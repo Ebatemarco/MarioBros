@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=allegroex6keyboard
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/allegroex6keyboard
+CND_ARTIFACT_NAME_Debug=mariobros_0.2
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/mariobros_0.2
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=allegroex6keyboard.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/allegroex6keyboard.tar
+CND_PACKAGE_NAME_Debug=mariobros0.2.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/mariobros0.2.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=allegroex6keyboard
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/allegroex6keyboard
+CND_ARTIFACT_NAME_Release=mariobros_0.2
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/mariobros_0.2
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=allegroex6keyboard.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/allegroex6keyboard.tar
+CND_PACKAGE_NAME_Release=mariobros0.2.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/mariobros0.2.tar
 #
 # include compiler specific variables
 #

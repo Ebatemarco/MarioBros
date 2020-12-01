@@ -24,6 +24,9 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer);
 
 #define MARIO_SIZE 32
 #define MOVE_RATE  4.0
+#define MARIO_W 16 //Tamaño del sprite
+#define MARIO_H 16 //Tamaño del sprite
+
 
 enum MYKEYS 
 {
@@ -45,6 +48,8 @@ int main(void)
     bool redraw = false;
     bool do_exit = false;
 
+    //Mario = al_create_sub_bitmap(al_load_bitmap("NES - Super Mario Bros - Enemies & Bosses.png"), 0, 16, MARIO_W, MARIO_H);
+    
     
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
     if (!al_init()) {
@@ -185,9 +190,23 @@ int main(void)
         if (redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
             disp_pre_draw(buffer);
+            
             al_clear_to_color(al_map_rgb(0,0,0));
+            
+            /*al_draw_scaled_bitmap("NES - Super Mario Bros - Enemies & Bosses.png",
+            0, 0, MARIO_W, MARIO_H, //imagen
+            Mario_x, Mario_y,  //Posicion donde lo dibuja
+            1, 1, // TE LO DIBUJA DE 500 X200
+            0);
+            */
+            
             al_draw_bitmap(Mario, Mario_x, Mario_y, 0);
+            
+            
+            
             disp_post_draw(display, buffer);
+            //al_flip_display();
+            
         }
     }
 
@@ -199,14 +218,14 @@ int main(void)
 
 //FUNCIONES
 
-void disp_pre_draw(ALLEGRO_BITMAP* buffer)
+void disp_pre_draw(ALLEGRO_BITMAP* b)
 {
-    al_set_target_bitmap(buffer);
+    al_set_target_bitmap(b);
 }
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer)
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b)
 {
     al_set_target_backbuffer(disp);
-    al_draw_scaled_bitmap(buffer, 0, 0, BUFFER_W, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
+    al_draw_scaled_bitmap(b, 0, 0, BUFFER_W, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
     al_flip_display();
 }

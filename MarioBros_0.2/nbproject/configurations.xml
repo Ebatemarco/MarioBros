@@ -5,13 +5,9 @@
                    displayName="Header Files"
                    projectFiles="true">
     </logicalFolder>
-    <logicalFolder name="f1"
-                   displayName="Resource Files"
-                   projectFiles="true"
-                   kind="ROOT">
+    <logicalFolder name="f1" displayName="Resource Files" projectFiles="true">
       <itemPath>NES - Super Mario Bros - Enemies &amp; Bosses.png</itemPath>
       <itemPath>NES - Super Mario Bros - Items Objects and NPCs.png</itemPath>
-      <itemPath>NES - Super Mario Bros - Mario &amp; Luigi.png</itemPath>
       <itemPath>NES - Super Mario Bros - World 2-2.png</itemPath>
       <itemPath>NES - Super Mario Bros - World 7-2.png</itemPath>
     </logicalFolder>
@@ -59,6 +55,7 @@
             <linkerOptionItem>`pkg-config --libs allegro_primitives-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_ttf-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_video-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs atk`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>
@@ -68,11 +65,6 @@
             flavor2="0">
       </item>
       <item path="NES - Super Mario Bros - Items Objects and NPCs.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES - Super Mario Bros - Mario &amp; Luigi.png"
             ex="false"
             tool="3"
             flavor2="0">
@@ -117,11 +109,6 @@
             flavor2="0">
       </item>
       <item path="NES - Super Mario Bros - Items Objects and NPCs.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES - Super Mario Bros - Mario &amp; Luigi.png"
             ex="false"
             tool="3"
             flavor2="0">

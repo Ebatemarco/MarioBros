@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=AllegroEx6KeyBoard
+PROJECTNAME=MarioBros_0.2
 
 # Active Configuration
 DEFAULTCONF=Debug
