@@ -16,9 +16,9 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer);
 
 #define FPS    60.0
 
-#define BUFFER_W 115//3347
-#define BUFFER_H 16//466
-#define DISP_SCALE 20
+#define BUFFER_W 3347
+#define BUFFER_H 466
+#define DISP_SCALE 1
 #define SCREEN_W (BUFFER_H * DISP_SCALE)
 #define SCREEN_H (BUFFER_H * DISP_SCALE)
 
@@ -61,7 +61,17 @@ int main(void)
         fprintf(stderr, "failed to initialize the keyboard!\n");
         return -1;
     }
-
+    
+    display = al_create_display(SCREEN_W, SCREEN_H);
+    if (!display) 
+    {
+        fprintf(stderr, "failed to create display!\n");
+        al_destroy_timer(timer);
+        al_destroy_bitmap(Mario);
+        al_destroy_event_queue(event_queue);
+        return -1;
+    }
+    
     timer = al_create_timer(1.0 / FPS);
     if (!timer) {
         fprintf(stderr, "failed to create timer!\n");
@@ -88,16 +98,6 @@ int main(void)
         fprintf(stderr, "failed to create event_queue!\n");
         al_destroy_bitmap(Mario);
         al_destroy_timer(timer);
-        return -1;
-    }
-
-    display = al_create_display(SCREEN_W, SCREEN_H);
-    if (!display) 
-    {
-        fprintf(stderr, "failed to create display!\n");
-        al_destroy_timer(timer);
-        al_destroy_bitmap(Mario);
-        al_destroy_event_queue(event_queue);
         return -1;
     }
 

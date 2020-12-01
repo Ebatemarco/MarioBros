@@ -42,6 +42,7 @@
         </cTool>
         <linkerTool>
           <linkerLibItems>
+            <linkerOptionItem>`pkg-config --libs adwaita-icon-theme`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_acodec-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_audio-5`</linkerOptionItem>
@@ -55,6 +56,7 @@
             <linkerOptionItem>`pkg-config --libs allegro_primitives-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_ttf-5`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs allegro_video-5`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs applewmproto`</linkerOptionItem>
             <linkerOptionItem>`pkg-config --libs atk`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
