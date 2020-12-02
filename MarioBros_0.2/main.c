@@ -12,7 +12,7 @@
 
 void disp_pre_draw(ALLEGRO_BITMAP* buffer);
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer);
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y);
 
 #define FPS    60.0
 
@@ -40,6 +40,7 @@ int main(void)
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_BITMAP *buffer = NULL;
     ALLEGRO_BITMAP *Mario = NULL;
+    ALLEGRO_BITMAP *background = NULL;
 
     float Mario_x = SCREEN_W / 2.0 - MARIO_SIZE / 2.0;
     float Mario_y = SCREEN_H / 2.0 - MARIO_SIZE / 2.0;
@@ -59,6 +60,12 @@ int main(void)
 
     if (!al_install_keyboard()) {
         fprintf(stderr, "failed to initialize the keyboard!\n");
+        return -1;
+    }
+    
+        if (!al_init_image_addon()) {
+        fprintf(stderr, "Unable to start image addon \n"); //Igual que printf pero imprime al error std 
+        al_uninstall_system();
         return -1;
     }
     
@@ -91,7 +98,15 @@ int main(void)
         al_destroy_timer(timer);
         return -1;
     }
-
+    
+    if (!(background = al_load_bitmap("NES - Super Mario Bros - World 2-2.png"))) {
+        fprintf(stderr, "Unable to load logo\n");
+        al_uninstall_system();
+        al_shutdown_image_addon();
+        al_destroy_display(display);
+        return -1;
+    }
+   
     event_queue = al_create_event_queue();
     if (!event_queue) 
     {
@@ -191,7 +206,8 @@ int main(void)
             redraw = false;
             disp_pre_draw(buffer);
             
-            al_clear_to_color(al_map_rgb(0,0,0));
+            //al_clear_to_color(al_map_rgb(0,0,0));
+            al_draw_bitmap(background,0,0,0);
             
             /*al_draw_scaled_bitmap("NES - Super Mario Bros - Enemies & Bosses.png",
             0, 0, MARIO_W, MARIO_H, //imagen
@@ -204,7 +220,7 @@ int main(void)
             
             
             
-            disp_post_draw(display, buffer);
+            disp_post_draw(display, buffer, Mario_x, Mario_y);
             //al_flip_display();
             
         }
@@ -223,9 +239,9 @@ void disp_pre_draw(ALLEGRO_BITMAP* b)
     al_set_target_bitmap(b);
 }
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b)
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,float x,float y)
 {
     al_set_target_backbuffer(disp);
-    al_draw_scaled_bitmap(b, 0, 0, BUFFER_W, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
+    al_draw_scaled_bitmap(b, x-(BUFFER_H/2), 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
     al_flip_display();
 }
