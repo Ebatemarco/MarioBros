@@ -16,9 +16,9 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y
 
 #define FPS    60.0
 
-#define BUFFER_W 3347
-#define BUFFER_H 466
-#define DISP_SCALE 1
+#define BUFFER_W 3103
+#define BUFFER_H 224
+#define DISP_SCALE 2
 #define SCREEN_W (BUFFER_H * DISP_SCALE)
 #define SCREEN_H (BUFFER_H * DISP_SCALE)
 
@@ -49,7 +49,7 @@ int main(void)
     bool redraw = false;
     bool do_exit = false;
 
-    //Mario = al_create_sub_bitmap(al_load_bitmap("NES - Super Mario Bros - Enemies & Bosses.png"), 0, 16, MARIO_W, MARIO_H);
+    //Mario = al_create_sub_bitmap(al_load_bitmap("NES_-_Super_Mario_Bros_-_Mario__Luigi.png"), 0, 16, MARIO_W, MARIO_H);
     
     
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
@@ -98,6 +98,7 @@ int main(void)
         al_destroy_timer(timer);
         return -1;
     }
+    
     
     if (!(background = al_load_bitmap("NES - Super Mario Bros - World 2-2.png"))) {
         fprintf(stderr, "Unable to load logo\n");
@@ -209,12 +210,12 @@ int main(void)
             //al_clear_to_color(al_map_rgb(0,0,0));
             al_draw_bitmap(background,0,0,0);
             
-            /*al_draw_scaled_bitmap("NES - Super Mario Bros - Enemies & Bosses.png",
+           /* al_draw_scaled_bitmap("NES_-_Super_Mario_Bros_-_Mario__Luigi.png",
             0, 0, MARIO_W, MARIO_H, //imagen
             Mario_x, Mario_y,  //Posicion donde lo dibuja
             1, 1, // TE LO DIBUJA DE 500 X200
-            0);
-            */
+            0);*/
+            
             
             al_draw_bitmap(Mario, Mario_x, Mario_y, 0);
             
