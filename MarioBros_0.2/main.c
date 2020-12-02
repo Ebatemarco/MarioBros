@@ -10,9 +10,7 @@
 #include <allegro5/allegro_image.h>
 
 
-void disp_pre_draw(ALLEGRO_BITMAP* buffer);
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y);
 
 #define FPS    60.0
 
@@ -27,14 +25,33 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
 
+#define BORDER 4
+
+void disp_pre_draw(ALLEGRO_BITMAP* buffer);
+
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y);
+
+void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento);
+
+bool collidewborder(int ax1, int ay1, int ax2, int ay2, char mapa [BUFFER_H][BUFFER_W]);
 
 enum MYKEYS 
 {
     KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT //arrow keys
 };
 
+char mapa2[BUFFER_H][BUFFER_W]={0};
+
+
+
+
 int main(void) 
 {
+    //INICIALIZACION 
+    // init_display();
+    // init_buffer();
+    //
+    
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
@@ -49,6 +66,18 @@ int main(void)
     bool redraw = false;
     bool do_exit = false;
 
+    
+    putbarrier (0 , 0, 32, 120, mapa2, 4);
+    
+    int i,j;
+    for (i=1;i<BUFFER_H;i++)
+    {
+        for(j=1;j<BUFFER_H;j++)
+        {
+            printf("%d " ,mapa2[i][j]);
+        }
+        printf("\n");
+    }
     //Mario = al_create_sub_bitmap(al_load_bitmap("NES_-_Super_Mario_Bros_-_Mario__Luigi.png"), 0, 16, MARIO_W, MARIO_H);
     
     
@@ -145,15 +174,15 @@ int main(void)
                 if (key_pressed[KEY_UP] && Mario_y >= MOVE_RATE)
                     Mario_y -= MOVE_RATE;
 
-                if (key_pressed[KEY_DOWN] && Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE)
+                if (key_pressed[KEY_DOWN] && Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2))
                     Mario_y += MOVE_RATE;
 
-                if (key_pressed[KEY_LEFT] && Mario_x >= MOVE_RATE)
+                if (key_pressed[KEY_LEFT] && Mario_x >= MOVE_RATE )
                     Mario_x -= MOVE_RATE;
 
                 if (key_pressed[KEY_RIGHT])
                     Mario_x += MOVE_RATE;
-
+                
                 redraw = true;
             }
             else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -203,6 +232,8 @@ int main(void)
             }
         }
 
+        
+        
         if (redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
             disp_pre_draw(buffer);
@@ -245,4 +276,38 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,float x,float y)
     al_set_target_backbuffer(disp);
     al_draw_scaled_bitmap(b, x-(BUFFER_H/2), 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
     al_flip_display();
+}
+
+void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento)
+{
+    int i, j;
+    for(j=ay; j<= by ;j++)
+    {
+        for(i=ax; i <= bx;i++)
+        {
+            mapa[j][i]= elemento;
+        }
+    }
+    
+}
+/*Para los enemigos crear una funcion "draw_enemi()" que modifique la
+ *matriz mapa, esta funcion antes de actualizar al jugador*/
+
+//  collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2)
+bool collidewborder(int ax1, int ay1, int ax2, int ay2, char mapa [BUFFER_H][BUFFER_W])
+{
+    
+    int i, j;
+    for(j=ay1; j<= ay2;j++)
+    {
+        for(i=ax1; i <= ax2;i++)
+        {
+            if(mapa[j][i]== BORDER);
+            {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
