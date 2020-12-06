@@ -16,11 +16,11 @@
 
 #define BUFFER_W 3103
 #define BUFFER_H 224
-#define DISP_SCALE 2
+#define DISP_SCALE 3
 #define SCREEN_W (BUFFER_H * DISP_SCALE)
 #define SCREEN_H (BUFFER_H * DISP_SCALE)
 
-#define MARIO_SIZE 16
+#define MARIO_SIZE 15
 #define MOVE_RATE  4.0
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
@@ -66,11 +66,53 @@ int main(void)
     bool redraw = false;
     bool do_exit = false;
 
-    //Zona de creacion de barrera
-   putbarrier (0 , 201, 3102, 223, mapa2, 4);
-    
-
-    
+   //Zona de creacion de barrera
+   putbarrier (0 , 200, 3101, 223, mapa2, 4);
+   putbarrier (175, 152, 190, 199, mapa2, 4);
+   putbarrier (288, 136, 335, 151, mapa2, 4);
+   putbarrier (544, 120, 559, 199, mapa2, 4);
+   putbarrier (688, 104, 703, 135, mapa2, 4);
+   putbarrier (688, 136, 719, 151, mapa2, 4);
+   putbarrier (816, 136, 831, 199, mapa2, 4);
+   putbarrier (1040, 152, 1055, 199, mapa2, 4);
+   putbarrier (1056, 120, 1071, 199, mapa2, 4);
+   putbarrier (1152, 120, 1167, 199, mapa2, 4);
+   putbarrier (1168, 152, 1183, 199, mapa2, 4);
+   putbarrier (1264, 152, 1295, 199, mapa2, 4);
+   putbarrier (1264, 24, 1295, 71, mapa2, 4);
+   putbarrier (1328, 72, 1375, 87, mapa2, 4);
+   putbarrier (1344, 40, 1359, 71, mapa2, 4);
+   putbarrier (1440, 152, 1455, 199, mapa2, 4);
+   putbarrier (1648, 72, 1663, 135, mapa2, 4);
+   putbarrier (1648, 136, 1679, 151, mapa2, 4);
+   putbarrier (1855, 120, 1886, 135, mapa2, 4);
+   putbarrier (1935, 136, 1950, 199, mapa2, 4);
+   putbarrier (2079, 136, 2094, 199, mapa2, 4);
+   putbarrier (2095, 168, 2110, 199, mapa2, 4);
+   
+   putbarrier (2111, 24, 2126, 55, mapa2, 4);
+   putbarrier (2111, 56, 2254, 71, mapa2, 4);
+   putbarrier (2255, 168, 2286, 199, mapa2, 4);
+   putbarrier (2271, 136, 2286, 168, mapa2, 4);
+   putbarrier (2364, 186, 2382, 199, mapa2, 4);
+   putbarrier (2399, 152, 2414, 199, mapa2, 4);
+   putbarrier (2511, 72, 2525, 199, mapa2, 4);
+   putbarrier (2527, 72, 2558, 87, mapa2, 4);
+   putbarrier (2607, 72, 2654, 87, mapa2, 4);
+   putbarrier (2639, 88, 2654, 199, mapa2, 4);
+   putbarrier (2767, 72, 2845, 87, mapa2, 4);
+   putbarrier (2783, 40, 2798, 71, mapa2, 4);
+   putbarrier (2894, 72, 2956, 87, mapa2, 4);
+   putbarrier (2767, 136, 2845, 151, mapa2, 4);
+   putbarrier (2894, 136, 2956, 151, mapa2, 4);
+   
+   putbarrier (3022, 24, 3101, 87, mapa2, 4);
+   putbarrier (3054, 88, 3101, 223, mapa2, 4);
+   putbarrier (3022, 136, 3070, 223, mapa2, 4);
+   putbarrier (3006, 152, 3037, 199, mapa2, 4);
+   putbarrier (2990, 168, 3021, 199, mapa2, 4);
+   putbarrier (2974, 184, 2989, 199, mapa2, 4);
+   
     
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
     if (!al_init()) {
@@ -160,16 +202,25 @@ int main(void)
             if (ev.type == ALLEGRO_EVENT_TIMER) {
                 if (key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2))
                     Mario_y -= MOVE_RATE;
-
+                else if(key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-1, Mario_x+MARIO_SIZE , Mario_y-1+MARIO_SIZE, mapa2))
+                    Mario_y -= 1;
+                else if (Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2))
+                    Mario_y += MOVE_RATE/3;
+                
                 if (key_pressed[KEY_DOWN] && Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2))
                     Mario_y += MOVE_RATE;
+                else if(key_pressed[KEY_DOWN] && Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+1, Mario_x+MARIO_SIZE , Mario_y+1+MARIO_SIZE, mapa2))
+                    Mario_y += 1;
 
                 if (key_pressed[KEY_LEFT] && Mario_x >= MOVE_RATE && collidewborder(Mario_x-MOVE_RATE, Mario_y, Mario_x+MARIO_SIZE-MOVE_RATE , Mario_y+MARIO_SIZE, mapa2))
                     Mario_x -= MOVE_RATE;
-
+                else if (key_pressed[KEY_LEFT] && Mario_x >= MOVE_RATE && collidewborder(Mario_x-1, Mario_y, Mario_x+MARIO_SIZE-1 , Mario_y+MARIO_SIZE, mapa2))
+                    Mario_x -= 1;
+                    
                 if (key_pressed[KEY_RIGHT]&& collidewborder(Mario_x+MOVE_RATE, Mario_y, Mario_x+MARIO_SIZE+MOVE_RATE , Mario_y+MARIO_SIZE, mapa2))
                     Mario_x += MOVE_RATE;
-                
+                else if (key_pressed[KEY_RIGHT]&& collidewborder(Mario_x+1, Mario_y, Mario_x+MARIO_SIZE+1 , Mario_y+MARIO_SIZE, mapa2))
+                    Mario_x += 1;
                 redraw = true;
             }
             else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
