@@ -65,6 +65,8 @@ int main(void)
     bool key_pressed[4] = {false, false, false, false}; //Estado de teclas, true cuando esta apretada
     bool redraw = false;
     bool do_exit = false;
+    float saltito=0;
+    float saltito2=0;
 
    //Zona de creacion de barrera
    putbarrier (0 , 200, 3101, 223, mapa2, 4);
@@ -200,8 +202,15 @@ int main(void)
         if (al_get_next_event(event_queue, &ev)) //Toma un evento de la cola, VER RETURN EN DOCUMENT.
         {
             if (ev.type == ALLEGRO_EVENT_TIMER) {
-                if (key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2))
-                    Mario_y -= MOVE_RATE;
+                
+                if (key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2) )
+                    {
+                    if (saltito2==0 )
+                        {
+                        saltito2= 60;
+                        saltito = 8;
+                        }                    
+                    }
                 else if(key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-1, Mario_x+MARIO_SIZE , Mario_y-1+MARIO_SIZE, mapa2))
                     Mario_y -= 1;
                 else if (Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2))
@@ -221,6 +230,16 @@ int main(void)
                     Mario_x += MOVE_RATE;
                 else if (key_pressed[KEY_RIGHT]&& collidewborder(Mario_x+1, Mario_y, Mario_x+MARIO_SIZE+1 , Mario_y+MARIO_SIZE, mapa2))
                     Mario_x += 1;
+                
+                if(saltito2>0)
+                    saltito2--;
+                
+                if (Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2) && (saltito>0) )
+                   {
+                    saltito-=1;
+                    Mario_y -= MOVE_RATE;
+                   }
+                
                 redraw = true;
             }
             else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
