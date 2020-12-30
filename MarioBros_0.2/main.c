@@ -66,7 +66,8 @@ int main(void)
     bool redraw = false;
     bool do_exit = false;
     float saltito=0;
-    float saltito2=0;
+    float saltito_cooldown=0;
+    char saltito_lock=0; //Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
 
    //Zona de creacion de barrera
    putbarrier (0 , 200, 3101, 223, mapa2, 4);
@@ -202,20 +203,23 @@ int main(void)
         if (al_get_next_event(event_queue, &ev)) //Toma un evento de la cola, VER RETURN EN DOCUMENT.
         {
             if (ev.type == ALLEGRO_EVENT_TIMER) {
-                
+
                 if (key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2) )
                     {
-                    if (saltito2==0 )
+                    if (saltito_cooldown==0 && saltito_lock==0)
                         {
-                        saltito2= 60;
-                        saltito = 8;
+                        saltito_cooldown= 30;
+                        saltito = 18;
+                        saltito_lock=1;
                         }                    
                     }
-                else if(key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-1, Mario_x+MARIO_SIZE , Mario_y-1+MARIO_SIZE, mapa2))
-                    Mario_y -= 1;
-                else if (Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2))
-                    Mario_y += MOVE_RATE/3;
-                
+                 
+                    if (!key_pressed[KEY_UP])
+                        saltito_lock=0;
+                 
+                 /*else if(key_pressed[KEY_UP] && Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-1, Mario_x+MARIO_SIZE , Mario_y-1+MARIO_SIZE, mapa2))
+                    Mario_y -= 1;*/
+                        
                 if (key_pressed[KEY_DOWN] && Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2))
                     Mario_y += MOVE_RATE;
                 else if(key_pressed[KEY_DOWN] && Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+1, Mario_x+MARIO_SIZE , Mario_y+1+MARIO_SIZE, mapa2))
@@ -231,10 +235,15 @@ int main(void)
                 else if (key_pressed[KEY_RIGHT]&& collidewborder(Mario_x+1, Mario_y, Mario_x+MARIO_SIZE+1 , Mario_y+MARIO_SIZE, mapa2))
                     Mario_x += 1;
                 
-                if(saltito2>0)
-                    saltito2--;
+                //Salto de Mario
                 
-                if (Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2) && (saltito>0) )
+                if (Mario_y <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(Mario_x, Mario_y+MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y+MOVE_RATE+MARIO_SIZE, mapa2)) //Mario cae siempre que no detecte nada abajo de él
+                    Mario_y += MOVE_RATE/3;       
+                
+                if(saltito_cooldown>0) //Se disminuye la variable saltito_cooldown en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
+                    saltito_cooldown--;
+                
+                if (Mario_y >= MOVE_RATE && collidewborder(Mario_x, Mario_y-MOVE_RATE, Mario_x+MARIO_SIZE , Mario_y-MOVE_RATE+MARIO_SIZE, mapa2) && (saltito>0) ) //Mario salta lo determinado por la variable saltito
                    {
                     saltito-=1;
                     Mario_y -= MOVE_RATE;
@@ -328,7 +337,7 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,float x,float y)
     al_flip_display();
 }
 
-void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento)
+void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento) //esta funcion modifica la matriz en las coordenadas dadas, con el elelmento dado 
 {
     int i, j;
     for(j=ay; j<= by ;j++)
@@ -344,7 +353,7 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
  *matriz mapa, esta funcion antes de actualizar al jugador*/
 
 
-bool collidewborder(int ax1, int ay1, int ax2, int ay2, const char mapa [BUFFER_H][BUFFER_W])
+bool collidewborder(int ax1, int ay1, int ax2, int ay2, const char mapa [BUFFER_H][BUFFER_W]) //esta funcion detecta si hubo una colision entre 2 elementos
 {
     
     int i, j;
