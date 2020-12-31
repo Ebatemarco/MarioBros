@@ -45,7 +45,7 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y
 
 void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento);
 
-bool collidewborder(char* live, int ax1, int ay1, int ax2, int ay2,const char mapa [BUFFER_H][BUFFER_W]);
+bool collidewborder(player* , int ax1, int ay1, int ax2, int ay2,const char mapa [BUFFER_H][BUFFER_W]);
 
 enum MYKEYS 
 {
@@ -62,9 +62,9 @@ int main(void)
     //INICIALIZACION 
     // init_display();
     // init_buffer();
-    //
     
     player Mario =  {3, 0, 0, 0, 0, 0}; 
+    player * pMario = &Mario;
     
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -72,6 +72,10 @@ int main(void)
     ALLEGRO_BITMAP *buffer = NULL;
     ALLEGRO_BITMAP *mario = NULL;
     ALLEGRO_BITMAP *background = NULL;
+    ALLEGRO_BITMAP *game_over = NULL;
+    
+    //ALLEGRO_COLOR grey;
+      // grey = al_map_rgb(255, 0, 0);
 
    
     bool key_pressed[4] = {false, false, false, false}; //Estado de teclas, true cuando esta apretada
@@ -184,6 +188,14 @@ int main(void)
         al_destroy_display(display);
         return -1;
     }
+    
+    game_over = al_load_bitmap("gameover.png");
+    if (!game_over) {
+        fprintf(stderr, "failed to create gameover bitmap!\n");
+        al_destroy_timer(timer);
+        return -1;
+    }
+    
    
     event_queue = al_create_event_queue();
     if (!event_queue) 
@@ -194,7 +206,7 @@ int main(void)
         return -1;
     }
 
-
+al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
     
     al_set_target_bitmap(al_get_backbuffer(display));
 
@@ -216,7 +228,7 @@ int main(void)
         {
             if (ev.type == ALLEGRO_EVENT_TIMER) {
 
-                if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(&(Mario.live) ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) )
+                if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) )
                     {
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==0)
                         {
@@ -232,31 +244,31 @@ int main(void)
                  /*else if(key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder((Mario.x), (Mario.y)-1, (Mario.x)+MARIO_SIZE , (Mario.y)-1+MARIO_SIZE, mapa2))
                     (Mario.y) -= 1;*/
                         
-                if (key_pressed[KEY_DOWN] && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( &(Mario.live),(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_DOWN] && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2))
                     (Mario.y) += MOVE_RATE;
-                else if(key_pressed[KEY_DOWN] && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(&(Mario.live),(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa2))
+                else if(key_pressed[KEY_DOWN] && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa2))
                     (Mario.y) += 1;
 
-                if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(&(Mario.live),(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) -= MOVE_RATE;
-                else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(&(Mario.live),(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa2))
+                else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) -= 1;
                     
-                if (key_pressed[KEY_RIGHT]&& collidewborder(&(Mario.live),(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_RIGHT]&& collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) += MOVE_RATE;
-                else if (key_pressed[KEY_RIGHT]&& collidewborder(&(Mario.live),(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa2))
+                else if (key_pressed[KEY_RIGHT]&& collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) += 1;
                 
                 //Salto de Mario
                 
-                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(&(Mario.live),(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2)) //Mario cae siempre que no detecte nada abajo de él
+                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2)) //Mario cae siempre que no detecte nada abajo de él
                     (Mario.y) += MOVE_RATE/3; 
                 
                 
                 if((Mario.salto_cooldown)>0) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
                     (Mario.salto_cooldown)--;
                 
-                if ((Mario.y) >= MOVE_RATE && collidewborder(&(Mario.live),(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
+                if ((Mario.y) >= MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
                    {
                     (Mario.salto)-=1;
                     (Mario.y) -= MOVE_RATE;
@@ -311,28 +323,27 @@ int main(void)
             }
         }
 
-        if((Mario.live)==0)
+        if (redraw && al_is_event_queue_empty(event_queue)) 
         {
-            Mario.x=0;
-            Mario.y=0;
-            Mario.live=3; 
-        }
-        
-        if (redraw && al_is_event_queue_empty(event_queue)) {
             redraw = false;
             disp_pre_draw(buffer);
             
             al_draw_bitmap(background,0,0,0);
-            
 
-            
             al_draw_bitmap(mario, (Mario.x), (Mario.y), 0);
 
+        if ((Mario.live)<=2) //Si se acabaron las vidas 
+        {
+         al_draw_scaled_bitmap(game_over,0,0,240,210,0,0,BUFFER_H,BUFFER_H,0);
+         //al_draw_filled_rectangle(x1, y1, x2, y2, black);
+         //al_draw_filled_rectangle(0, 0, 200, 200, grey);
+        } 
             
-            disp_post_draw(display, buffer, (Mario.x), (Mario.y));
-
-            
+            disp_post_draw(display, buffer, (Mario.x), (Mario.y));    
         }
+        
+        
+        
     }
 
     al_destroy_bitmap(mario);
@@ -371,7 +382,7 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
  *matriz mapa, esta funcion antes de actualizar al jugador*/
 
 
-bool collidewborder(char* live,int ax1, int ay1, int ax2, int ay2, const char mapa [BUFFER_H][BUFFER_W]) //esta funcion detecta si hubo una colision entre 2 elementos
+bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2, const char mapa [BUFFER_H][BUFFER_W]) //esta funcion detecta si hubo una colision entre 2 elementos
 {
     
     int i, j;
@@ -385,7 +396,9 @@ bool collidewborder(char* live,int ax1, int ay1, int ax2, int ay2, const char ma
             }
             if(mapa[j][i]== BLOCKDEATH)
             {
-                live[0]-=1;
+                Mario->live-=1;
+                Mario->x=0;
+                Mario->y=0;
                 return false;
             }   
         }
