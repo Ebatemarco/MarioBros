@@ -10,7 +10,7 @@
 #include <allegro5/allegro_image.h>
 
 
-#define BLOCKDEATH 3
+
 
 #define FPS    60.0
 
@@ -26,6 +26,8 @@
 #define MARIO_H 16 //Tamaño del sprite
 
 #define BORDER 4
+#define BLOCKDEATH 3
+#define EMPTY 0
 
 typedef struct
 {
@@ -49,10 +51,10 @@ bool collidewborder(player* , int ax1, int ay1, int ax2, int ay2,const char mapa
 
 enum MYKEYS 
 {
-    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT //arrow keys
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT , KEY_P //arrow keys
 };
 
-char mapa2[BUFFER_H][BUFFER_W]={0};
+char mapa2[BUFFER_H][BUFFER_W]={EMPTY};
 
 
 
@@ -66,6 +68,9 @@ int main(void)
     player Mario =  {3, 0, 0, 0, 0, 0}; 
     player * pMario = &Mario;
     
+    bool pausa= false;
+    bool pausa_lock = false;
+    
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
@@ -78,59 +83,59 @@ int main(void)
       // grey = al_map_rgb(255, 0, 0);
 
    
-    bool key_pressed[4] = {false, false, false, false}; //Estado de teclas, true cuando esta apretada
+    bool key_pressed[5] = {false, false, false, false, false}; //Estado de teclas, true cuando esta apretada
     bool redraw = false;
     bool do_exit = false;
      
 
    //Zona de creacion de barrera
-   putbarrier (0 , 200, 3101, 223, mapa2, 4);
-   putbarrier (175, 152, 190, 199, mapa2, 4);
-   putbarrier (288, 136, 335, 151, mapa2, 4);
-   putbarrier (544, 120, 559, 199, mapa2, 4);
-   putbarrier (688, 104, 703, 135, mapa2, 4);
-   putbarrier (688, 136, 719, 151, mapa2, 4);
-   putbarrier (816, 136, 831, 199, mapa2, 4);
-   putbarrier (1040, 152, 1055, 199, mapa2, 4);
-   putbarrier (1056, 120, 1071, 199, mapa2, 4);
-   putbarrier (1152, 120, 1167, 199, mapa2, 4);
-   putbarrier (1168, 152, 1183, 199, mapa2, 4);
-   putbarrier (1264, 152, 1295, 199, mapa2, 4);
-   putbarrier (1264, 24, 1295, 71, mapa2, 4);
-   putbarrier (1328, 72, 1375, 87, mapa2, 4);
-   putbarrier (1344, 40, 1359, 71, mapa2, 4);
-   putbarrier (1440, 152, 1455, 199, mapa2, 4);
-   putbarrier (1648, 72, 1663, 135, mapa2, 4);
-   putbarrier (1648, 136, 1679, 151, mapa2, 4);
-   putbarrier (1855, 120, 1886, 135, mapa2, 4);
-   putbarrier (1935, 136, 1950, 199, mapa2, 4);
-   putbarrier (2079, 136, 2094, 199, mapa2, 4);
-   putbarrier (2095, 168, 2110, 199, mapa2, 4);
+   putbarrier (0 , 200, 3101, 223, mapa2, BORDER);
+   putbarrier (175, 152, 190, 199, mapa2, BORDER);
+   putbarrier (288, 136, 335, 151, mapa2, BORDER);
+   putbarrier (544, 120, 559, 199, mapa2, BORDER);
+   putbarrier (688, 104, 703, 135, mapa2, BORDER);
+   putbarrier (688, 136, 719, 151, mapa2, BORDER);
+   putbarrier (816, 136, 831, 199, mapa2, BORDER);
+   putbarrier (1040, 152, 1055, 199, mapa2, BORDER);
+   putbarrier (1056, 120, 1071, 199, mapa2, BORDER);
+   putbarrier (1152, 120, 1167, 199, mapa2, BORDER);
+   putbarrier (1168, 152, 1183, 199, mapa2, BORDER);
+   putbarrier (1264, 152, 1295, 199, mapa2, BORDER);
+   putbarrier (1264, 24, 1295, 71, mapa2, BORDER);
+   putbarrier (1328, 72, 1375, 87, mapa2, BORDER);
+   putbarrier (1344, 40, 1359, 71, mapa2, BORDER);
+   putbarrier (1440, 152, 1455, 199, mapa2, BORDER);
+   putbarrier (1648, 72, 1663, 135, mapa2, BORDER);
+   putbarrier (1648, 136, 1679, 151, mapa2, BORDER);
+   putbarrier (1855, 120, 1886, 135, mapa2, BORDER);
+   putbarrier (1935, 136, 1950, 199, mapa2, BORDER);
+   putbarrier (2079, 136, 2094, 199, mapa2, BORDER);
+   putbarrier (2095, 168, 2110, 199, mapa2, BORDER);
    
-   putbarrier (2111, 24, 2126, 55, mapa2, 4);
-   putbarrier (2111, 56, 2254, 71, mapa2, 4);
-   putbarrier (2255, 168, 2286, 199, mapa2, 4);
-   putbarrier (2271, 136, 2286, 168, mapa2, 4);
-   putbarrier (2364, 186, 2382, 199, mapa2, 4);
-   putbarrier (2399, 152, 2414, 199, mapa2, 4);
-   putbarrier (2511, 72, 2525, 199, mapa2, 4);
-   putbarrier (2527, 72, 2558, 87, mapa2, 4);
-   putbarrier (2607, 72, 2654, 87, mapa2, 4);
-   putbarrier (2639, 88, 2654, 199, mapa2, 4);
-   putbarrier (2767, 72, 2845, 87, mapa2, 4);
-   putbarrier (2783, 40, 2798, 71, mapa2, 4);
-   putbarrier (2894, 72, 2956, 87, mapa2, 4);
-   putbarrier (2767, 136, 2845, 151, mapa2, 4);
-   putbarrier (2894, 136, 2956, 151, mapa2, 4);
+   putbarrier (2111, 24, 2126, 55, mapa2, BORDER);
+   putbarrier (2111, 56, 2254, 71, mapa2, BORDER);
+   putbarrier (2255, 168, 2286, 199, mapa2, BORDER);
+   putbarrier (2271, 136, 2286, 168, mapa2, BORDER);
+   putbarrier (2364, 186, 2382, 199, mapa2, BORDER);
+   putbarrier (2399, 152, 2414, 199, mapa2, BORDER);
+   putbarrier (2511, 72, 2525, 199, mapa2, BORDER);
+   putbarrier (2527, 72, 2558, 87, mapa2, BORDER);
+   putbarrier (2607, 72, 2654, 87, mapa2, BORDER);
+   putbarrier (2639, 88, 2654, 199, mapa2, BORDER);
+   putbarrier (2767, 72, 2845, 87, mapa2, BORDER);
+   putbarrier (2783, 40, 2798, 71, mapa2, BORDER);
+   putbarrier (2894, 72, 2956, 87, mapa2, BORDER);
+   putbarrier (2767, 136, 2845, 151, mapa2, BORDER);
+   putbarrier (2894, 136, 2956, 151, mapa2, BORDER);
    
-   putbarrier (3022, 24, 3101, 87, mapa2, 4);
-   putbarrier (3054, 88, 3101, 223, mapa2, 4);
-   putbarrier (3022, 136, 3070, 223, mapa2, 4);
-   putbarrier (3006, 152, 3037, 199, mapa2, 4);
-   putbarrier (2990, 168, 3021, 199, mapa2, 4);
-   putbarrier (2974, 184, 2989, 199, mapa2, 4);
+   putbarrier (3022, 24, 3101, 87, mapa2, BORDER);
+   putbarrier (3054, 88, 3101, 223, mapa2, BORDER);
+   putbarrier (3022, 136, 3070, 223, mapa2, BORDER);
+   putbarrier (3006, 152, 3037, 199, mapa2, BORDER);
+   putbarrier (2990, 168, 3021, 199, mapa2, BORDER);
+   putbarrier (2974, 184, 2989, 199, mapa2, BORDER);
    
-   putbarrier (1072, 200, 1151, 223, mapa2, 0);
+   putbarrier (1072, 200, 1151, 223, mapa2, EMPTY);
    putbarrier (1072, 219, 1151, 223, mapa2, BLOCKDEATH);
     
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
@@ -227,7 +232,12 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
         if (al_get_next_event(event_queue, &ev)) //Toma un evento de la cola, VER RETURN EN DOCUMENT.
         {
             if (ev.type == ALLEGRO_EVENT_TIMER) {
-
+                
+                //Teclas de movimiento
+                
+                if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
+                {
+                    
                 if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) )
                     {
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==0)
@@ -241,12 +251,10 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     if (!key_pressed[KEY_UP])
                         (Mario.salto_lock)=0;
                  
-                 /*else if(key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder((Mario.x), (Mario.y)-1, (Mario.x)+MARIO_SIZE , (Mario.y)-1+MARIO_SIZE, mapa2))
-                    (Mario.y) -= 1;*/
                         
-                if (key_pressed[KEY_DOWN] && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2))
                     (Mario.y) += MOVE_RATE;
-                else if(key_pressed[KEY_DOWN] && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa2))
+                else if(key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa2))
                     (Mario.y) += 1;
 
                 if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
@@ -254,18 +262,19 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                 else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) -= 1;
                     
-                if (key_pressed[KEY_RIGHT]&& collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) += MOVE_RATE;
-                else if (key_pressed[KEY_RIGHT]&& collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa2))
+                else if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa2))
                     (Mario.x) += 1;
+                
                 
                 //Salto de Mario
                 
-                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2)) //Mario cae siempre que no detecte nada abajo de él
+                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE  && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2)) //Mario cae siempre que no detecte nada abajo de él
                     (Mario.y) += MOVE_RATE/3; 
                 
                 
-                if((Mario.salto_cooldown)>0) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
+                if((Mario.salto_cooldown)>0 ) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
                     (Mario.salto_cooldown)--;
                 
                 if ((Mario.y) >= MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
@@ -274,6 +283,28 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     (Mario.y) -= MOVE_RATE;
                    }
                 
+                }
+                
+                //Boton de pausa
+                if (key_pressed[KEY_P])
+                {
+                    if  (pausa_lock== false)
+                    {
+                        if (pausa== false )
+                            {
+                            pausa= true;
+                            pausa_lock = true;
+                            }
+                        else
+                            {
+                            pausa = false;
+                            pausa_lock = true;
+                            }
+                    }
+                }
+                if (!key_pressed[KEY_P])
+                    pausa_lock= false;
+
                 redraw = true;
             }
             else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -296,6 +327,10 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     case ALLEGRO_KEY_RIGHT:
                         key_pressed[KEY_RIGHT] = true;
                         break;
+                        
+                    case ALLEGRO_KEY_P:
+                        key_pressed[KEY_P] = true;
+                        break;
                 }
             }
             else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
@@ -314,6 +349,10 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
 
                     case ALLEGRO_KEY_RIGHT:
                         key_pressed[KEY_RIGHT] = false;
+                        break;
+                        
+                    case ALLEGRO_KEY_P:
+                        key_pressed[KEY_P] = false;
                         break;
 
                     case ALLEGRO_KEY_ESCAPE:
