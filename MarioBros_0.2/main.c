@@ -41,15 +41,24 @@
 #define COIN3_YLOC 100
 #define COIN_SIZE 15
 
-#define FISH_SIZE 15
+#define SQUID 3
+#define REDFISH 2
 #define FISH 1
+
 #define MOVE_RATE_FISH  4.0
+#define MOVE_RATE_REDFISH  2.0
+#define MOVE_RATE_SQUID 2.0
+#define DODGE_DIST 40
+
+#define FISH_SIZE 16
+#define SQUID_H 24
+#define SQUID_W 16
 
 typedef struct
 {
-    char live;
-    float x;
-    float y;
+    char live;//Vidas de Mario
+    float x;//Posicion x de Mario
+    float y;//Posicion y de Mario
     float salto;
     float salto_cooldown;
     char salto_lock;//Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
@@ -61,10 +70,12 @@ typedef struct
 
 typedef struct
 {
-    bool active;
-    char type;
-    float x;
-    float y;
+    bool active; // Flag que indica si el enemigo esta activo o no
+    char type;// Tipo de enemigo
+    float x;//Posicion x del enemigo
+    float y;//Posicion y del enemigo
+    float prev_pos;//Variable que guarda la posicion previa del pulpo antes de moverse lateralmente
+    bool dodge;//Flag que utilizan los pulpos para indicar di deben ir hacia abajo o lateralmente
 }enemy;
 
 void disp_pre_draw(ALLEGRO_BITMAP* buffer);
@@ -95,11 +106,21 @@ int main(void)
     // init_display();
     // init_buffer();
     
+    //Inicializacion de Mario
+    
     player Mario =  {3, 0, 0, 0, 0, 0,true,true,true}; 
     player * pMario = &Mario;
     
-    enemy F1 = {0,FISH,400,100};
+    //Inicializacion de enemigos
+    
+    enemy F1 = {0,FISH,400,100,0,false};
     enemy * F1p = &F1;
+    
+    enemy RF1 = {0,REDFISH,500,100,0,false};
+    enemy * RF1p = &RF1;
+    
+    enemy S1 = {0,SQUID,700,100,100,false};
+    enemy * S1p = &S1;
     
     bool pausa= false;
     bool pausa_lock = false;
@@ -114,6 +135,8 @@ int main(void)
     ALLEGRO_BITMAP *game_over = NULL;
     
     ALLEGRO_BITMAP *fish = NULL;
+    ALLEGRO_BITMAP *redfish = NULL;
+    ALLEGRO_BITMAP *squid = NULL;
     ALLEGRO_BITMAP *coin = NULL;
 
     
@@ -226,7 +249,21 @@ int main(void)
         return -1;
     }
     
-    fish = al_load_bitmap("fish.png");
+    fish = al_load_bitmap("fish2.png");
+    if (!fish) {
+        fprintf(stderr, "failed to create f2 bitmap!\n");
+        al_destroy_timer(timer);
+        return -1;
+    } 
+    
+    redfish = al_load_bitmap("fish.png");
+    if (!fish) {
+        fprintf(stderr, "failed to create mario bitmap!\n");
+        al_destroy_timer(timer);
+        return -1;
+    } 
+    
+    squid = al_load_bitmap("squid.png");
     if (!fish) {
         fprintf(stderr, "failed to create mario bitmap!\n");
         al_destroy_timer(timer);
@@ -296,6 +333,8 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
 
                //Movimiento de enemigos
                enemy_mov(F1p, pMario);
+               enemy_mov(RF1p, pMario);
+               enemy_mov(S1p, pMario);
         
                 
                 //Teclas de movimiento
@@ -435,6 +474,10 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
             
             al_draw_bitmap(fish, (F1.x), (F1.y), 0);
             
+            al_draw_bitmap(redfish, (RF1.x), (RF1.y), 0);
+            
+            al_draw_bitmap(squid, (S1.x), (S1.y), 0);
+            
             if (Mario.coin1 == true)
             al_draw_bitmap(coin, COIN1_XLOC, COIN1_YLOC, 0);
             if (Mario.coin2 == true)
@@ -543,15 +586,61 @@ if ( (Mario->x) >= (en->x - (BUFFER_H/2)) )
 
 if (en->active == 1)
     {
-        if (en->type == FISH)
-        (en->x) -= 1/MOVE_RATE_FISH;
         
-        if ( collide_entity(en->x, en->y, (en->x)+FISH_SIZE, (en->y)+FISH_SIZE, Mario) )
+        if (en->type == FISH || en->type == REDFISH) //Movimiento de los peces
             {
-            Mario->live-=1;
-            Mario->x=0;
-            Mario->y=0;  
+            if ( collide_entity(en->x, en->y, (en->x)+FISH_SIZE, (en->y)+FISH_SIZE, Mario) )
+                {
+                Mario->live-=1;
+                Mario->x=0;
+                Mario->y=0;  
+                }
+            if (en->type == FISH)
+            (en->x) -= 1/MOVE_RATE_FISH;
+        
+            if (en->type == REDFISH)
+            (en->x) -= 1/MOVE_RATE_REDFISH;
             }
+        
+        if (en->type == SQUID)//Movimiento de los pulpos
+            {
+            if ( collide_entity(en->x, en->y, (en->x)+SQUID_W, (en->y)+SQUID_H, Mario) )
+                {
+                Mario->live-=1;
+                Mario->x=0;
+                Mario->y=0;  
+                }
+            if (((en->y) > (en->prev_pos - DODGE_DIST))&&(en->dodge == false))
+                {
+                if((Mario->x)<=(en->x))
+                    {
+                    (en->x) -= 0.8/MOVE_RATE_SQUID;
+                    (en->y) -= 0.8/MOVE_RATE_SQUID;
+                    }
+                if((Mario->x)>(en->x))
+                    {
+                    (en->x) += 0.8/MOVE_RATE_SQUID;
+                    (en->y) -= 0.8/MOVE_RATE_SQUID;
+                    }
+                }
+            else 
+                {
+                if (en->dodge == false)
+                    {
+                    en->dodge = true;
+                    }
+                else
+                    {
+                    (en->y) += 2/MOVE_RATE_SQUID;
+                    if ((en->y) > (en->prev_pos))
+                        {
+                        en->dodge = false;
+                        en->prev_pos = en->y;
+                        }
+                    }
+                }
+            }
+            
     }
 }
 

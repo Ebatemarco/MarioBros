@@ -14,7 +14,9 @@
       <itemPath>NES_-_Super_Mario_Bros_-_Mario__Luigi.png</itemPath>
       <itemPath>coin.png</itemPath>
       <itemPath>fish.png</itemPath>
+      <itemPath>fish2.png</itemPath>
       <itemPath>gameover.png</itemPath>
+      <itemPath>squid.png</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -98,9 +100,13 @@
       </item>
       <item path="fish.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="fish2.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="gameover.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="squid.png" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -155,9 +161,13 @@
       </item>
       <item path="fish.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="fish2.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="gameover.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="squid.png" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>
