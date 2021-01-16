@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_primitives.h>
@@ -24,6 +25,9 @@
 #define MOVE_RATE  4.0
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
+
+#define MAPA2 2
+#define MAPA3 3
 
 #define EXIT 6
 #define COIN3 5
@@ -57,8 +61,10 @@
 typedef struct
 {
     char live;//Vidas de Mario
+    bool death;//Flag que indica si Mario acaba de morir
     float x;//Posicion x de Mario
     float y;//Posicion y de Mario
+    char n_mapa_actual;
     float salto;
     float salto_cooldown;
     char salto_lock;//Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
@@ -72,11 +78,21 @@ typedef struct
 {
     bool active; // Flag que indica si el enemigo esta activo o no
     char type;// Tipo de enemigo
+    char mapa;//Mapa en el que está el enemigo
     float x;//Posicion x del enemigo
     float y;//Posicion y del enemigo
     float prev_pos;//Variable que guarda la posicion previa del pulpo antes de moverse lateralmente
     bool dodge;//Flag que utilizan los pulpos para indicar di deben ir hacia abajo o lateralmente
 }enemy;
+
+
+typedef struct
+{
+ALLEGRO_BITMAP *(*p_fish);
+ALLEGRO_BITMAP *(*p_redfish);
+ALLEGRO_BITMAP *(*p_squid);
+}bitmaps_t;
+    
 
 void disp_pre_draw(ALLEGRO_BITMAP* buffer);
 
@@ -84,11 +100,17 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,float x,float y
 
 void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento);
 
-bool collidewborder(player* , int ax1, int ay1, int ax2, int ay2,const char mapa [BUFFER_H][BUFFER_W]);
+bool collidewborder(player* , int ax1, int ay1, int ax2, int ay2,char mapa [BUFFER_H][BUFFER_W],ALLEGRO_BITMAP *(*p_background)); //mapa, p_background y n_mapa_actual son siempre las mismas que se mandan
 
 bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario);
 
 void enemy_mov (enemy * en, player* Mario);
+
+void enemy_start (enemy * en,bool active,char type,char mapa,float x,float y,float prev_pos,bool dodge);
+
+void clonarMatriz(char origen[BUFFER_H][BUFFER_W], char destino[BUFFER_H][BUFFER_W]);
+
+void draw_enemy (enemy * en, player * Mario, bitmaps_t * bit);
 
 enum MYKEYS 
 {
@@ -96,6 +118,8 @@ enum MYKEYS
 };
 
 char mapa2[BUFFER_H][BUFFER_W]={EMPTY};
+char mapa3[BUFFER_H][BUFFER_W]={EMPTY};
+char mapa[BUFFER_H][BUFFER_W]={EMPTY};
 
 
 
@@ -108,22 +132,24 @@ int main(void)
     
     //Inicializacion de Mario
     
-    player Mario =  {3, 0, 0, 0, 0, 0,true,true,true}; 
+    player Mario =  {3,true, 0, 0,MAPA2, 0, 0, 0,true,true,true}; 
     player * pMario = &Mario;
     
     //Inicializacion de enemigos
     
-    enemy F1 = {0,FISH,400,100,0,false};
+    enemy F1;
     enemy * F1p = &F1;
     
-    enemy RF1 = {0,REDFISH,500,100,0,false};
+    enemy RF1;
     enemy * RF1p = &RF1;
     
-    enemy S1 = {0,SQUID,700,100,100,false};
+    enemy S1;
     enemy * S1p = &S1;
     
     bool pausa= false;
     bool pausa_lock = false;
+    
+    //char n_mapa_actual = MAPA2;
     
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -139,6 +165,12 @@ int main(void)
     ALLEGRO_BITMAP *squid = NULL;
     ALLEGRO_BITMAP *coin = NULL;
 
+    ALLEGRO_BITMAP *(*p_background) = &background;
+    
+
+    
+    bitmaps_t bitmaps = {&fish,&redfish,&squid};
+    bitmaps_t * p_bitmaps_t = &bitmaps;
     
     //ALLEGRO_COLOR grey;
       // grey = al_map_rgb(255, 0, 0);
@@ -201,6 +233,9 @@ int main(void)
    putbarrier (COIN1_XLOC, COIN1_YLOC, COIN1_XLOC+COIN_SIZE, COIN1_YLOC+COIN_SIZE, mapa2, COIN1);
    putbarrier (COIN2_XLOC, COIN2_YLOC, COIN2_XLOC+COIN_SIZE, COIN2_YLOC+COIN_SIZE, mapa2, COIN2);
    putbarrier (COIN3_XLOC, COIN3_YLOC, COIN3_XLOC+COIN_SIZE, COIN3_YLOC+COIN_SIZE, mapa2, COIN3);
+   putbarrier (3039, 107, 3048, 135, mapa2, EXIT);
+   
+   putbarrier (0, 200, 563, 223, mapa3, BORDER);
     
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
     if (!al_init()) {
@@ -286,6 +321,14 @@ int main(void)
         return -1;
     }
     
+    /*if (!(background = al_load_bitmap("mapa-final.png"))) {
+        fprintf(stderr, "Unable to load logo\n");
+        al_uninstall_system();
+        al_shutdown_image_addon();
+        al_destroy_display(display);
+        return -1;
+    }*/
+    
     game_over = al_load_bitmap("gameover.png");
     if (!game_over) {
         fprintf(stderr, "failed to create gameover bitmap!\n");
@@ -318,6 +361,8 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
     al_flip_display();
     al_start_timer(timer);
 
+    clonarMatriz(mapa2,mapa);//se carga el primer mapa
+    
     while (!do_exit) 
     {
 
@@ -330,16 +375,30 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
   
             if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
             {          
+                
+                //Muerte de Mario
+                if(Mario.death == true)
+                {
+                    Mario.live-=1;
+                    Mario.x=0;
+                    Mario.y=0;
+                    Mario.death=false;
 
-               //Movimiento de enemigos
-               enemy_mov(F1p, pMario);
-               enemy_mov(RF1p, pMario);
-               enemy_mov(S1p, pMario);
+                    //Estado inicial de los enemigos
+                    enemy_start(F1p,false,FISH,MAPA2,400,100,0,false);
+                    enemy_start(RF1p,false,REDFISH,MAPA2,500,100,0,false);
+                    enemy_start(S1p,false,SQUID,MAPA2,700,100,100,false);
+                }
+                
+                //Movimiento de enemigos
+                enemy_mov(F1p, pMario);
+                enemy_mov(RF1p, pMario);
+                enemy_mov(S1p, pMario);
         
                 
                 //Teclas de movimiento
  
-                if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) )
+                if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa,p_background ))
                     {
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==0)
                         {
@@ -353,32 +412,32 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                         (Mario.salto_lock)=0;
                  
                         
-                if (key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa,p_background))
                     (Mario.y) += MOVE_RATE;
-                else if(key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa2))
+                else if(key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa,p_background))
                     (Mario.y) += 1;
 
-                if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
                     (Mario.x) -= MOVE_RATE;
-                else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa2))
+                else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
                     (Mario.x) -= 1;
                     
-                if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa2))
+                if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
                     (Mario.x) += MOVE_RATE;
-                else if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa2))
+                else if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
                     (Mario.x) += 1;
                 
                 
                 //Salto de Mario
                 
-                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE  && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa2)) //Mario cae siempre que no detecte nada abajo de él
+                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE  && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa,p_background)) //Mario cae siempre que no detecte nada abajo de él
                     (Mario.y) += MOVE_RATE/3; 
                 
                 
                 if((Mario.salto_cooldown)>0 ) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
                     (Mario.salto_cooldown)--;
                 
-                if ((Mario.y) >= MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa2) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
+                if ((Mario.y) >= MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa,p_background) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
                    {
                     (Mario.salto)-=1;
                     (Mario.y) -= MOVE_RATE;
@@ -472,11 +531,13 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
 
             al_draw_bitmap(mario, (Mario.x), (Mario.y), 0);
             
-            al_draw_bitmap(fish, (F1.x), (F1.y), 0);
+            draw_enemy (F1p, pMario, p_bitmaps_t);
+            draw_enemy (RF1p, pMario, p_bitmaps_t);
+            draw_enemy (S1p, pMario, p_bitmaps_t);
             
+           /* al_draw_bitmap(fish, (F1.x), (F1.y), 0);
             al_draw_bitmap(redfish, (RF1.x), (RF1.y), 0);
-            
-            al_draw_bitmap(squid, (S1.x), (S1.y), 0);
+            al_draw_bitmap(squid, (S1.x), (S1.y), 0);*/
             
             if (Mario.coin1 == true)
             al_draw_bitmap(coin, COIN1_XLOC, COIN1_YLOC, 0);
@@ -502,6 +563,9 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
 
     al_destroy_bitmap(mario);
     al_destroy_bitmap(fish);
+    al_destroy_bitmap(redfish);
+    al_destroy_bitmap(squid);
+    al_destroy_bitmap(coin);
     
     al_destroy_timer(timer);
     al_destroy_display(display);
@@ -538,7 +602,7 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
  *matriz mapa, esta funcion antes de actualizar al jugador*/
 
 
-bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2, const char mapa [BUFFER_H][BUFFER_W]) //esta funcion detecta si hubo una colision entre 2 elementos
+bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [BUFFER_H][BUFFER_W],ALLEGRO_BITMAP *(*p_background)) //esta funcion detecta si hubo una colision entre 2 elementos
 {
     
     int i, j;
@@ -552,9 +616,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2, const char
             }
             if(mapa[j][i]== BLOCKDEATH)
             {
-                Mario->live-=1;
-                Mario->x=0;
-                Mario->y=0;
+                Mario->death=true;
                 return false;
             }
             if(mapa[j][i]== COIN1)
@@ -569,6 +631,15 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2, const char
             {
                 Mario->coin3 = false;
             }
+            if(mapa[j][i]== EXIT)
+            {
+             *p_background = al_load_bitmap("mapa-final.png");
+              clonarMatriz(mapa3,mapa);
+              Mario->x=0;
+              Mario->y=0;
+              Mario->n_mapa_actual=MAPA3;
+               return false;
+            }
         }
     }
 
@@ -578,70 +649,69 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2, const char
 
 void enemy_mov (enemy * en, player* Mario ) 
 {
-//Generacion de enemigos
-if ( (Mario->x) >= (en->x - (BUFFER_H/2)) )
-        (en->active) =1;
+if((Mario->n_mapa_actual)== en->mapa)
+{
+    //Generacion de enemigos
+    if ( (Mario->x) >= (en->x - (BUFFER_H/2)) )
+            (en->active) =true;
 
-//Movimiento de enemigos
+    //Movimiento de enemigos
 
-if (en->active == 1)
-    {
-        
-        if (en->type == FISH || en->type == REDFISH) //Movimiento de los peces
-            {
-            if ( collide_entity(en->x, en->y, (en->x)+FISH_SIZE, (en->y)+FISH_SIZE, Mario) )
+    if (en->active == 1)
+        {
+
+            if (en->type == FISH || en->type == REDFISH) //Movimiento de los peces
                 {
-                Mario->live-=1;
-                Mario->x=0;
-                Mario->y=0;  
-                }
-            if (en->type == FISH)
-            (en->x) -= 1/MOVE_RATE_FISH;
-        
-            if (en->type == REDFISH)
-            (en->x) -= 1/MOVE_RATE_REDFISH;
-            }
-        
-        if (en->type == SQUID)//Movimiento de los pulpos
-            {
-            if ( collide_entity(en->x, en->y, (en->x)+SQUID_W, (en->y)+SQUID_H, Mario) )
-                {
-                Mario->live-=1;
-                Mario->x=0;
-                Mario->y=0;  
-                }
-            if (((en->y) > (en->prev_pos - DODGE_DIST))&&(en->dodge == false))
-                {
-                if((Mario->x)<=(en->x))
+                if ( collide_entity(en->x, en->y, (en->x)+FISH_SIZE, (en->y)+FISH_SIZE, Mario) )
                     {
-                    (en->x) -= 0.8/MOVE_RATE_SQUID;
-                    (en->y) -= 0.8/MOVE_RATE_SQUID;
+                    Mario->death=true; 
                     }
-                if((Mario->x)>(en->x))
-                    {
-                    (en->x) += 0.8/MOVE_RATE_SQUID;
-                    (en->y) -= 0.8/MOVE_RATE_SQUID;
-                    }
+                if (en->type == FISH)
+                (en->x) -= 1/MOVE_RATE_FISH;
+
+                if (en->type == REDFISH)
+                (en->x) -= 1/MOVE_RATE_REDFISH;
                 }
-            else 
+
+            if (en->type == SQUID)//Movimiento de los pulpos
                 {
-                if (en->dodge == false)
+                if ( collide_entity(en->x, en->y, (en->x)+SQUID_W, (en->y)+SQUID_H, Mario) )
                     {
-                    en->dodge = true;
+                    Mario->death=true;
                     }
-                else
+                if (((en->y) > (en->prev_pos - DODGE_DIST))&&(en->dodge == false))
                     {
-                    (en->y) += 2/MOVE_RATE_SQUID;
-                    if ((en->y) > (en->prev_pos))
+                    if((Mario->x)<=(en->x))
                         {
-                        en->dodge = false;
-                        en->prev_pos = en->y;
+                        (en->x) -= 0.8/MOVE_RATE_SQUID;
+                        (en->y) -= 0.8/MOVE_RATE_SQUID;
+                        }
+                    if((Mario->x)>(en->x))
+                        {
+                        (en->x) += 0.8/MOVE_RATE_SQUID;
+                        (en->y) -= 0.8/MOVE_RATE_SQUID;
+                        }
+                    }
+                else 
+                    {
+                    if (en->dodge == false)
+                        {
+                        en->dodge = true;
+                        }
+                    else
+                        {
+                        (en->y) += 2/MOVE_RATE_SQUID;
+                        if ((en->y) > (en->prev_pos))
+                            {
+                            en->dodge = false;
+                            en->prev_pos = en->y;
+                            }
                         }
                     }
                 }
-            }
-            
-    }
+
+        }
+}
 }
 
 bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario)
@@ -652,5 +722,35 @@ bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario)
     if(ay2 < (Mario->y)) return false;
 
     return true;
+}
+
+void clonarMatriz(char origen[BUFFER_H][BUFFER_W], char destino[BUFFER_H][BUFFER_W]) 
+{
+    memcpy(destino, origen, sizeof(char)*BUFFER_H*BUFFER_W);
+}
+
+void enemy_start (enemy * en,bool active,char type,char mapa,float x,float y,float prev_pos,bool dodge)
+{
+    en->active= active; // Flag que indica si el enemigo esta activo o no
+    en->type= type;// Tipo de enemigo
+    en->mapa= mapa;//Mapa en el que está el enemigo
+    en->x= x;//Posicion x del enemigo
+    en->y= y;//Posicion y del enemigo
+    en->prev_pos= prev_pos;//Variable que guarda la posicion previa del pulpo antes de moverse lateralmente
+    en->dodge= dodge;//Flag que utilizan los pulpos para indicar di deben ir hacia abajo o lateralmente
+}
+
+void draw_enemy (enemy * en, player * Mario, bitmaps_t * bitm)
+{
+    if((Mario->n_mapa_actual)== en->mapa)
+    {
+        
+        if (en->type == FISH)
+        al_draw_bitmap(*(bitm->p_fish), (en->x), (en->y), 0);
+        if (en->type == REDFISH)
+        al_draw_bitmap(*(bitm->p_redfish), (en->x), (en->y), 0);
+        if (en->type == SQUID)
+        al_draw_bitmap(*(bitm->p_squid), (en->x), (en->y), 0);
+    }
 }
 

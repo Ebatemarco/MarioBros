@@ -16,6 +16,8 @@
       <itemPath>fish.png</itemPath>
       <itemPath>fish2.png</itemPath>
       <itemPath>gameover.png</itemPath>
+      <itemPath>mapa-final.png</itemPath>
+      <itemPath>mapa-inicio.png</itemPath>
       <itemPath>squid.png</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -106,6 +108,10 @@
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="mapa-final.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mapa-inicio.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="squid.png" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
@@ -166,6 +172,10 @@
       <item path="gameover.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mapa-final.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mapa-inicio.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="squid.png" ex="false" tool="3" flavor2="0">
       </item>
