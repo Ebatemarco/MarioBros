@@ -26,24 +26,18 @@
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
 
-#define MAPA2 2
-#define MAPA3 3
+#define MAPA1 1
+#define FINALMAPA 2
+#define MAPA2 3
 
-#define EXIT 6
-#define COIN3 5
-#define COIN2 4
-#define COIN1 3
+#define EXIT2 5
+#define EXIT1 4
+#define COIN 3
 #define BORDER 2
 #define BLOCKDEATH 1
 #define EMPTY 0
 
-#define COIN1_XLOC 100
-#define COIN1_YLOC 100
-#define COIN2_XLOC 130
-#define COIN2_YLOC 100
-#define COIN3_XLOC 150
-#define COIN3_YLOC 100
-#define COIN_SIZE 15
+#define COIN_SIZE 15.0
 
 #define SQUID 3
 #define REDFISH 2
@@ -68,9 +62,8 @@ typedef struct
     float salto;
     float salto_cooldown;
     char salto_lock;//Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
-    bool coin1;
-    bool coin2;
-    bool coin3;
+    int coins;
+    bool coin_obt;
     
 }player;
 
@@ -85,12 +78,20 @@ typedef struct
     bool dodge;//Flag que utilizan los pulpos para indicar di deben ir hacia abajo o lateralmente
 }enemy;
 
+typedef struct
+{
+    bool active;
+    float x;
+    float y;
+    char map;
+}coin;
 
 typedef struct
 {
 ALLEGRO_BITMAP *(*p_fish);
 ALLEGRO_BITMAP *(*p_redfish);
 ALLEGRO_BITMAP *(*p_squid);
+ALLEGRO_BITMAP *(*p_coin);
 }bitmaps_t;
     
 
@@ -112,13 +113,21 @@ void clonarMatriz(char origen[BUFFER_H][BUFFER_W], char destino[BUFFER_H][BUFFER
 
 void draw_enemy (enemy * en, player * Mario, bitmaps_t * bit);
 
+void fcoin(player * Mario,coin* ncoin);
+
+void coin_start(coin* ncoin,float x,float y,char map, bool startup);
+
+void draw_coin(player * Mario,coin* ncoin,bitmaps_t * bitm);
+
 enum MYKEYS 
 {
     KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT , KEY_P //arrow keys
 };
 
+char mapa1[BUFFER_H][BUFFER_W]={EMPTY};
+char finalmapa[BUFFER_H][BUFFER_W]={EMPTY};
 char mapa2[BUFFER_H][BUFFER_W]={EMPTY};
-char mapa3[BUFFER_H][BUFFER_W]={EMPTY};
+
 char mapa[BUFFER_H][BUFFER_W]={EMPTY};
 
 
@@ -132,8 +141,21 @@ int main(void)
     
     //Inicializacion de Mario
     
-    player Mario =  {3,true, 0, 0,MAPA2, 0, 0, 0,true,true,true}; 
+    player Mario =  {3,false, 0, 0,MAPA1, 0, 0, 0,0,false}; 
     player * pMario = &Mario;
+    
+    /*bool coin1;
+    bool coin2;
+    bool coin3;*/
+    
+    coin coin1;
+    coin * pcoin1=&coin1;
+    
+    coin coin2;
+    coin * pcoin2=&coin2;
+    
+    coin coin3;
+    coin * pcoin3=&coin3;
     
     //Inicializacion de enemigos
     
@@ -146,10 +168,11 @@ int main(void)
     enemy S1;
     enemy * S1p = &S1;
     
+    //Inicializacion de otras variables
     bool pausa= false;
     bool pausa_lock = false;
+    bool startup=true;//flag que indica si el juego se acaba de iniciar
     
-    //char n_mapa_actual = MAPA2;
     
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
@@ -169,7 +192,7 @@ int main(void)
     
 
     
-    bitmaps_t bitmaps = {&fish,&redfish,&squid};
+    bitmaps_t bitmaps = {&fish,&redfish,&squid,&coin};
     bitmaps_t * p_bitmaps_t = &bitmaps;
     
     //ALLEGRO_COLOR grey;
@@ -182,60 +205,60 @@ int main(void)
      
 
    //Zona de creacion de barrera
-   putbarrier (0 , 200, 3101, 223, mapa2, BORDER);
-   putbarrier (175, 152, 190, 199, mapa2, BORDER);
-   putbarrier (288, 136, 335, 151, mapa2, BORDER);
-   putbarrier (544, 120, 559, 199, mapa2, BORDER);
-   putbarrier (688, 104, 703, 135, mapa2, BORDER);
-   putbarrier (688, 136, 719, 151, mapa2, BORDER);
-   putbarrier (816, 136, 831, 199, mapa2, BORDER);
-   putbarrier (1040, 152, 1055, 199, mapa2, BORDER);
-   putbarrier (1056, 120, 1071, 199, mapa2, BORDER);
-   putbarrier (1152, 120, 1167, 199, mapa2, BORDER);
-   putbarrier (1168, 152, 1183, 199, mapa2, BORDER);
-   putbarrier (1264, 152, 1295, 199, mapa2, BORDER);
-   putbarrier (1264, 24, 1295, 71, mapa2, BORDER);
-   putbarrier (1328, 72, 1375, 87, mapa2, BORDER);
-   putbarrier (1344, 40, 1359, 71, mapa2, BORDER);
-   putbarrier (1440, 152, 1455, 199, mapa2, BORDER);
-   putbarrier (1648, 72, 1663, 135, mapa2, BORDER);
-   putbarrier (1648, 136, 1679, 151, mapa2, BORDER);
-   putbarrier (1855, 120, 1886, 135, mapa2, BORDER);
-   putbarrier (1935, 136, 1950, 199, mapa2, BORDER);
-   putbarrier (2079, 136, 2094, 199, mapa2, BORDER);
-   putbarrier (2095, 168, 2110, 199, mapa2, BORDER);
+   putbarrier (0 , 200, 3101, 223,  mapa1, BORDER);
+   putbarrier (175, 152, 190, 199,  mapa1, BORDER);
+   putbarrier (288, 136, 335, 151,  mapa1, BORDER);
+   putbarrier (544, 120, 559, 199,  mapa1, BORDER);
+   putbarrier (688, 104, 703, 135,  mapa1, BORDER);
+   putbarrier (688, 136, 719, 151,  mapa1, BORDER);
+   putbarrier (816, 136, 831, 199,  mapa1, BORDER);
+   putbarrier (1040, 152, 1055, 199,  mapa1, BORDER);
+   putbarrier (1056, 120, 1071, 199,  mapa1, BORDER);
+   putbarrier (1152, 120, 1167, 199,  mapa1, BORDER);
+   putbarrier (1168, 152, 1183, 199,  mapa1, BORDER);
+   putbarrier (1264, 152, 1295, 199,  mapa1, BORDER);
+   putbarrier (1264, 24, 1295, 71,  mapa1, BORDER);
+   putbarrier (1328, 72, 1375, 87,  mapa1, BORDER);
+   putbarrier (1344, 40, 1359, 71,  mapa1, BORDER);
+   putbarrier (1440, 152, 1455, 199,  mapa1, BORDER);
+   putbarrier (1648, 72, 1663, 135,  mapa1, BORDER);
+   putbarrier (1648, 136, 1679, 151,  mapa1, BORDER);
+   putbarrier (1855, 120, 1886, 135,  mapa1, BORDER);
+   putbarrier (1935, 136, 1950, 199,  mapa1, BORDER);
+   putbarrier (2079, 136, 2094, 199,  mapa1, BORDER);
+   putbarrier (2095, 168, 2110, 199,  mapa1, BORDER);
    
-   putbarrier (2111, 24, 2126, 55, mapa2, BORDER);
-   putbarrier (2111, 56, 2254, 71, mapa2, BORDER);
-   putbarrier (2255, 168, 2286, 199, mapa2, BORDER);
-   putbarrier (2271, 136, 2286, 168, mapa2, BORDER);
-   putbarrier (2364, 186, 2382, 199, mapa2, BORDER);
-   putbarrier (2399, 152, 2414, 199, mapa2, BORDER);
-   putbarrier (2511, 72, 2525, 199, mapa2, BORDER);
-   putbarrier (2527, 72, 2558, 87, mapa2, BORDER);
-   putbarrier (2607, 72, 2654, 87, mapa2, BORDER);
-   putbarrier (2639, 88, 2654, 199, mapa2, BORDER);
-   putbarrier (2767, 72, 2845, 87, mapa2, BORDER);
-   putbarrier (2783, 40, 2798, 71, mapa2, BORDER);
-   putbarrier (2894, 72, 2956, 87, mapa2, BORDER);
-   putbarrier (2767, 136, 2845, 151, mapa2, BORDER);
-   putbarrier (2894, 136, 2956, 151, mapa2, BORDER);
+   putbarrier (2111, 24, 2126, 55,  mapa1, BORDER);
+   putbarrier (2111, 56, 2254, 71,  mapa1, BORDER);
+   putbarrier (2255, 168, 2286, 199,  mapa1, BORDER);
+   putbarrier (2271, 136, 2286, 168,  mapa1, BORDER);
+   putbarrier (2364, 186, 2382, 199,  mapa1, BORDER);
+   putbarrier (2399, 152, 2414, 199,  mapa1, BORDER);
+   putbarrier (2511, 72, 2525, 199,  mapa1, BORDER);
+   putbarrier (2527, 72, 2558, 87,  mapa1, BORDER);
+   putbarrier (2607, 72, 2654, 87,  mapa1, BORDER);
+   putbarrier (2639, 88, 2654, 199,  mapa1, BORDER);
+   putbarrier (2767, 72, 2845, 87,  mapa1, BORDER);
+   putbarrier (2783, 40, 2798, 71,  mapa1, BORDER);
+   putbarrier (2894, 72, 2956, 87,  mapa1, BORDER);
+   putbarrier (2767, 136, 2845, 151,  mapa1, BORDER);
+   putbarrier (2894, 136, 2956, 151,  mapa1, BORDER);
    
-   putbarrier (3022, 24, 3101, 87, mapa2, BORDER);
-   putbarrier (3054, 88, 3101, 223, mapa2, BORDER);
-   putbarrier (3022, 136, 3070, 223, mapa2, BORDER);
-   putbarrier (3006, 152, 3037, 199, mapa2, BORDER);
-   putbarrier (2990, 168, 3021, 199, mapa2, BORDER);
-   putbarrier (2974, 184, 2989, 199, mapa2, BORDER);
+   putbarrier (3022, 24, 3101, 87,  mapa1, BORDER);
+   putbarrier (3054, 88, 3101, 223,  mapa1, BORDER);
+   putbarrier (3022, 136, 3070, 223,  mapa1, BORDER);
+   putbarrier (3006, 152, 3037, 199,  mapa1, BORDER);
+   putbarrier (2990, 168, 3021, 199,  mapa1, BORDER);
+   putbarrier (2974, 184, 2989, 199,  mapa1, BORDER);
    
-   putbarrier (1072, 200, 1151, 223, mapa2, EMPTY);
-   putbarrier (1072, 219, 1151, 223, mapa2, BLOCKDEATH);
-   putbarrier (COIN1_XLOC, COIN1_YLOC, COIN1_XLOC+COIN_SIZE, COIN1_YLOC+COIN_SIZE, mapa2, COIN1);
-   putbarrier (COIN2_XLOC, COIN2_YLOC, COIN2_XLOC+COIN_SIZE, COIN2_YLOC+COIN_SIZE, mapa2, COIN2);
-   putbarrier (COIN3_XLOC, COIN3_YLOC, COIN3_XLOC+COIN_SIZE, COIN3_YLOC+COIN_SIZE, mapa2, COIN3);
-   putbarrier (3039, 107, 3048, 135, mapa2, EXIT);
+   putbarrier (1072, 200, 1151, 223,  mapa1, EMPTY);
+   putbarrier (1072, 219, 1151, 223,  mapa1, BLOCKDEATH);
+   putbarrier (3039, 107, 3048, 135,  mapa1, EXIT1);
    
-   putbarrier (0, 200, 563, 223, mapa3, BORDER);
+   putbarrier (0, 200, 563, 223, finalmapa, BORDER);
+   putbarrier (447, 168, 463, 198, finalmapa, EXIT2);
+   
+   putbarrier (0, 207, 2199, 239, mapa2, BORDER);
     
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
     if (!al_init()) {
@@ -277,7 +300,7 @@ int main(void)
         return -1;
     }
     
-    mario = al_load_bitmap("Mario.png");//al_create_bitmap(MARIO_SIZE, MARIO_SIZE);
+    mario = al_load_bitmap("Mario.png");
     if (!mario) {
         fprintf(stderr, "failed to create mario bitmap!\n");
         al_destroy_timer(timer);
@@ -321,13 +344,6 @@ int main(void)
         return -1;
     }
     
-    /*if (!(background = al_load_bitmap("mapa-final.png"))) {
-        fprintf(stderr, "Unable to load logo\n");
-        al_uninstall_system();
-        al_shutdown_image_addon();
-        al_destroy_display(display);
-        return -1;
-    }*/
     
     game_over = al_load_bitmap("gameover.png");
     if (!game_over) {
@@ -361,7 +377,8 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
     al_flip_display();
     al_start_timer(timer);
 
-    clonarMatriz(mapa2,mapa);//se carga el primer mapa
+    clonarMatriz( mapa1,mapa);//se carga el primer mapa
+    
     
     while (!do_exit) 
     {
@@ -377,18 +394,37 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
             {          
                 
                 //Muerte de Mario
-                if(Mario.death == true)
+                if((Mario.death == true)|| startup==true)
                 {
+                    if(startup==false)
+                    {
                     Mario.live-=1;
+                    Mario.death=false;
+                    }
                     Mario.x=0;
                     Mario.y=0;
-                    Mario.death=false;
-
+                    
                     //Estado inicial de los enemigos
-                    enemy_start(F1p,false,FISH,MAPA2,400,100,0,false);
-                    enemy_start(RF1p,false,REDFISH,MAPA2,500,100,0,false);
-                    enemy_start(S1p,false,SQUID,MAPA2,700,100,100,false);
+                    enemy_start(F1p,false,FISH,MAPA1,400,100,0,false);
+                    enemy_start(RF1p,false,REDFISH,MAPA1,500,100,0,false);
+                    enemy_start(S1p,false,SQUID,MAPA1,700,100,100,false);
+                    
+                    //Estado inicial de las monedas
+                    coin_start(pcoin1,100,100,MAPA1,startup);
+                    coin_start(pcoin2,130,100,MAPA1,startup);
+                    coin_start(pcoin3,150,100,MAPA1,startup);
+                    if(startup==true)
+                    {
+                    clonarMatriz( mapa1,mapa);
+                    startup=false;
+                    }
                 }
+        
+                //Colision con las monedas
+                fcoin(pMario,pcoin1);
+                fcoin(pMario,pcoin2);
+                fcoin(pMario,pcoin3);
+                Mario.coin_obt=false;
                 
                 //Movimiento de enemigos
                 enemy_mov(F1p, pMario);
@@ -521,40 +557,41 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                 }
             }
         }
-
+        //Dibujo de bitmaps
         if (redraw && al_is_event_queue_empty(event_queue)) 
         {
             redraw = false;
             disp_pre_draw(buffer);
             
+            //Dibujo del mapa
             al_draw_bitmap(background,0,0,0);
 
+            if ((Mario.live)==0)//Si se acabaron las vidas Mario se bloquea en una posicion y se pausa el juego
+            {
+             Mario.x= BUFFER_H/2; 
+             pausa=true;
+            }
+            
+            //Dibujo de Mario
             al_draw_bitmap(mario, (Mario.x), (Mario.y), 0);
             
+            //Dibujo de enemigos
             draw_enemy (F1p, pMario, p_bitmaps_t);
             draw_enemy (RF1p, pMario, p_bitmaps_t);
             draw_enemy (S1p, pMario, p_bitmaps_t);
             
-           /* al_draw_bitmap(fish, (F1.x), (F1.y), 0);
-            al_draw_bitmap(redfish, (RF1.x), (RF1.y), 0);
-            al_draw_bitmap(squid, (S1.x), (S1.y), 0);*/
-            
-            if (Mario.coin1 == true)
-            al_draw_bitmap(coin, COIN1_XLOC, COIN1_YLOC, 0);
-            if (Mario.coin2 == true)
-            al_draw_bitmap(coin, COIN2_XLOC, COIN2_YLOC, 0);
-            if (Mario.coin3 == true)
-            al_draw_bitmap(coin, COIN3_XLOC, COIN3_YLOC, 0);
+            //Dibujo de monedas
+            draw_coin(pMario,pcoin1,p_bitmaps_t);
+            draw_coin(pMario,pcoin2,p_bitmaps_t);
+            draw_coin(pMario,pcoin3,p_bitmaps_t);
 
-        if ((Mario.live)<=1) //Si se acabaron las vidas 
-        {
-         al_draw_scaled_bitmap(game_over,0,0,240,210,0,0,BUFFER_H,BUFFER_H,0);
-         //al_draw_filled_rectangle(x1, y1, x2, y2, black);
-         //al_draw_filled_rectangle(0, 0, 200, 200, grey);
-        } 
-            
+            if ((Mario.live)==0) //Si se acabaron las vidas aparece el cartel de game over
+            {
+             al_draw_scaled_bitmap(game_over,0,0,240,210,0,0,BUFFER_H,BUFFER_H,0);
+             //al_draw_filled_rectangle(x1, y1, x2, y2, black);
+             //al_draw_filled_rectangle(0, 0, 200, 200, grey);
+            } 
             disp_post_draw(display, buffer, (Mario.x), (Mario.y)); 
-            //disp_post_draw(display, buffer, (F1.x), (F1.y));
         }
         
         
@@ -598,8 +635,6 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
     }
     
 }
-/*Para los enemigos crear una funcion "draw_enemi()" que modifique la
- *matriz mapa, esta funcion antes de actualizar al jugador*/
 
 
 bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [BUFFER_H][BUFFER_W],ALLEGRO_BITMAP *(*p_background)) //esta funcion detecta si hubo una colision entre 2 elementos
@@ -619,25 +654,26 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 Mario->death=true;
                 return false;
             }
-            if(mapa[j][i]== COIN1)
+            if(mapa[j][i]== COIN)
             {
-                Mario->coin1 = false;
+                Mario->coin_obt=true;
             }
-            if(mapa[j][i]== COIN2)
-            {
-                Mario->coin2 = false;
-            }
-            if(mapa[j][i]== COIN3)
-            {
-                Mario->coin3 = false;
-            }
-            if(mapa[j][i]== EXIT)
+            if(mapa[j][i]== EXIT1)
             {
              *p_background = al_load_bitmap("mapa-final.png");
-              clonarMatriz(mapa3,mapa);
+              clonarMatriz(finalmapa,mapa);
               Mario->x=0;
               Mario->y=0;
-              Mario->n_mapa_actual=MAPA3;
+              Mario->n_mapa_actual=FINALMAPA;
+               return false;
+            }
+            if(mapa[j][i]== EXIT2)
+            {
+             *p_background = al_load_bitmap("mapa2.png");
+              clonarMatriz(mapa2,mapa);
+              Mario->x=0;
+              Mario->y=0;
+              Mario->n_mapa_actual=MAPA2;
                return false;
             }
         }
@@ -652,12 +688,12 @@ void enemy_mov (enemy * en, player* Mario )
 if((Mario->n_mapa_actual)== en->mapa)
 {
     //Generacion de enemigos
-    if ( (Mario->x) >= (en->x - (BUFFER_H/2)) )
+    if ( (Mario->x) >= (en->x - (BUFFER_H/2)) )//solo se activará el enemigo cuando se encuentre en el campo de vision de mario
             (en->active) =true;
 
     //Movimiento de enemigos
 
-    if (en->active == 1)
+    if (en->active == true)
         {
 
             if (en->type == FISH || en->type == REDFISH) //Movimiento de los peces
@@ -714,26 +750,12 @@ if((Mario->n_mapa_actual)== en->mapa)
 }
 }
 
-bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario)
-{
-    if(ax1 > ((Mario->x)+ MARIO_SIZE)) return false;
-    if(ax2 < (Mario->x)) return false;
-    if(ay1 > ((Mario->y)+ MARIO_SIZE)) return false;
-    if(ay2 < (Mario->y)) return false;
 
-    return true;
-}
-
-void clonarMatriz(char origen[BUFFER_H][BUFFER_W], char destino[BUFFER_H][BUFFER_W]) 
-{
-    memcpy(destino, origen, sizeof(char)*BUFFER_H*BUFFER_W);
-}
-
-void enemy_start (enemy * en,bool active,char type,char mapa,float x,float y,float prev_pos,bool dodge)
+void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,float prev_pos,bool dodge)
 {
     en->active= active; // Flag que indica si el enemigo esta activo o no
     en->type= type;// Tipo de enemigo
-    en->mapa= mapa;//Mapa en el que está el enemigo
+    en->mapa= ma;//Mapa en el que está el enemigo
     en->x= x;//Posicion x del enemigo
     en->y= y;//Posicion y del enemigo
     en->prev_pos= prev_pos;//Variable que guarda la posicion previa del pulpo antes de moverse lateralmente
@@ -754,3 +776,56 @@ void draw_enemy (enemy * en, player * Mario, bitmaps_t * bitm)
     }
 }
 
+void fcoin(player * Mario,coin* ncoin)
+{
+        if(Mario->coin_obt) //Solo se escanea si mario tocó la moneda cuando el flag de coin_obtenida se encuentra prendida
+            {
+                if(Mario->n_mapa_actual== (ncoin->map))
+                    {
+                    if(collide_entity(ncoin->x, ncoin->y, (ncoin->x)+COIN_SIZE, (ncoin->y)+COIN_SIZE, Mario))
+                    ncoin->active=false;//Si mario tocó la moneda esta se desactiva y se aumenta el contador de monedas
+                    Mario->coins ++;
+                    }
+            }
+
+        if((Mario->n_mapa_actual) != (ncoin->map)) //Si Mario no está en el mapa de la moneda esta se desactiva
+            {
+            ncoin->active=false;
+            }
+}
+
+void coin_start(coin* ncoin,float x,float y,char map,bool startup)
+{
+    ncoin->active=true;
+    ncoin->x=x;
+    ncoin->y=y;
+    ncoin->map=map;
+    if(startup==true)//Si se acaba de iniciar el juego se rellena la matriz en donde se encuentra la moneda
+    {
+    if(map==MAPA1)
+    putbarrier ((int)x, (int)y, (int)(x+COIN_SIZE), (int)(y+COIN_SIZE), mapa1, COIN);
+    }
+}
+
+void draw_coin(player * Mario,coin* ncoin,bitmaps_t * bitm)
+{
+     if(((Mario->n_mapa_actual)== (ncoin->map)) && ((ncoin->active) == true))//se dibuja la moneda solo cuando esté activa y mario se encuentre en el mapa de la misma
+        {
+        al_draw_bitmap(*(bitm->p_coin), ncoin->x, ncoin->y, 0);
+        }
+}
+
+bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario)
+{
+    if(ax1 > ((Mario->x)+ MARIO_SIZE)) return false;
+    if(ax2 < (Mario->x)) return false;
+    if(ay1 > ((Mario->y)+ MARIO_SIZE)) return false;
+    if(ay2 < (Mario->y)) return false;
+
+    return true;
+}
+
+void clonarMatriz(char origen[BUFFER_H][BUFFER_W], char destino[BUFFER_H][BUFFER_W]) 
+{
+    memcpy(destino, origen, sizeof(char)*BUFFER_H*BUFFER_W);
+}
