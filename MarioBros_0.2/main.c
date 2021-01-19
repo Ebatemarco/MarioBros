@@ -738,7 +738,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
             {
                 Mario->coin_obt=true;
             }
-            if(mapa[j][i]== EXIT4)
+            if(mapa[j][i]== EXIT1)
             {
              *p_background = al_load_bitmap("mapa-final.png");
               clonarMatriz(finalmapa1,mapa);
@@ -765,7 +765,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
               Mario->n_mapa_actual=FINALMAPA2;
                return false;
             }
-            if(mapa[j][i]== EXIT1)
+            if(mapa[j][i]== EXIT4)
             {
              *p_background = al_load_bitmap("mapa3.png");
               clonarMatriz(mapa3,mapa);
