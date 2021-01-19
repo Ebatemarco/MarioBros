@@ -12,6 +12,7 @@
       <itemPath>NES - Super Mario Bros - World 2-2.png</itemPath>
       <itemPath>NES - Super Mario Bros - World 7-2.png</itemPath>
       <itemPath>NES_-_Super_Mario_Bros_-_Mario__Luigi.png</itemPath>
+      <itemPath>boss.png</itemPath>
       <itemPath>coin.png</itemPath>
       <itemPath>fish.png</itemPath>
       <itemPath>fish2.png</itemPath>
@@ -19,6 +20,7 @@
       <itemPath>mapa-final.png</itemPath>
       <itemPath>mapa-inicio.png</itemPath>
       <itemPath>mapa2.png</itemPath>
+      <itemPath>mapa3.png</itemPath>
       <itemPath>squid.png</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
@@ -100,6 +102,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="boss.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="coin.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="fish.png" ex="false" tool="3" flavor2="0">
@@ -115,6 +119,8 @@
       <item path="mapa-inicio.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mapa2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mapa3.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="squid.png" ex="false" tool="3" flavor2="0">
       </item>
@@ -167,6 +173,8 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="boss.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="coin.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="fish.png" ex="false" tool="3" flavor2="0">
@@ -182,6 +190,8 @@
       <item path="mapa-inicio.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mapa2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mapa3.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="squid.png" ex="false" tool="3" flavor2="0">
       </item>
