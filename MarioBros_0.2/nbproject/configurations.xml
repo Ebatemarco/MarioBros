@@ -12,16 +12,23 @@
       <itemPath>NES - Super Mario Bros - World 2-2.png</itemPath>
       <itemPath>NES - Super Mario Bros - World 7-2.png</itemPath>
       <itemPath>NES_-_Super_Mario_Bros_-_Mario__Luigi.png</itemPath>
+      <itemPath>bala.png</itemPath>
       <itemPath>boss.png</itemPath>
       <itemPath>coin.png</itemPath>
-      <itemPath>fish.png</itemPath>
+      <itemPath>explosion1.png</itemPath>
+      <itemPath>explosion2.png</itemPath>
+      <itemPath>explosion3.png</itemPath>
+      <itemPath>fish1.png</itemPath>
       <itemPath>fish2.png</itemPath>
       <itemPath>gameover.png</itemPath>
       <itemPath>mapa-final.png</itemPath>
       <itemPath>mapa-inicio.png</itemPath>
       <itemPath>mapa2.png</itemPath>
       <itemPath>mapa3.png</itemPath>
-      <itemPath>squid.png</itemPath>
+      <itemPath>redfish1.png</itemPath>
+      <itemPath>redfish2.png</itemPath>
+      <itemPath>squid1.png</itemPath>
+      <itemPath>squid2.png</itemPath>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -102,11 +109,19 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="bala.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="boss.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="coin.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="fish.png" ex="false" tool="3" flavor2="0">
+      <item path="explosion1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="explosion2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="explosion3.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fish1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="fish2.png" ex="false" tool="3" flavor2="0">
       </item>
@@ -122,7 +137,13 @@
       </item>
       <item path="mapa3.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="squid.png" ex="false" tool="3" flavor2="0">
+      <item path="redfish1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="redfish2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="squid1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="squid2.png" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -173,11 +194,19 @@
             tool="3"
             flavor2="0">
       </item>
+      <item path="bala.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="boss.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="coin.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="fish.png" ex="false" tool="3" flavor2="0">
+      <item path="explosion1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="explosion2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="explosion3.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="fish1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="fish2.png" ex="false" tool="3" flavor2="0">
       </item>
@@ -193,7 +222,13 @@
       </item>
       <item path="mapa3.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="squid.png" ex="false" tool="3" flavor2="0">
+      <item path="redfish1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="redfish2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="squid1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="squid2.png" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

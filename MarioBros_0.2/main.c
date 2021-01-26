@@ -49,6 +49,11 @@
 
 #define COIN_SIZE 15.0
 
+#define MISIL6 10
+#define MISIL5 9
+#define MISIL4 8
+#define MISIL3 7
+#define MISIL2 6
 #define MISIL1 5
 #define BOSS 4
 #define SQUID 3
@@ -59,6 +64,7 @@
 #define MOVE_RATE_REDFISH  2.0
 #define MOVE_RATE_SQUID 2.0
 #define DODGE_DIST 40
+#define FISH_DIST 15
 
 #define FISH_SIZE 16
 #define SQUID_H 24
@@ -91,6 +97,7 @@ typedef struct
     float y;//Posicion y del enemigo
     float prev_pos;//Variable que guarda la posicion previa del pulpo antes de moverse lateralmente
     bool dodge;//Flag que utilizan los pulpos para indicar di deben ir hacia abajo o lateralmente
+    int timer;//Temporizador de los misiles que indica cuanto falta para que se activen
 }enemy;
 
 typedef struct
@@ -103,12 +110,18 @@ typedef struct
 
 typedef struct
 {
-ALLEGRO_BITMAP *(*p_fish);
-ALLEGRO_BITMAP *(*p_redfish);
-ALLEGRO_BITMAP *(*p_squid);
+ALLEGRO_BITMAP *(*p_fish1);
+ALLEGRO_BITMAP *(*p_fish2);
+ALLEGRO_BITMAP *(*p_redfish1);
+ALLEGRO_BITMAP *(*p_redfish2);
+ALLEGRO_BITMAP *(*p_squid1);
+ALLEGRO_BITMAP *(*p_squid2);
 ALLEGRO_BITMAP *(*p_coin);
 ALLEGRO_BITMAP *(*p_boss);
 ALLEGRO_BITMAP *(*p_misil);
+ALLEGRO_BITMAP *(*p_explosion1);
+ALLEGRO_BITMAP *(*p_explosion2);
+ALLEGRO_BITMAP *(*p_explosion3);
 }bitmaps_t;
     
 
@@ -124,7 +137,7 @@ bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario);
 
 void enemy_mov (enemy * en, player* Mario);
 
-void enemy_start (enemy * en,bool active,char type,char mapa,float x,float y,float prev_pos,bool dodge);
+void enemy_start (enemy * en,bool active,char type,char mapa,float x,float y,bool dodge,int time);
 
 void clonarMatriz(char origen[BUFFER_H][BUFFER_W], char destino[BUFFER_H][BUFFER_W]);
 
@@ -192,6 +205,24 @@ int main(void)
     enemy Boss;
     enemy * Bossp = &Boss;
     
+    enemy M1;
+    enemy * M1p = &M1;
+    
+    enemy M2;
+    enemy * M2p = &M2;
+    
+    enemy M3;
+    enemy * M3p = &M3;
+    
+    enemy M4;
+    enemy * M4p = &M4;
+    
+    enemy M5;
+    enemy * M5p = &M5;
+    
+    enemy M6;
+    enemy * M6p = &M6;
+    
     //Inicializacion de otras variables
     bool pausa= false;
     bool pausa_lock = false;
@@ -207,18 +238,25 @@ int main(void)
     ALLEGRO_BITMAP *background = NULL;
     ALLEGRO_BITMAP *game_over = NULL;
     
-    ALLEGRO_BITMAP *fish = NULL;
-    ALLEGRO_BITMAP *redfish = NULL;
-    ALLEGRO_BITMAP *squid = NULL;
+    ALLEGRO_BITMAP *fish1 = NULL;
+    ALLEGRO_BITMAP *fish2 = NULL;
+    ALLEGRO_BITMAP *redfish1 = NULL;
+    ALLEGRO_BITMAP *redfish2 = NULL;
+    ALLEGRO_BITMAP *squid1 = NULL;
+    ALLEGRO_BITMAP *squid2 = NULL;
     ALLEGRO_BITMAP *coin = NULL;
     ALLEGRO_BITMAP *boss = NULL;
     ALLEGRO_BITMAP *misil = NULL;
+    
+    ALLEGRO_BITMAP *explosion1 = NULL;
+    ALLEGRO_BITMAP *explosion2 = NULL;
+    ALLEGRO_BITMAP *explosion3 = NULL;
 
     ALLEGRO_BITMAP *(*p_background) = &background;
     
 
     
-    bitmaps_t bitmaps = {&fish,&redfish,&squid,&coin,&boss,&misil};
+    bitmaps_t bitmaps = {&fish1,&fish2,&redfish1,&redfish2,&squid1,&squid2,&coin,&boss,&misil,&explosion1,&explosion2,&explosion3};
     bitmaps_t * p_bitmaps_t = &bitmaps;
     
     //ALLEGRO_COLOR grey;
@@ -350,26 +388,23 @@ int main(void)
         return -1;
     }
     
-    fish = al_load_bitmap("fish2.png");
-    if (!fish) {
-        fprintf(stderr, "failed to create f2 bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    } 
+    fish1 = al_load_bitmap("fish1.png");
+
     
-    redfish = al_load_bitmap("fish.png");
-    if (!fish) {
-        fprintf(stderr, "failed to create mario bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    } 
+    fish2 = al_load_bitmap("fish2.png");
+
     
-    squid = al_load_bitmap("squid.png");
-    if (!fish) {
-        fprintf(stderr, "failed to create mario bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    } 
+    redfish1 = al_load_bitmap("redfish1.png");
+ 
+    
+    redfish2 = al_load_bitmap("redfish2.png");
+
+    
+    squid1 = al_load_bitmap("squid1.png");
+
+    
+    squid2 = al_load_bitmap("squid2.png");
+
     
     coin = al_load_bitmap("coin.png");
     if (!coin) {
@@ -385,12 +420,12 @@ int main(void)
         return -1;
     }
     
-    /*misil = al_load_bitmap("coin.png");
+    misil = al_load_bitmap("bala.png");
     if (!coin) {
         fprintf(stderr, "failed to create mario bitmap!\n");
         al_destroy_timer(timer);
         return -1;
-    }*/
+    }
     
     
     if (!(background = al_load_bitmap("NES - Super Mario Bros - World 2-2.png"))) {
@@ -409,6 +444,26 @@ int main(void)
         return -1;
     }
     
+    explosion1 = al_load_bitmap("explosion1.png");
+    if (!game_over) {
+        fprintf(stderr, "failed to create explosion bitmap!\n");
+        al_destroy_timer(timer);
+        return -1;
+    }
+    
+    explosion2 = al_load_bitmap("explosion2.png");
+    if (!game_over) {
+        fprintf(stderr, "failed to create explosion bitmap!\n");
+        al_destroy_timer(timer);
+        return -1;
+    }
+    
+    explosion3 = al_load_bitmap("explosion3.png");
+    if (!game_over) {
+        fprintf(stderr, "failed to create explosion bitmap!\n");
+        al_destroy_timer(timer);
+        return -1;
+    }
    
     event_queue = al_create_event_queue();
     if (!event_queue) 
@@ -462,10 +517,18 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     Mario.y=0;
                     
                     //Estado inicial de los enemigos
-                    enemy_start(F1p,false,FISH,MAPA1,400,100,0,false);
-                    enemy_start(RF1p,false,REDFISH,MAPA1,500,100,0,false);
-                    enemy_start(S1p,false,SQUID,MAPA1,700,100,100,false);
-                    enemy_start(Bossp,false,BOSS,MAPA3,260,103,0,false);
+                    enemy_start(F1p,false,FISH,MAPA1,400,100,false,0);
+                    enemy_start(RF1p,false,REDFISH,MAPA1,500,100,false,0);
+                    enemy_start(S1p,false,SQUID,MAPA1,700,100,false,0);
+                    
+                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
+                    
+                    enemy_start(M1p,false,MISIL1,MAPA3,277,114,false,60*4);
+                    enemy_start(M2p,false,MISIL2,MAPA3,277,114,false,60*6);
+                    enemy_start(M3p,false,MISIL3,MAPA3,277,117,true,60*8);
+                    enemy_start(M4p,false,MISIL4,MAPA3,260,157,false,60*10);
+                    enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
+                    enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
                     
                     //Estado inicial de las monedas
                     coin_start(pcoin1,100,100,MAPA1,startup);
@@ -489,6 +552,13 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                 enemy_mov(RF1p, pMario);
                 enemy_mov(S1p, pMario);
                 enemy_mov(Bossp, pMario);
+                enemy_mov(M1p, pMario);
+                enemy_mov(M2p, pMario);
+                enemy_mov(M3p, pMario);
+                enemy_mov(M4p, pMario);
+                enemy_mov(M5p, pMario);
+                enemy_mov(M6p, pMario);
+
         
                 
                 //Teclas de movimiento
@@ -639,6 +709,13 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
             draw_enemy (RF1p, pMario, p_bitmaps_t);
             draw_enemy (S1p, pMario, p_bitmaps_t);
             draw_enemy (Bossp, pMario, p_bitmaps_t);
+            draw_enemy (M1p, pMario, p_bitmaps_t);
+            draw_enemy (M2p, pMario, p_bitmaps_t);
+            draw_enemy (M3p, pMario, p_bitmaps_t);
+            draw_enemy (M4p, pMario, p_bitmaps_t);
+            draw_enemy (M5p, pMario, p_bitmaps_t);
+            draw_enemy (M6p, pMario, p_bitmaps_t);
+            
             
             //Dibujo de monedas
             draw_coin(pMario,pcoin1,p_bitmaps_t);
@@ -659,9 +736,9 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
     }
 
     al_destroy_bitmap(mario);
-    al_destroy_bitmap(fish);
-    al_destroy_bitmap(redfish);
-    al_destroy_bitmap(squid);
+    al_destroy_bitmap(fish1);
+    al_destroy_bitmap(redfish1);
+//    al_destroy_bitmap(squid);
     al_destroy_bitmap(coin);
     
     al_destroy_timer(timer);
@@ -786,9 +863,28 @@ void enemy_mov (enemy * en, player* Mario )
 if((Mario->n_mapa_actual)== en->mapa)
 {
     //Generacion de enemigos
-    if ( (Mario->x) >= (en->x - (BUFFER_H/2)) )//solo se activará el enemigo cuando se encuentre en el campo de vision de mario
-            (en->active) =true;
-
+    if (((Mario->x) >= (en->x - (BUFFER_H/2)) ) || (Mario->n_mapa_actual == MAPA3))//solo se activará el enemigo cuando se encuentre en el campo de vision de mario
+    {
+        (en->active) =true;
+ 
+            if(en->type == BOSS )
+            {
+                en->timer --;
+                if(en->timer <= 0)
+                    (en->active)=false;
+            }
+            else 
+            {
+                if(en->timer > 0)
+                {
+                en->timer --;
+                (en->active)=false;
+                }
+                else if (en->type == MISIL6)
+                en->timer --; 
+            }
+    }
+        
     //Movimiento de enemigos
 
     if (en->active == true)
@@ -799,6 +895,13 @@ if((Mario->n_mapa_actual)== en->mapa)
                 if ( collide_entity(en->x, en->y, (en->x)+FISH_SIZE, (en->y)+FISH_SIZE, Mario) )
                     {
                     Mario->death=true; 
+                    }
+                if (en->x < (en->prev_pos - FISH_DIST))
+                    {
+                    en->prev_pos = en->x;
+                    if (en->dodge == false)
+                        en->dodge =true;
+                    else en->dodge =false;
                     }
                 if (en->type == FISH)
                 (en->x) -= 1/MOVE_RATE_FISH;
@@ -849,13 +952,87 @@ if((Mario->n_mapa_actual)== en->mapa)
                     {
                     Mario->death=true; 
                     }
+                    if ((en->x)> (en->prev_pos)-50)
+                    (en->x) -= 1/MOVE_RATE_FISH;
                 }
-                if (en->type == MISIL1) //Movimiento de los misiles del submarino
+                if (en->type == MISIL1 || en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6 ) //Movimiento de los misiles del submarino
                 {
                     if ( collide_entity(en->x, en->y, (en->x)+MISIL_SIZE, (en->y)+MISIL_SIZE, Mario) )
                     {
                     Mario->death=true; 
                     }
+                    if (en->type == MISIL1)
+                        {
+                        if ((en->y)> (en->prev_pos)-80)
+                            {
+                            (en->y) -= 1/MOVE_RATE_SQUID;
+                            }
+                        else
+                            {
+                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            en->dodge = true;
+                            }
+                        }
+                    else if (en->type == MISIL2)
+                        {
+                        if ((en->y)> (en->prev_pos)-40)
+                            {
+                            (en->y) -= 1/MOVE_RATE_SQUID;
+                            }
+                        else
+                            {
+                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            en->dodge = true;
+                            }
+                        }
+                    else if (en->type == MISIL3)
+                        {
+                        (en->x) -= 1/MOVE_RATE_SQUID;
+                        }
+                    else if (en->type == MISIL4)
+                        {
+                        if ((en->y)< (en->prev_pos)+10)
+                            {
+                            (en->y) += 1/MOVE_RATE_SQUID;
+                            }
+                        else
+                            {
+                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            en->dodge = true;
+                            }
+                        }
+                    else if (en->type == MISIL5)
+                        {
+                        if ((en->y)< (en->prev_pos)+30)
+                            {
+                            (en->y) += 1/MOVE_RATE_SQUID;
+                            }
+                        else
+                            {
+                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            en->dodge = true;
+                            }
+                        }
+                    else if (en->type == MISIL6)
+                        {
+                        if ((en->timer > -60*2) && (en->timer < 0))
+                            {
+                            (en->y) -= 1/MOVE_RATE_SQUID;
+                            }
+                        else if (en->timer > -60*10) 
+                            {
+                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            }
+                        else if (en->timer > -60*12)
+                            {
+                            (en->y) += 1/MOVE_RATE_SQUID;
+                            }
+                        else if (en->timer > -60*19) 
+                            {
+                            (en->x) += 1/MOVE_RATE_SQUID;
+                            }
+
+                        }
                 }
 
         }
@@ -863,32 +1040,95 @@ if((Mario->n_mapa_actual)== en->mapa)
 }
 
 
-void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,float prev_pos,bool dodge)
+void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,bool dodge,int time)
 {
-    en->active= active; // Flag que indica si el enemigo esta activo o no
-    en->type= type;// Tipo de enemigo
-    en->mapa= ma;//Mapa en el que está el enemigo
-    en->x= x;//Posicion x del enemigo
-    en->y= y;//Posicion y del enemigo
-    en->prev_pos= prev_pos;//Variable que guarda la posicion previa del pulpo antes de moverse lateralmente
-    en->dodge= dodge;//Flag que utilizan los pulpos para indicar di deben ir hacia abajo o lateralmente
+    en->active= active;
+    en->type= type;
+    en->mapa= ma;
+    en->x= x;
+    en->y= y;
+    en->dodge= dodge;
+    en->timer=time;
+    if (en->type == FISH || en->type == REDFISH || en->type == BOSS)
+        en->prev_pos = x;
+    else en->prev_pos = y;
 }
 
 void draw_enemy (enemy * en, player * Mario, bitmaps_t * bitm)
 {
-    if((Mario->n_mapa_actual)== (en->mapa))
-    {
-        
-        if (en->type == FISH)
-        al_draw_bitmap(*(bitm->p_fish), (en->x), (en->y), 0);
-        if (en->type == REDFISH)
-        al_draw_bitmap(*(bitm->p_redfish), (en->x), (en->y), 0);
-        if (en->type == SQUID)
-        al_draw_bitmap(*(bitm->p_squid), (en->x), (en->y), 0);
+    if(Mario->n_mapa_actual== en->mapa)
+    {    
         if (en->type == BOSS)
-        al_draw_bitmap(*(bitm->p_boss), (en->x), (en->y), 0);
-        if (en->type == MISIL1)
-        al_draw_bitmap(*(bitm->p_misil), (en->x), (en->y), 0);
+                {
+                if (en->timer <= 0)
+                    {
+                    if (en->timer > -30*1) 
+                    al_draw_bitmap(*(bitm->p_explosion1), (en->x)+5, (en->y)-6, 0);
+                    else if (en->timer > -30*2)
+                    al_draw_bitmap(*(bitm->p_explosion2), (en->x)+5, (en->y)-6, 0);
+                    else if (en->timer > -30*3)
+                    al_draw_bitmap(*(bitm->p_explosion3), (en->x)+5, (en->y)-6, 0);
+                    }
+                }
+
+        if(en->active==true)
+        {   
+            if (en->type == FISH)
+            {
+                if(en->dodge == false)
+                al_draw_bitmap(*(bitm->p_fish1), (en->x), (en->y), 0);
+                else al_draw_bitmap(*(bitm->p_fish2), (en->x), (en->y), 0);  
+            }
+
+            if (en->type == REDFISH)
+           {
+                if(en->dodge == false)
+                al_draw_bitmap(*(bitm->p_redfish1), (en->x), (en->y), 0);
+                else al_draw_bitmap(*(bitm->p_redfish2), (en->x), (en->y), 0);  
+            }
+
+            if (en->type == SQUID)
+            {
+                if(en->dodge == false)
+                al_draw_bitmap(*(bitm->p_squid1), (en->x), (en->y), 0);
+                else al_draw_bitmap(*(bitm->p_squid2), (en->x), (en->y), 0);  
+            }
+
+            if (en->type == BOSS)
+            al_draw_bitmap(*(bitm->p_boss), (en->x), (en->y), 0);
+
+            if (en->type == MISIL1 ||en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6)
+                {
+                if (en->dodge == false)
+                    {
+                    if (en->type == MISIL4 ||en->type == MISIL5 )
+                    al_draw_rotated_bitmap(*(bitm->p_misil),MISIL_SIZE/2,MISIL_SIZE/2, (en->x)+MISIL_SIZE/2, (en->y), 3*(ALLEGRO_PI/2),0);
+
+                    else if (en->type == MISIL6)
+                            {
+                            if ((en->timer > -60*2) && (en->timer < 0))
+                                {
+                                al_draw_rotated_bitmap(*(bitm->p_misil),MISIL_SIZE/2,MISIL_SIZE/2, (en->x), (en->y), ALLEGRO_PI/2,0);
+                                }
+                            else if (en->timer > -60*10) 
+                                {
+                                al_draw_bitmap(*(bitm->p_misil), (en->x), (en->y), 0);
+                                }
+                            else if (en->timer > -60*12)
+                                {
+                                al_draw_rotated_bitmap(*(bitm->p_misil),MISIL_SIZE/2,MISIL_SIZE/2, (en->x)+MISIL_SIZE/2, (en->y), 3*(ALLEGRO_PI/2),0);
+                                }
+                            else if (en->timer > -60*19) 
+                                {
+                                al_draw_bitmap(*(bitm->p_misil), (en->x), (en->y), ALLEGRO_FLIP_HORIZONTAL);
+                                }
+                            }
+                    else al_draw_rotated_bitmap(*(bitm->p_misil),MISIL_SIZE/2,MISIL_SIZE/2, (en->x), (en->y), ALLEGRO_PI/2,0);
+                    }
+                else al_draw_bitmap(*(bitm->p_misil), (en->x), (en->y), 0);
+                }
+        }
+    
     }
 }
 
