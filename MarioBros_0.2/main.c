@@ -80,9 +80,9 @@ typedef struct
     float x;//Posicion x de Mario
     float y;//Posicion y de Mario
     char n_mapa_actual;
-    float salto;
-    float salto_cooldown;
-    char salto_lock;//Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
+    float salto;//variable que indica cuanto debe subir mario tras saltar
+    float salto_cooldown;//temporizador que indica cuanto falta para hacer un nuevo salto
+    bool salto_lock;//Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
     int coins;
     bool coin_obt;
     
@@ -227,6 +227,9 @@ int main(void)
     bool pausa= false;
     bool pausa_lock = false;
     bool startup=true;//flag que indica si el juego se acaba de iniciar
+    //Variables relacionadas solo con el dibujo de mario
+    int mariomove=0;//variable utilizada para alternar entre las animaciones 
+    bool marioright=true;//flag que indica si mario esta mirando hcia la derecha
     
     
     ALLEGRO_DISPLAY *display = NULL;
@@ -234,16 +237,25 @@ int main(void)
     ALLEGRO_TIMER *timer = NULL;
     
     ALLEGRO_BITMAP *buffer = NULL;
-    ALLEGRO_BITMAP *mario = NULL;
+    
+    ALLEGRO_BITMAP *mario1 = NULL;
+    ALLEGRO_BITMAP *mario2 = NULL;
+    ALLEGRO_BITMAP *mario3 = NULL;
+    ALLEGRO_BITMAP *mario4 = NULL;
+    ALLEGRO_BITMAP *mario5 = NULL;
+    
     ALLEGRO_BITMAP *background = NULL;
     ALLEGRO_BITMAP *game_over = NULL;
     
     ALLEGRO_BITMAP *fish1 = NULL;
     ALLEGRO_BITMAP *fish2 = NULL;
+    
     ALLEGRO_BITMAP *redfish1 = NULL;
     ALLEGRO_BITMAP *redfish2 = NULL;
+    
     ALLEGRO_BITMAP *squid1 = NULL;
     ALLEGRO_BITMAP *squid2 = NULL;
+    
     ALLEGRO_BITMAP *coin = NULL;
     ALLEGRO_BITMAP *boss = NULL;
     ALLEGRO_BITMAP *misil = NULL;
@@ -363,7 +375,7 @@ int main(void)
     {
         fprintf(stderr, "failed to create display!\n");
         al_destroy_timer(timer);
-        al_destroy_bitmap(mario);
+        al_destroy_bitmap(mario1);
         al_destroy_event_queue(event_queue);
         return -1;
     }
@@ -381,12 +393,11 @@ int main(void)
         return -1;
     }
     
-    mario = al_load_bitmap("Mario.png");
-    if (!mario) {
-        fprintf(stderr, "failed to create mario bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
+    mario1 = al_load_bitmap("Mario1.png");
+    mario2 = al_load_bitmap("Mario2.png");
+    mario3 = al_load_bitmap("Mario3.png");
+    mario4 = al_load_bitmap("Mario4.png");
+    mario5 = al_load_bitmap("Mario5.png");
     
     fish1 = al_load_bitmap("fish1.png");
 
@@ -407,25 +418,11 @@ int main(void)
 
     
     coin = al_load_bitmap("coin.png");
-    if (!coin) {
-        fprintf(stderr, "failed to create mario bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
-    
+
     boss = al_load_bitmap("boss.png");
-    if (!boss) {
-        fprintf(stderr, "failed to create mario bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
-    
+
     misil = al_load_bitmap("bala.png");
-    if (!coin) {
-        fprintf(stderr, "failed to create mario bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
+
     
     
     if (!(background = al_load_bitmap("NES - Super Mario Bros - World 2-2.png"))) {
@@ -438,38 +435,21 @@ int main(void)
     
     
     game_over = al_load_bitmap("gameover.png");
-    if (!game_over) {
-        fprintf(stderr, "failed to create gameover bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
-    
+
     explosion1 = al_load_bitmap("explosion1.png");
-    if (!game_over) {
-        fprintf(stderr, "failed to create explosion bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
+
     
     explosion2 = al_load_bitmap("explosion2.png");
-    if (!game_over) {
-        fprintf(stderr, "failed to create explosion bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
+
     
     explosion3 = al_load_bitmap("explosion3.png");
-    if (!game_over) {
-        fprintf(stderr, "failed to create explosion bitmap!\n");
-        al_destroy_timer(timer);
-        return -1;
-    }
+
    
     event_queue = al_create_event_queue();
     if (!event_queue) 
     {
         fprintf(stderr, "failed to create event_queue!\n");
-        al_destroy_bitmap(mario);
+        al_destroy_bitmap(mario1);
         al_destroy_timer(timer);
         return -1;
     }
@@ -565,38 +545,60 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
  
                 if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa,p_background ))
                     {
-                    if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==0)
+                    mariomove++;
+                    if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==false)
                         {
                         (Mario.salto_cooldown)= 30;
                         (Mario.salto) = 18;
-                        (Mario.salto_lock)=1;
+                        (Mario.salto_lock)=true;
                         }                    
                     }
-                 
+                    
                     if (!key_pressed[KEY_UP])
-                        (Mario.salto_lock)=0;
+                        (Mario.salto_lock)=false;
                  
                         
                 if (key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa,p_background))
+                    {
                     (Mario.y) += MOVE_RATE;
-                else if(key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa,p_background))
+                    mariomove++;
+                    }
+                /*else if(key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa,p_background))
+                    {
                     (Mario.y) += 1;
-
+                    mariomove++;
+                    }*/
                 if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
+                    {
                     (Mario.x) -= MOVE_RATE;
-                else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
+                    mariomove++;
+                    marioright=false;
+                    }
+                /*else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
+                    {
                     (Mario.x) -= 1;
-                    
+                    mariomove++;
+                    }*/
                 if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
+                    {
                     (Mario.x) += MOVE_RATE;
-                else if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
+                    mariomove++;
+                    marioright=true;
+                    }
+                /*else if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
+                    {
                     (Mario.x) += 1;
+                    mariomove++;
+                    }*/
                 
                 
                 //Salto de Mario
                 
                 if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE  && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa,p_background)) //Mario cae siempre que no detecte nada abajo de él
+                    {
                     (Mario.y) += MOVE_RATE/3; 
+                    mariomove++;
+                    }
                 
                 
                 if((Mario.salto_cooldown)>0 ) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
@@ -702,7 +704,43 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
             }
             
             //Dibujo de Mario
-            al_draw_bitmap(mario, (Mario.x), (Mario.y), 0);
+            if (mariomove < 20 && mariomove >= 0)
+                {
+                if (marioright==true)
+                al_draw_bitmap(mario1, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario1, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
+            else if (mariomove < 40) 
+                {
+                if (marioright==true)
+                al_draw_bitmap(mario2, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario2, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
+            else if (mariomove < 60) 
+                {
+                if (marioright==true)
+                al_draw_bitmap(mario3, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario3, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
+            else if (mariomove < 80) 
+                {
+                if (marioright==true)
+                al_draw_bitmap(mario4, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario4, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
+            else if (mariomove < 100) 
+                {
+                if (marioright==true)
+                al_draw_bitmap(mario5, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario5, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
+            else 
+                {
+                mariomove=0;
+                if (marioright==true)
+                al_draw_bitmap(mario5, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario5, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
             
             //Dibujo de enemigos
             draw_enemy (F1p, pMario, p_bitmaps_t);
@@ -735,10 +773,17 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
         
     }
 
-    al_destroy_bitmap(mario);
+    al_destroy_bitmap(mario1);
+    al_destroy_bitmap(mario2);
+    al_destroy_bitmap(mario3);
+    al_destroy_bitmap(mario4);
+    al_destroy_bitmap(mario5);
     al_destroy_bitmap(fish1);
+    al_destroy_bitmap(fish2);
     al_destroy_bitmap(redfish1);
-//    al_destroy_bitmap(squid);
+    al_destroy_bitmap(redfish2);
+    al_destroy_bitmap(squid1);
+    al_destroy_bitmap(squid2);
     al_destroy_bitmap(coin);
     
     al_destroy_timer(timer);

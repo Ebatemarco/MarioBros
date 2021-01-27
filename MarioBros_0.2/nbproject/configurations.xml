@@ -6,7 +6,11 @@
                    projectFiles="true">
     </logicalFolder>
     <logicalFolder name="f1" displayName="Resource Files" projectFiles="true">
-      <itemPath>Mario.png</itemPath>
+      <itemPath>Mario1.png</itemPath>
+      <itemPath>Mario2.png</itemPath>
+      <itemPath>Mario3.png</itemPath>
+      <itemPath>Mario4.png</itemPath>
+      <itemPath>Mario5.png</itemPath>
       <itemPath>NES - Super Mario Bros - Enemies &amp; Bosses.png</itemPath>
       <itemPath>NES - Super Mario Bros - Items Objects and NPCs.png</itemPath>
       <itemPath>NES - Super Mario Bros - World 2-2.png</itemPath>
@@ -82,7 +86,15 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="Mario.png" ex="false" tool="3" flavor2="0">
+      <item path="Mario1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario3.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario4.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario5.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NES - Super Mario Bros - Enemies &amp; Bosses.png"
             ex="false"
@@ -167,7 +179,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="Mario.png" ex="false" tool="3" flavor2="0">
+      <item path="Mario1.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario3.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario4.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Mario5.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="NES - Super Mario Bros - Enemies &amp; Bosses.png"
             ex="false"
