@@ -13,7 +13,6 @@
       <itemPath>Mario5.png</itemPath>
       <itemPath>NES - Super Mario Bros - Enemies &amp; Bosses.png</itemPath>
       <itemPath>NES - Super Mario Bros - Items Objects and NPCs.png</itemPath>
-      <itemPath>NES - Super Mario Bros - World 2-2.png</itemPath>
       <itemPath>NES - Super Mario Bros - World 7-2.png</itemPath>
       <itemPath>NES_-_Super_Mario_Bros_-_Mario__Luigi.png</itemPath>
       <itemPath>bala.png</itemPath>
@@ -27,8 +26,10 @@
       <itemPath>gameover.png</itemPath>
       <itemPath>mapa-final.png</itemPath>
       <itemPath>mapa-inicio.png</itemPath>
+      <itemPath>mapa1.png</itemPath>
       <itemPath>mapa2.png</itemPath>
       <itemPath>mapa3.png</itemPath>
+      <itemPath>mariobros.ttf</itemPath>
       <itemPath>redfish1.png</itemPath>
       <itemPath>redfish2.png</itemPath>
       <itemPath>squid1.png</itemPath>
@@ -106,11 +107,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="NES - Super Mario Bros - World 2-2.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="NES - Super Mario Bros - World 7-2.png"
             ex="false"
             tool="3"
@@ -145,9 +141,13 @@
       </item>
       <item path="mapa-inicio.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="mapa1.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="mapa2.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mapa3.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mariobros.ttf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="redfish1.png" ex="false" tool="3" flavor2="0">
       </item>
@@ -199,11 +199,6 @@
             tool="3"
             flavor2="0">
       </item>
-      <item path="NES - Super Mario Bros - World 2-2.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
       <item path="NES - Super Mario Bros - World 7-2.png"
             ex="false"
             tool="3"
@@ -238,9 +233,13 @@
       </item>
       <item path="mapa-inicio.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="mapa1.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="mapa2.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mapa3.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="mariobros.ttf" ex="false" tool="3" flavor2="0">
       </item>
       <item path="redfish1.png" ex="false" tool="3" flavor2="0">
       </item>
