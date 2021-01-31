@@ -136,7 +136,7 @@ ALLEGRO_BITMAP *(*p_explosion3);
 
 void disp_pre_draw(ALLEGRO_BITMAP* buffer);
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer, player* Mario, ALLEGRO_FONT * font,bool pausa);
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,ALLEGRO_BITMAP* menupausa,ALLEGRO_BITMAP* gameover, player* Mario, ALLEGRO_FONT * font,bool pausa);
 
 void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] , char elemento);
 
@@ -160,7 +160,7 @@ void draw_coin(player * Mario,coin* ncoin,bitmaps_t * bitm);
 
 enum MYKEYS 
 {
-    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT , KEY_P //arrow keys
+    KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT , KEY_P ,KEY_R
 };
 
 char mapainicio[BUFFER_H][BUFFER_W]={EMPTY};
@@ -180,17 +180,13 @@ char mapa[BUFFER_H][BUFFER_W]={EMPTY};
 int main(void) 
 {
     //INICIALIZACION 
-    // init_display();
-    // init_buffer();
     
     //Inicializacion de Mario
     
-    player Mario =  {3,false, XINICIAL, YINICIAL,MAPAINICIO, 0, 0, false,0,false,LEVEL_TIME,0}; 
+    player Mario;
     player * pMario = &Mario;
     
-    /*bool coin1;
-    bool coin2;
-    bool coin3;*/
+    //Inicializacion de monedas
     
     coin coin1;
     coin * pcoin1=&coin1;
@@ -234,17 +230,24 @@ int main(void)
     enemy * M6p = &M6;
     
     //Inicializacion de otras variables
+    
     bool pausa= false;
     bool pausa_lock = false;
-    bool startup=true;//flag que indica si el juego se acaba de iniciar
+    //bool startup=true;//flag que indica si el juego se acaba de iniciar
+    bool restart=true;//flag que indica si el juego se reinicio
     
     int timemarker=0;
+    
+    bool key_pressed[5] = {false, false, false, false, false}; //Estado de teclas, true cuando esta apretada
+    bool redraw = false;
+    bool do_exit = false;
     
     //Variables relacionadas solo con el dibujo de mario
     int mariomove=0;//variable utilizada para alternar entre las animaciones 
     bool marioright=true;//flag que indica si mario esta mirando hcia la derecha
     
     
+    //Inicializacion de bitmaps y otras variables de allegro
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
@@ -260,6 +263,7 @@ int main(void)
     
     ALLEGRO_BITMAP *background = NULL;
     ALLEGRO_BITMAP *game_over = NULL;
+    ALLEGRO_BITMAP *menupausa = NULL;
     
     ALLEGRO_BITMAP *fish1 = NULL;
     ALLEGRO_BITMAP *fish2 = NULL;
@@ -282,17 +286,11 @@ int main(void)
     
 
     
-    bitmaps_t bitmaps = {&fish1,&fish2,&redfish1,&redfish2,&squid1,&squid2,&coin,&boss,&misil,&explosion1,&explosion2,&explosion3};
+    bitmaps_t bitmaps = {&fish1,&fish2,&redfish1,&redfish2,&squid1,&squid2,&coin,&boss,&misil,&explosion1,&explosion2,&explosion3};//se utiliza una estructura de bitmaps para hacer más simple el uso de funciones de animación
     bitmaps_t * p_bitmaps_t = &bitmaps;
     
     //ALLEGRO_COLOR grey;
       // grey = al_map_rgb(255, 0, 0);
-
-   
-    bool key_pressed[5] = {false, false, false, false, false}; //Estado de teclas, true cuando esta apretada
-    bool redraw = false;
-    bool do_exit = false;
-     
 
    //Zona de creacion de barreras
     
@@ -371,7 +369,10 @@ int main(void)
    //Mapa 3
    putbarrier (0, 200, 563, 223, mapa3, BORDER);
    putbarrier (MAPA3_W-1, 0 , MAPA3_W, BUFFER_H, mapa3, BORDER);
-    
+   
+   
+    //Carga de bitmaps, y otras variables de allegro
+   
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
     if (!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
@@ -415,7 +416,7 @@ int main(void)
     
     al_init_font_addon(); // initialize the font addon
     al_init_ttf_addon(); // initialize the ttf (True Type Font) addon
-    font = al_load_ttf_font("mariobros.ttf", 30, 0);
+    font = al_load_ttf_font("mariobros.ttf", DISP_SCALE*7.5, 0);
     if (!font) {
         fprintf(stderr, "Could not load 'mariofont.ttf'.\n");
         return -1;
@@ -464,6 +465,7 @@ int main(void)
     
     
     game_over = al_load_bitmap("gameover.png");
+    menupausa = al_load_bitmap("menu de pausa.png");
 
     explosion1 = al_load_bitmap("explosion1.png");
 
@@ -483,52 +485,58 @@ int main(void)
         return -1;
     }
 
-al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
+    //al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
 
-    
-    
-    al_set_target_bitmap(al_get_backbuffer(display));
+    //Registro de eventos
 
     al_register_event_source(event_queue, al_get_display_event_source(display));
     al_register_event_source(event_queue, al_get_timer_event_source(timer));
     al_register_event_source(event_queue, al_get_keyboard_event_source()); //REGISTRAMOS EL TECLADO
 
-    al_clear_to_color(al_map_rgb(0, 0, 0));
-    
-    al_set_target_backbuffer(display);
-    al_draw_scaled_bitmap(buffer, 0, 0, BUFFER_W, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
-    al_flip_display();
-    al_start_timer(timer);
+    al_start_timer(timer);//inicio del timer
 
-
-    //Estado inicial de las monedas
-    coin_start(pcoin1,100,100,MAPA1,startup);
-    coin_start(pcoin2,130,100,MAPA1,startup);
-    coin_start(pcoin3,150,100,MAPA1,startup);
-    
-    clonarMatriz(mapainicio,mapa);//se carga el primer mapa
-    
-    pausa=true;
-
-    
-    
+   
     while (!do_exit) 
-    {
-
-        
-            
+    {    
         ALLEGRO_EVENT ev;
         if (al_get_next_event(event_queue, &ev)) //Toma un evento de la cola, VER RETURN EN DOCUMENT.
         {
             if (ev.type == ALLEGRO_EVENT_TIMER) {
-  
-            if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
-            {          
                 
+                
+            if (restart==true)
+            {
+                //Estado inicial de Mario
+                Mario.live=3;
+                Mario.death=false;
+                Mario.x=XINICIAL;
+                Mario.y=YINICIAL;
+                Mario.n_mapa_actual=MAPAINICIO;
+                Mario.salto=0;
+                Mario.salto_cooldown=0;
+                Mario.salto_lock=false;
+                Mario.coins=0;
+                Mario.coin_obt=false;
+                Mario.timer=LEVEL_TIME;
+                Mario.score=0;
+                
+               //Estado inicial de las monedas
+                coin_start(pcoin1,100,100,MAPA1,restart);
+                coin_start(pcoin2,130,100,MAPA1,restart);
+                coin_start(pcoin3,150,100,MAPA1,restart);
+                
+                //Carga del primer mapa
+                clonarMatriz(mapainicio,mapa);
+                background = al_load_bitmap("mapa-inicio.png");
+
+                pausa=true;
+            }
+    
+             
                 //Muerte de Mario
-                if((Mario.death == true)|| startup==true)
+                if((Mario.death == true)|| restart==true)
                 {
-                    if(startup==false)
+                    if(restart==false)
                     {
                     Mario.live-=1;
                     Mario.death=false;
@@ -537,12 +545,14 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     }
                     
                     //Estado inicial de los enemigos
+                    
+                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
+                    
                     enemy_start(F1p,false,FISH,MAPA1,400,100,false,0);
                     enemy_start(RF1p,false,REDFISH,MAPA1,500,100,false,0);
                     enemy_start(S1p,false,SQUID,MAPA1,700,100,false,0);
                     
-                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
-                    
+
                     enemy_start(M1p,false,MISIL1,MAPA3,277,114,false,60*4);
                     enemy_start(M2p,false,MISIL2,MAPA3,277,114,false,60*6);
                     enemy_start(M3p,false,MISIL3,MAPA3,277,117,true,60*8);
@@ -550,16 +560,22 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
                     enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
                     
-                    startup=false;
+                    restart=false;
                 }
+            
+            if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
+            {          
+               
                 
                 //Colision con las monedas
+                
                 fcoin(pMario,pcoin1);
                 fcoin(pMario,pcoin2);
                 fcoin(pMario,pcoin3);
                 Mario.coin_obt=false;
                 
                 //Movimiento de enemigos
+                
                 enemy_mov(F1p, pMario);
                 enemy_mov(RF1p, pMario);
                 enemy_mov(S1p, pMario);
@@ -572,7 +588,7 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                 enemy_mov(M6p, pMario);
 
         
-                //Timer de mario
+                //Timer de mario para sus animaciones
                 timemarker++;
                 if (timemarker==FPS)
                     {
@@ -602,34 +618,21 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     (Mario.y) += MOVE_RATE;
                     mariomove++;
                     }
-                /*else if(key_pressed[KEY_DOWN]  && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+1, (Mario.x)+MARIO_SIZE , (Mario.y)+1+MARIO_SIZE, mapa,p_background))
-                    {
-                    (Mario.y) += 1;
-                    mariomove++;
-                    }*/
+
                 if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
                     {
                     (Mario.x) -= MOVE_RATE;
                     mariomove++;
                     marioright=false;
                     }
-                /*else if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-1, (Mario.y), (Mario.x)+MARIO_SIZE-1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
-                    {
-                    (Mario.x) -= 1;
-                    mariomove++;
-                    }*/
+
                 if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
                     {
                     (Mario.x) += MOVE_RATE;
                     mariomove++;
                     marioright=true;
                     }
-                /*else if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+1, (Mario.y), (Mario.x)+MARIO_SIZE+1 , (Mario.y)+MARIO_SIZE, mapa,p_background))
-                    {
-                    (Mario.x) += 1;
-                    mariomove++;
-                    }*/
-                
+
                 
                 //Salto de Mario
                 
@@ -638,7 +641,6 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     (Mario.y) += MOVE_RATE/3; 
                     mariomove++;
                     }
-                
                 
                 if((Mario.salto_cooldown)>0 ) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
                     (Mario.salto_cooldown)--;
@@ -670,9 +672,14 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                 }
                 if (!key_pressed[KEY_P])
                     pausa_lock= false;
-
+            
+                //Boton de reiniciar
+                if(key_pressed[KEY_R])
+                restart=true;
+            
                 redraw = true;
             }
+            
             else if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
                 do_exit = true;
 
@@ -697,6 +704,10 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     case ALLEGRO_KEY_P:
                         key_pressed[KEY_P] = true;
                         break;
+                        
+                    case ALLEGRO_KEY_R:
+                        key_pressed[KEY_R] = true;
+                        break;
                 }
             }
             else if (ev.type == ALLEGRO_EVENT_KEY_UP) {
@@ -720,6 +731,10 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                     case ALLEGRO_KEY_P:
                         key_pressed[KEY_P] = false;
                         break;
+                        
+                    case ALLEGRO_KEY_R:
+                        key_pressed[KEY_R] = false;
+                        break;
 
                     case ALLEGRO_KEY_ESCAPE:
                         do_exit = true;
@@ -727,7 +742,9 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
                 }
             }
         }
-        //Dibujo de bitmaps
+        
+        //DIBUJO DE BITMAPS
+        
         if (redraw && al_is_event_queue_empty(event_queue)) 
         {
             redraw = false;
@@ -805,10 +822,9 @@ al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
             if ((Mario.live)==0) //Si se acabaron las vidas aparece el cartel de game over
             {
              al_draw_scaled_bitmap(game_over,0,0,240,210,0,0,BUFFER_H,BUFFER_H,0);
-             //al_draw_filled_rectangle(x1, y1, x2, y2, black);
-             //al_draw_filled_rectangle(0, 0, 200, 200, grey);
             } 
-            disp_post_draw(display, buffer, pMario, font,pausa); 
+
+            disp_post_draw(display, buffer,menupausa ,game_over, pMario, font,pausa); 
         }
         
         
@@ -840,7 +856,7 @@ void disp_pre_draw(ALLEGRO_BITMAP* b)
     al_set_target_bitmap(b);
 }
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b, player* Mario, ALLEGRO_FONT * font,bool pausa)
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu,ALLEGRO_BITMAP* gameover, player* Mario, ALLEGRO_FONT * font,bool pausa)//dibujo de cosas en la pantalla,no en el buffer
 {
     //Dibujo del buffer
     al_set_target_backbuffer(disp);
@@ -881,13 +897,18 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b, player* Mario, ALLE
     al_draw_textf(font, al_map_rgb(255, 255, 255), 18*(SCREEN_W/20) ,(40), ALLEGRO_ALIGN_CENTER, "%d",Mario->live);
     
     //Dibujo de otros mensajes
-            if(Mario->n_mapa_actual==MAPAINICIO && pausa==true && Mario->x==XINICIAL)
+    if (pausa==true)
+        {
+        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XINICIAL)//pantalla de inicio
             {
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,13*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "Presiona");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,14*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "la tecla P ");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,15*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "para empezar");
-            //menu=false;
             }
+        else al_draw_scaled_bitmap(menu,0, 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);//pantalla de pausa
+        }
+    if (Mario->live==0) //Si se acabaron las vidas aparece el cartel de game over
+    al_draw_scaled_bitmap(gameover,0, 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
     
     al_flip_display();
 }

@@ -30,6 +30,7 @@
       <itemPath>mapa2.png</itemPath>
       <itemPath>mapa3.png</itemPath>
       <itemPath>mariobros.ttf</itemPath>
+      <itemPath>menu de pausa.png</itemPath>
       <itemPath>redfish1.png</itemPath>
       <itemPath>redfish2.png</itemPath>
       <itemPath>squid1.png</itemPath>
@@ -149,6 +150,8 @@
       </item>
       <item path="mariobros.ttf" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="menu de pausa.png" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="redfish1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="redfish2.png" ex="false" tool="3" flavor2="0">
@@ -240,6 +243,8 @@
       <item path="mapa3.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="mariobros.ttf" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="menu de pausa.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="redfish1.png" ex="false" tool="3" flavor2="0">
       </item>
