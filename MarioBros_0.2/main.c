@@ -357,6 +357,25 @@ int main(void)
    putbarrier (447, 168, 463, 198, finalmapa1, EXIT2);
    
    //Mapa2
+   
+   putbarrier (0,32,31,207, mapa2, BORDER);
+   putbarrier (0,208,2199,239, mapa2, BORDER);
+   putbarrier (32,32,95,39, mapa2, BORDER);
+   putbarrier (96,32,287,79, mapa2, BORDER);
+   putbarrier (176,80,287,95, mapa2, BORDER);
+   putbarrier (96,160,287,207, mapa2, BORDER);
+   putbarrier (176,144,287,159, mapa2, BORDER);
+   putbarrier (48,176,79,207, mapa2, BORDER);
+   putbarrier (288,32,2199,207, mapa2, BORDER);
+
+   putbarrier (288,48,623,207, mapa2, EMPTY);
+   putbarrier (624,96,1823,159, mapa2, EMPTY);
+   putbarrier (672,48,1007,207, mapa2, EMPTY);
+   putbarrier (1056,48,1391,107, mapa2, EMPTY);
+   putbarrier (1440,38,1775,207, mapa2, EMPTY);
+   putbarrier (1824,48,2120,207, mapa2, EMPTY);
+   putbarrier (2121,96,2136,143, mapa2, EMPTY);
+   putbarrier (2137,96,2152,111, mapa2, EMPTY);
    putbarrier (0, 207, 2199, 239, mapa2, BORDER);
    putbarrier (2137, 114, 2150, 142, mapa2, EXIT3);
    putbarrier (MAPA2_W-1, 0 , MAPA2_W, BUFFER_H, mapa2, BORDER);
