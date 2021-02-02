@@ -26,8 +26,8 @@
 #define MOVE_RATE  4.0
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
-#define XINICIAL 110
-#define YINICIAL 182
+#define XINICIAL 55
+#define YINICIAL 110
 #define LEVEL_TIME 120
 
 #define MAPAINICIO 0
@@ -198,15 +198,22 @@ int main(void)
     coin * pcoin3=&coin3;
     
     //Inicializacion de enemigos
-    
     enemy F1;
     enemy * F1p = &F1;
-    
+    enemy F2;
+    enemy * F2p = &F2;
+    enemy F3;
+    enemy * F3p = &F3;
+    enemy F4;
+    enemy * F4p = &F4;
     enemy RF1;
     enemy * RF1p = &RF1;
-    
+    enemy RF2;
+    enemy * RF2p = &RF2;
     enemy S1;
     enemy * S1p = &S1;
+    enemy S2;
+    enemy * S2p = &S2;
     
     enemy Boss;
     enemy * Bossp = &Boss;
@@ -228,6 +235,8 @@ int main(void)
     
     enemy M6;
     enemy * M6p = &M6;
+    
+    
     
     //Inicializacion de otras variables
     
@@ -371,7 +380,7 @@ int main(void)
    putbarrier (288,48,623,207, mapa2, EMPTY);
    putbarrier (624,96,1823,159, mapa2, EMPTY);
    putbarrier (672,48,1007,207, mapa2, EMPTY);
-   putbarrier (1056,48,1391,107, mapa2, EMPTY);
+   putbarrier (1056,48,1391,207, mapa2, EMPTY);
    putbarrier (1440,38,1775,207, mapa2, EMPTY);
    putbarrier (1824,48,2120,207, mapa2, EMPTY);
    putbarrier (2121,96,2136,143, mapa2, EMPTY);
@@ -566,11 +575,15 @@ int main(void)
                     //Estado inicial de los enemigos
                     
                     enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
-                    
-                    enemy_start(F1p,false,FISH,MAPA1,400,100,false,0);
-                    enemy_start(RF1p,false,REDFISH,MAPA1,500,100,false,0);
-                    enemy_start(S1p,false,SQUID,MAPA1,700,100,false,0);
-                    
+                    enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
+                    enemy_start(RF1p,false,REDFISH,MAPA1,268,87,false,0);
+                    enemy_start(F2p,false,FISH,MAPA1,380,86,false,0);
+                    enemy_start(S1p,false,SQUID,MAPA1,459,173,false,0);
+                    enemy_start(F3p,false,FISH,MAPA1,615,71,false,0);
+                    enemy_start(RF2p,false,REDFISH,MAPA1,756,172,false,0);
+                    enemy_start(S2p,false,SQUID,MAPA1,944,168,false,0);
+                    enemy_start(F4p,false,FISH,MAPA1,944,42,false,0);
+                  
 
                     enemy_start(M1p,false,MISIL1,MAPA3,277,114,false,60*4);
                     enemy_start(M2p,false,MISIL2,MAPA3,277,114,false,60*6);
@@ -596,8 +609,14 @@ int main(void)
                 //Movimiento de enemigos
                 
                 enemy_mov(F1p, pMario);
+                enemy_mov(F2p, pMario);
+                enemy_mov(F3p, pMario);
+                enemy_mov(F4p, pMario);
                 enemy_mov(RF1p, pMario);
+                enemy_mov(RF2p, pMario);
                 enemy_mov(S1p, pMario);
+                enemy_mov(S2p, pMario);
+                
                 enemy_mov(Bossp, pMario);
                 enemy_mov(M1p, pMario);
                 enemy_mov(M2p, pMario);
@@ -818,9 +837,18 @@ int main(void)
                 }
             
             //Dibujo de enemigos
+            
+            draw_enemy (F1p, pMario, p_bitmaps_t);
+            draw_enemy (F2p, pMario, p_bitmaps_t);
+            draw_enemy (F3p, pMario, p_bitmaps_t);
+            draw_enemy (F4p, pMario, p_bitmaps_t);
             draw_enemy (F1p, pMario, p_bitmaps_t);
             draw_enemy (RF1p, pMario, p_bitmaps_t);
+            draw_enemy (RF2p, pMario, p_bitmaps_t);
             draw_enemy (S1p, pMario, p_bitmaps_t);
+            draw_enemy (S2p, pMario, p_bitmaps_t);
+
+            
             draw_enemy (Bossp, pMario, p_bitmaps_t);
             draw_enemy (M1p, pMario, p_bitmaps_t);
             draw_enemy (M2p, pMario, p_bitmaps_t);
@@ -971,8 +999,8 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
             {
              *p_background = al_load_bitmap("mapa1.png");
               clonarMatriz(mapa1,mapa);
-              Mario->x=5;
-              Mario->y=11;
+              Mario->x=XINICIAL;
+              Mario->y=YINICIAL;
               Mario->n_mapa_actual=MAPA1;
                return false;
             }
@@ -980,8 +1008,8 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
             {
              *p_background = al_load_bitmap("mapa-final.png");
               clonarMatriz(finalmapa1,mapa);
-              Mario->x=5;
-              Mario->y=11;
+              Mario->x=XINICIAL;
+              Mario->y=YINICIAL;
               Mario->n_mapa_actual=FINALMAPA1;
                return false;
             }
@@ -989,8 +1017,8 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
             {
              *p_background = al_load_bitmap("mapa2.png");
               clonarMatriz(mapa2,mapa);
-              Mario->x=5;
-              Mario->y=11;
+              Mario->x=XINICIAL;
+              Mario->y=YINICIAL;
               Mario->n_mapa_actual=MAPA2;
               Mario->score = (Mario->timer)*100;
               Mario->timer=LEVEL_TIME;
@@ -1000,8 +1028,8 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
             {
              *p_background = al_load_bitmap("mapa-final.png");
               clonarMatriz(finalmapa2,mapa);
-              Mario->x=5;
-              Mario->y=11;
+              Mario->x=XINICIAL;
+              Mario->y=YINICIAL;
               Mario->n_mapa_actual=FINALMAPA2;
                return false;
             }
@@ -1009,8 +1037,8 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
             {
              *p_background = al_load_bitmap("mapa3.png");
               clonarMatriz(mapa3,mapa);
-              Mario->x=5;
-              Mario->y=11;
+              Mario->x=XINICIAL;
+              Mario->y=YINICIAL;
               Mario->n_mapa_actual=MAPA3;
               Mario->score = (Mario->timer)*100;
               Mario->timer=LEVEL_TIME;
