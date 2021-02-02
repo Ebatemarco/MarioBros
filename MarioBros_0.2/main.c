@@ -23,9 +23,12 @@
 #define SCREEN_H (BUFFER_H * DISP_SCALE)
 
 #define MARIO_SIZE 15
-#define MOVE_RATE  4.0
+#define MOVE_RATE  2.0
+#define SALTO_H 25 //Altura del salto de mario
+#define SALTO_SPEED 1 //Velocidad de la subida al saltar
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
+#define MARIO_LIVES 10
 #define XINICIAL 55
 #define YINICIAL 70
 #define LEVEL_TIME 120
@@ -186,18 +189,61 @@ int main(void)
     player Mario;
     player * pMario = &Mario;
     
-    //Inicializacion de monedas
+    //Inicializacion de monedas MAPA 1
     
     coin coin1;
     coin * pcoin1=&coin1;
-    
     coin coin2;
     coin * pcoin2=&coin2;
-    
     coin coin3;
     coin * pcoin3=&coin3;
+    coin coin4;
+    coin * pcoin4=&coin4;
+    coin coin5;
+    coin * pcoin5=&coin5;
+    coin coin6;
+    coin * pcoin6=&coin6;
+    coin coin7;
+    coin * pcoin7=&coin7;
+    coin coin8;
+    coin * pcoin8=&coin8;
+    coin coin9;
+    coin * pcoin9=&coin9;
+    coin coin10;
+    coin * pcoin10=&coin10;
+    coin coin11;
+    coin * pcoin11=&coin11;
+    coin coin12;
+    coin * pcoin12=&coin12;
+    coin coin13;
+    coin * pcoin13=&coin13;
+    coin coin14;
+    coin * pcoin14=&coin14;
+    coin coin15;
+    coin * pcoin15=&coin15;
+    coin coin16;
+    coin * pcoin16=&coin16;
+    coin coin17;
+    coin * pcoin17=&coin17;
+    coin coin18;
+    coin * pcoin18=&coin18;
+    coin coin19;
+    coin * pcoin19=&coin19;
+    coin coin20;
+    coin * pcoin20=&coin20;
+    coin coin21;
+    coin * pcoin21=&coin21;
+    coin coin22;
+    coin * pcoin22=&coin22;
+    coin coin23;
+    coin * pcoin23=&coin23;
+    coin coin24;
+    coin * pcoin24=&coin24;
+    coin coin25;
+    coin * pcoin25=&coin25;
     
-    //Inicializacion de enemigos
+    
+    //Inicializacion de enemigos MAPA 1
     enemy F1;
     enemy * F1p = &F1;
     enemy F2;
@@ -206,15 +252,59 @@ int main(void)
     enemy * F3p = &F3;
     enemy F4;
     enemy * F4p = &F4;
+    enemy F5;
+    enemy * F5p = &F5;
+    enemy F6;
+    enemy * F6p = &F6;
+    enemy F7;
+    enemy * F7p = &F7;
+    enemy F8;
+    enemy * F8p = &F8;
+    enemy F9;
+    enemy * F9p = &F9;
+    enemy F10;
+    enemy * F10p = &F10;
+    enemy F11;
+    enemy * F11p = &F11;
+    enemy F12;
+    enemy * F12p = &F12;
+    
+    
     enemy RF1;
     enemy * RF1p = &RF1;
     enemy RF2;
     enemy * RF2p = &RF2;
+    enemy RF3;
+    enemy * RF3p = &RF3;
+    enemy RF4;
+    enemy * RF4p = &RF4;
+    enemy RF5;
+    enemy * RF5p = &RF5;
+    enemy RF6;
+    enemy * RF6p = &RF6;
+    enemy RF7;
+    enemy * RF7p = &RF7;
+    enemy RF8;
+    enemy * RF8p = &RF8;
+    enemy RF9;
+    enemy * RF9p = &RF9;
+    
     enemy S1;
     enemy * S1p = &S1;
     enemy S2;
     enemy * S2p = &S2;
+    enemy S3;
+    enemy * S3p = &S3;
+    enemy S4;
+    enemy * S4p = &S4;
+    enemy S5;
+    enemy * S5p = &S5;
+    enemy S6;
+    enemy * S6p = &S6;
+    enemy S7;
+    enemy * S7p = &S7;
     
+    // Inicializacion enemigos MAPA 3 - BOSS
     enemy Boss;
     enemy * Bossp = &Boss;
     
@@ -356,12 +446,25 @@ int main(void)
    putbarrier (2974, 184, 2989, 199,  mapa1, BORDER);
    putbarrier (MAPA1_W-1, 0 , MAPA1_W, BUFFER_H, mapa1, BORDER);
    
-   putbarrier (1072, 200, 1151, 223,  mapa1, EMPTY);
-   putbarrier (1072, 219, 1151, 223,  mapa1, BLOCKDEATH);
+   putbarrier (1072, 200, 1151, 223,  mapa1, BLOCKDEATH);
+   putbarrier (2111, 168, 2254, 223,  mapa1, EMPTY);
+   putbarrier (2111, 206, 2254, 223,  mapa1, BLOCKDEATH);
+   putbarrier (2527, 139, 2638, 223,  mapa1, EMPTY);
+   putbarrier (2527, 210, 2638, 223,  mapa1, BLOCKDEATH);
    putbarrier (3039, 107, 3048, 135,  mapa1, EXIT1);
    
    //Final del mapa 1
    putbarrier (0, 200, 563, 223, finalmapa1, BORDER);
+   putbarrier (192,72, 223, 199, finalmapa1, BORDER);
+   putbarrier (144,120,159,199, finalmapa1, BORDER);
+   putbarrier (176,88, 191, 199, finalmapa1, BORDER);
+   putbarrier (160,104,175,199, finalmapa1, BORDER);
+   putbarrier (128,136,143,199, finalmapa1, BORDER);
+   putbarrier (112,152,127,199, finalmapa1, BORDER);
+   putbarrier (96, 168,111, 199, finalmapa1, BORDER);
+   putbarrier (80, 184 , 95, 199, finalmapa1, BORDER);
+   putbarrier (48, 168 , 79, 199, finalmapa1, BORDER);
+   putbarrier (352, 184 , 367, 199, finalmapa1, BORDER);
    putbarrier (FINALMAPA1_W-1, 0 , FINALMAPA1_W, BUFFER_H, finalmapa1, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa1, EXIT2);
    
@@ -390,6 +493,17 @@ int main(void)
    putbarrier (MAPA2_W-1, 0 , MAPA2_W, BUFFER_H, mapa2, BORDER);
    
    //Final del mapa 2
+   putbarrier (0, 200, 563, 223, finalmapa2, BORDER);
+   putbarrier (192,72, 223, 199, finalmapa2, BORDER);
+   putbarrier (144,120,159,199, finalmapa2, BORDER);
+   putbarrier (176,88, 191, 199, finalmapa2, BORDER);
+   putbarrier (160,104,175,199, finalmapa2, BORDER);
+   putbarrier (128,136,143,199, finalmapa2, BORDER);
+   putbarrier (112,152,127,199, finalmapa2, BORDER);
+   putbarrier (96, 168,111, 199, finalmapa2, BORDER);
+   putbarrier (80, 184 , 95, 199, finalmapa2, BORDER);
+   putbarrier (48, 168 , 79, 199, finalmapa2, BORDER);
+   putbarrier (352, 184 , 367, 199, finalmapa2, BORDER);
    putbarrier (0, 200, 563, 223, finalmapa2, BORDER);
    putbarrier (FINALMAPA2_W-1, 0 , FINALMAPA2_W, BUFFER_H, finalmapa2, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa2, EXIT4);
@@ -535,7 +649,7 @@ int main(void)
             if (restart==true)
             {
                 //Estado inicial de Mario
-                Mario.live=3;
+                Mario.live=MARIO_LIVES;
                 Mario.death=false;
                 Mario.x=118;
                 Mario.y=181;
@@ -548,10 +662,32 @@ int main(void)
                 Mario.timer=LEVEL_TIME;
                 Mario.score=0;
                 
-               //Estado inicial de las monedas
+               //Estado inicial de las monedas MAPA 1
                 coin_start(pcoin1,100,100,MAPA1,restart);
                 coin_start(pcoin2,130,100,MAPA1,restart);
                 coin_start(pcoin3,150,100,MAPA1,restart);
+                coin_start(pcoin4,2895,52,MAPA1,restart);
+                coin_start(pcoin5,1402,41,MAPA1,restart);
+                coin_start(pcoin6,304,118,MAPA1,restart);
+                coin_start(pcoin7,539,71,MAPA1,restart);
+                coin_start(pcoin8,688,86,MAPA1,restart);
+                coin_start(pcoin9,697,171,MAPA1,restart);
+                coin_start(pcoin10,940,96,MAPA1,restart);
+                coin_start(pcoin11,1087,182,MAPA1,restart);
+                coin_start(pcoin12,1121,182,MAPA1,restart);
+                coin_start(pcoin13,1272,78,MAPA1,restart);
+                coin_start(pcoin14,1272,130,MAPA1,restart);
+                coin_start(pcoin15,1530,179,MAPA1,restart);
+                coin_start(pcoin16,1648,53,MAPA1,restart);
+                coin_start(pcoin17,1768,179,MAPA1,restart);
+                coin_start(pcoin18,1863,103,MAPA1,restart);
+                coin_start(pcoin19,2135,34,MAPA1,restart);
+                coin_start(pcoin20,2149,175,MAPA1,restart);
+                coin_start(pcoin21,2204,175,MAPA1,restart);
+                coin_start(pcoin22,2366,147,MAPA1,restart);
+                coin_start(pcoin23,2550,142,MAPA1,restart);
+                coin_start(pcoin24,2600,142,MAPA1,restart);
+                coin_start(pcoin25,2825,117,MAPA1,restart);
                 
                 //Carga del primer mapa
                 
@@ -575,17 +711,43 @@ int main(void)
                     
                     //Estado inicial de los enemigos
                     
-                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
+                    //MAPA 1
+                    
                     enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
-                    enemy_start(RF1p,false,REDFISH,MAPA1,268,87,false,0);
                     enemy_start(F2p,false,FISH,MAPA1,380,86,false,0);
-                    enemy_start(S1p,false,SQUID,MAPA1,459,173,false,0);
                     enemy_start(F3p,false,FISH,MAPA1,615,71,false,0);
-                    enemy_start(RF2p,false,REDFISH,MAPA1,756,172,false,0);
-                    enemy_start(S2p,false,SQUID,MAPA1,944,168,false,0);
                     enemy_start(F4p,false,FISH,MAPA1,944,42,false,0);
-                  
+                    enemy_start(F5p,false,FISH,MAPA1,1200,72,false,0);
+                    enemy_start(F6p,false,FISH,MAPA1,1416,173,false,0);
+                    enemy_start(F7p,false,FISH,MAPA1,1538,104,false,0);
+                    enemy_start(F8p,false,FISH,MAPA1,1708,55,false,0);
+                    enemy_start(F9p,false,FISH,MAPA1,2230,166,false,0);
+                    enemy_start(F10p,false,FISH,MAPA1,2426,142,false,0);
+                    enemy_start(F11p,false,FISH,MAPA1,2613,107,false,0);
+                    enemy_start(F12p,false,FISH,MAPA1,2935,111,false,0);
+                    
+                    enemy_start(RF1p,false,REDFISH,MAPA1,268,87,false,0);
+                    enemy_start(RF2p,false,REDFISH,MAPA1,756,172,false,0);
+                    enemy_start(RF3p,false,REDFISH,MAPA1,1465,40,false,0);
+                    enemy_start(RF4p,false,REDFISH,MAPA1,1820,158,false,0);
+                    enemy_start(RF5p,false,REDFISH,MAPA1,1922,84,false,0);
+                    enemy_start(RF6p,false,REDFISH,MAPA1,2322,84,false,0);
+                    enemy_start(RF7p,false,REDFISH,MAPA1,2610,46,false,0);
+                    enemy_start(RF8p,false,REDFISH,MAPA1,2787,112,false,0);
+                    enemy_start(RF9p,false,REDFISH,MAPA1,2988,48,false,0);
+                    
+                    enemy_start(S1p,false,SQUID,MAPA1,459,173,false,0);
+                    enemy_start(S2p,false,SQUID,MAPA1,944,168,false,0);
+                    enemy_start(S3p,false,SQUID,MAPA1,1056,98,false,0);
+                    enemy_start(S4p,false,SQUID,MAPA1,1258,131,false,0);
+                    enemy_start(S5p,false,SQUID,MAPA1,1615,179,false,0);
+                    enemy_start(S6p,false,SQUID,MAPA1,2076,107,false,0);
+                    enemy_start(S7p,false,SQUID,MAPA1,2739,168,false,0);
 
+                    //MAPA 3 - BOSS
+                    
+                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
+                    
                     enemy_start(M1p,false,MISIL1,MAPA3,277,114,false,60*4);
                     enemy_start(M2p,false,MISIL2,MAPA3,277,114,false,60*6);
                     enemy_start(M3p,false,MISIL3,MAPA3,277,117,true,60*8);
@@ -605,18 +767,64 @@ int main(void)
                 fcoin(pMario,pcoin1);
                 fcoin(pMario,pcoin2);
                 fcoin(pMario,pcoin3);
+                fcoin(pMario,pcoin4);
+                fcoin(pMario,pcoin5);
+                fcoin(pMario,pcoin6);
+                fcoin(pMario,pcoin7);
+                fcoin(pMario,pcoin8);
+                fcoin(pMario,pcoin9);
+                fcoin(pMario,pcoin10);
+                fcoin(pMario,pcoin11);
+                fcoin(pMario,pcoin12);
+                fcoin(pMario,pcoin13);
+                fcoin(pMario,pcoin14);
+                fcoin(pMario,pcoin15);
+                fcoin(pMario,pcoin16);
+                fcoin(pMario,pcoin17);
+                fcoin(pMario,pcoin18);
+                fcoin(pMario,pcoin19);
+                fcoin(pMario,pcoin20);
+                fcoin(pMario,pcoin21);
+                fcoin(pMario,pcoin22);
+                fcoin(pMario,pcoin23);
+                fcoin(pMario,pcoin24);
+                fcoin(pMario,pcoin25);
                 Mario.coin_obt=false;
                 
-                //Movimiento de enemigos
+                //Movimiento de enemigos MAPA 1
                 
                 enemy_mov(F1p, pMario);
                 enemy_mov(F2p, pMario);
                 enemy_mov(F3p, pMario);
                 enemy_mov(F4p, pMario);
+                enemy_mov(F5p, pMario);
+                enemy_mov(F6p, pMario);
+                enemy_mov(F7p, pMario);
+                enemy_mov(F8p, pMario);
+                enemy_mov(F9p, pMario);
+                enemy_mov(F10p, pMario);
+                enemy_mov(F11p, pMario);
+                enemy_mov(F12p, pMario);
+                
                 enemy_mov(RF1p, pMario);
                 enemy_mov(RF2p, pMario);
+                enemy_mov(RF3p, pMario);
+                enemy_mov(RF4p, pMario);
+                enemy_mov(RF5p, pMario);
+                enemy_mov(RF6p, pMario);
+                enemy_mov(RF7p, pMario);
+                enemy_mov(RF8p, pMario);
+                enemy_mov(RF9p, pMario);
+                
                 enemy_mov(S1p, pMario);
                 enemy_mov(S2p, pMario);
+                enemy_mov(S3p, pMario);
+                enemy_mov(S4p, pMario);
+                enemy_mov(S5p, pMario);
+                enemy_mov(S6p, pMario);
+                enemy_mov(S7p, pMario);
+                
+                //Movimiento de enemigos MAPA 3 - BOSS
                 
                 enemy_mov(Bossp, pMario);
                 enemy_mov(M1p, pMario);
@@ -643,7 +851,7 @@ int main(void)
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==false)
                         {
                         (Mario.salto_cooldown)= 30;
-                        (Mario.salto) = 18;
+                        (Mario.salto) = SALTO_H;
                         (Mario.salto_lock)=true;
                         }                    
                     }
@@ -687,7 +895,7 @@ int main(void)
                 if ((Mario.y) >= MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa,p_background) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
                    {
                     (Mario.salto)-=1;
-                    (Mario.y) -= MOVE_RATE;
+                    (Mario.y) -= MOVE_RATE*SALTO_SPEED;
                    }
                 
                 }
@@ -837,20 +1045,44 @@ int main(void)
                 else al_draw_bitmap(mario5, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
                 }
             
-            //Dibujo de enemigos
+            //Dibujo de enemigos MAPA 1
             
             draw_enemy (F1p, pMario, p_bitmaps_t);
             draw_enemy (F2p, pMario, p_bitmaps_t);
             draw_enemy (F3p, pMario, p_bitmaps_t);
             draw_enemy (F4p, pMario, p_bitmaps_t);
-            draw_enemy (F1p, pMario, p_bitmaps_t);
+            draw_enemy (F5p, pMario, p_bitmaps_t);
+            draw_enemy (F6p, pMario, p_bitmaps_t);
+            draw_enemy (F7p, pMario, p_bitmaps_t);
+            draw_enemy (F8p, pMario, p_bitmaps_t);
+            draw_enemy (F9p, pMario, p_bitmaps_t);
+            draw_enemy (F10p, pMario, p_bitmaps_t);
+            draw_enemy (F11p, pMario, p_bitmaps_t);
+            draw_enemy (F12p, pMario, p_bitmaps_t);
+            
+            
             draw_enemy (RF1p, pMario, p_bitmaps_t);
             draw_enemy (RF2p, pMario, p_bitmaps_t);
+            draw_enemy (RF3p, pMario, p_bitmaps_t);
+            draw_enemy (RF4p, pMario, p_bitmaps_t);
+            draw_enemy (RF5p, pMario, p_bitmaps_t);
+            draw_enemy (RF6p, pMario, p_bitmaps_t);
+            draw_enemy (RF7p, pMario, p_bitmaps_t);
+            draw_enemy (RF8p, pMario, p_bitmaps_t);
+            draw_enemy (RF9p, pMario, p_bitmaps_t);
+            
             draw_enemy (S1p, pMario, p_bitmaps_t);
             draw_enemy (S2p, pMario, p_bitmaps_t);
+            draw_enemy (S3p, pMario, p_bitmaps_t);
+            draw_enemy (S4p, pMario, p_bitmaps_t);
+            draw_enemy (S5p, pMario, p_bitmaps_t);
+            draw_enemy (S6p, pMario, p_bitmaps_t);
+            draw_enemy (S7p, pMario, p_bitmaps_t);
 
+            //Dibujo de enemigos MAPA 3 - BOSS
             
             draw_enemy (Bossp, pMario, p_bitmaps_t);
+            
             draw_enemy (M1p, pMario, p_bitmaps_t);
             draw_enemy (M2p, pMario, p_bitmaps_t);
             draw_enemy (M3p, pMario, p_bitmaps_t);
@@ -859,12 +1091,32 @@ int main(void)
             draw_enemy (M6p, pMario, p_bitmaps_t);
             
             
-            //Dibujo de monedas
+            //Dibujo de monedas MAPA 1
             draw_coin(pMario,pcoin1,p_bitmaps_t);
             draw_coin(pMario,pcoin2,p_bitmaps_t);
             draw_coin(pMario,pcoin3,p_bitmaps_t);
-            
-                
+            draw_coin(pMario,pcoin4,p_bitmaps_t);
+            draw_coin(pMario,pcoin5,p_bitmaps_t);
+            draw_coin(pMario,pcoin6,p_bitmaps_t);
+            draw_coin(pMario,pcoin7,p_bitmaps_t);
+            draw_coin(pMario,pcoin8,p_bitmaps_t);
+            draw_coin(pMario,pcoin9,p_bitmaps_t);
+            draw_coin(pMario,pcoin10,p_bitmaps_t);
+            draw_coin(pMario,pcoin11,p_bitmaps_t);
+            draw_coin(pMario,pcoin12,p_bitmaps_t);
+            draw_coin(pMario,pcoin13,p_bitmaps_t);
+            draw_coin(pMario,pcoin14,p_bitmaps_t);
+            draw_coin(pMario,pcoin15,p_bitmaps_t);
+            draw_coin(pMario,pcoin16,p_bitmaps_t);
+            draw_coin(pMario,pcoin17,p_bitmaps_t);
+            draw_coin(pMario,pcoin18,p_bitmaps_t);
+            draw_coin(pMario,pcoin19,p_bitmaps_t);
+            draw_coin(pMario,pcoin20,p_bitmaps_t);
+            draw_coin(pMario,pcoin21,p_bitmaps_t);
+            draw_coin(pMario,pcoin22,p_bitmaps_t);
+            draw_coin(pMario,pcoin23,p_bitmaps_t);
+            draw_coin(pMario,pcoin24,p_bitmaps_t);
+            draw_coin(pMario,pcoin25,p_bitmaps_t);
             
             
             if ((Mario.live)==0) //Si se acabaron las vidas aparece el cartel de game over
