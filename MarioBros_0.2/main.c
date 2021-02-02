@@ -27,7 +27,7 @@
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
 #define XINICIAL 55
-#define YINICIAL 110
+#define YINICIAL 70
 #define LEVEL_TIME 120
 
 #define MAPAINICIO 0
@@ -537,8 +537,8 @@ int main(void)
                 //Estado inicial de Mario
                 Mario.live=3;
                 Mario.death=false;
-                Mario.x=XINICIAL;
-                Mario.y=YINICIAL;
+                Mario.x=118;
+                Mario.y=181;
                 Mario.n_mapa_actual=MAPAINICIO;
                 Mario.salto=0;
                 Mario.salto_cooldown=0;
@@ -554,6 +554,7 @@ int main(void)
                 coin_start(pcoin3,150,100,MAPA1,restart);
                 
                 //Carga del primer mapa
+                
                 clonarMatriz(mapainicio,mapa);
                 background = al_load_bitmap("mapa-inicio.png");
 
@@ -568,8 +569,8 @@ int main(void)
                     {
                     Mario.live-=1;
                     Mario.death=false;
-                    Mario.x=5;
-                    Mario.y=11;
+                    Mario.x=XINICIAL;
+                    Mario.y=YINICIAL;
                     }
                     
                     //Estado inicial de los enemigos
@@ -946,7 +947,7 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu
     //Dibujo de otros mensajes
     if (pausa==true)
         {
-        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XINICIAL)//pantalla de inicio
+        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==118)//pantalla de inicio
             {
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,13*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "Presiona");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,14*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "la tecla P ");
