@@ -241,6 +241,26 @@ int main(void)
     coin * pcoin24=&coin24;
     coin coin25;
     coin * pcoin25=&coin25;
+    coin coin26;
+    coin * pcoin26=&coin26;
+    coin coin27;
+    coin * pcoin27=&coin27;
+    coin coin28;
+    coin * pcoin28=&coin28;
+    coin coin29;
+    coin * pcoin29=&coin29;
+    coin coin30;
+    coin * pcoin30=&coin30;
+    coin coin31;
+    coin * pcoin31=&coin31;
+    coin coin32;
+    coin * pcoin32=&coin32;
+    coin coin33;
+    coin * pcoin33=&coin33;
+    coin coin34;
+    coin * pcoin34=&coin34;
+    coin coin35;
+    coin * pcoin35=&coin35;
     
     
     //Inicializacion de enemigos MAPA 1
@@ -689,6 +709,18 @@ int main(void)
                 coin_start(pcoin24,2600,142,MAPA1,restart);
                 coin_start(pcoin25,2825,117,MAPA1,restart);
                 
+                //Estado inicial de las monedas MAPA 2
+                coin_start(pcoin26,193,108,MAPA2,restart);
+                coin_start(pcoin27,224,108,MAPA2,restart);
+                coin_start(pcoin28,254,108,MAPA2,restart);
+                coin_start(pcoin29,639,119,MAPA2,restart);
+                coin_start(pcoin30,1791,119,MAPA2,restart);
+                coin_start(pcoin31,1023,119,MAPA2,restart);
+                coin_start(pcoin32,1407,119,MAPA2,restart);
+                coin_start(pcoin33,1607,179,MAPA2,restart);
+                coin_start(pcoin34,1223,61,MAPA2,restart);
+                coin_start(pcoin35,840,179,MAPA2,restart);
+                
                 //Carga del primer mapa
                 
                 clonarMatriz(mapainicio,mapa);
@@ -789,6 +821,20 @@ int main(void)
                 fcoin(pMario,pcoin23);
                 fcoin(pMario,pcoin24);
                 fcoin(pMario,pcoin25);
+                
+                fcoin(pMario,pcoin26);
+                fcoin(pMario,pcoin27);
+                fcoin(pMario,pcoin28);
+                fcoin(pMario,pcoin29);
+                fcoin(pMario,pcoin30);
+                fcoin(pMario,pcoin31);
+                fcoin(pMario,pcoin32);
+                fcoin(pMario,pcoin33);
+                fcoin(pMario,pcoin34);
+                fcoin(pMario,pcoin35);
+                
+                
+                
                 Mario.coin_obt=false;
                 
                 //Movimiento de enemigos MAPA 1
@@ -1117,6 +1163,18 @@ int main(void)
             draw_coin(pMario,pcoin23,p_bitmaps_t);
             draw_coin(pMario,pcoin24,p_bitmaps_t);
             draw_coin(pMario,pcoin25,p_bitmaps_t);
+            
+            draw_coin(pMario,pcoin26,p_bitmaps_t);
+            draw_coin(pMario,pcoin27,p_bitmaps_t);
+            draw_coin(pMario,pcoin28,p_bitmaps_t);
+            draw_coin(pMario,pcoin29,p_bitmaps_t);
+            draw_coin(pMario,pcoin30,p_bitmaps_t);
+            draw_coin(pMario,pcoin31,p_bitmaps_t);
+            draw_coin(pMario,pcoin32,p_bitmaps_t);
+            draw_coin(pMario,pcoin33,p_bitmaps_t);
+            draw_coin(pMario,pcoin34,p_bitmaps_t);
+            draw_coin(pMario,pcoin35,p_bitmaps_t);
+            
             
             
             if ((Mario.live)==0) //Si se acabaron las vidas aparece el cartel de game over
