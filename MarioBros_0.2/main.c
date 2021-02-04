@@ -28,7 +28,7 @@
 #define SALTO_SPEED 1 //Velocidad de la subida al saltar
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
-#define MARIO_LIVES 3
+#define MARIO_LIVES 10
 #define XINICIAL 55
 #define YINICIAL 70
 #define LEVEL_TIME 240
@@ -288,6 +288,36 @@ int main(void)
     enemy * F11p = &F11;
     enemy F12;
     enemy * F12p = &F12;
+    enemy F13;
+    enemy * F13p = &F13;
+    enemy F14;
+    enemy * F14p = &F14;
+    enemy F15;
+    enemy * F15p = &F15;
+    enemy F16;
+    enemy * F16p = &F16;
+    enemy F17;
+    enemy * F17p = &F17;
+    enemy F18;
+    enemy * F18p = &F18;
+    enemy F19;
+    enemy * F19p = &F19;
+    enemy F20;
+    enemy * F20p = &F20;
+    enemy F21;
+    enemy * F21p = &F21;
+    enemy F22;
+    enemy * F22p = &F22;
+    enemy F23;
+    enemy * F23p = &F23;
+    enemy F24;
+    enemy * F24p = &F24;
+    enemy F25;
+    enemy * F25p = &F25;
+    enemy F26;
+    enemy * F26p = &F26;
+    enemy F27;
+    enemy * F27p = &F27;
     
     
     enemy RF1;
@@ -308,6 +338,15 @@ int main(void)
     enemy * RF8p = &RF8;
     enemy RF9;
     enemy * RF9p = &RF9;
+    enemy RF10;
+    enemy * RF10p = &RF10;
+    enemy RF11;
+    enemy * RF11p = &RF11;
+    enemy RF12;
+    enemy * RF12p = &RF12;
+    enemy RF13;
+    enemy * RF13p = &RF13;
+    
     
     enemy S1;
     enemy * S1p = &S1;
@@ -323,6 +362,20 @@ int main(void)
     enemy * S6p = &S6;
     enemy S7;
     enemy * S7p = &S7;
+    enemy S8;
+    enemy * S8p = &S8;
+    enemy S9;
+    enemy * S9p = &S9;
+    enemy S10;
+    enemy * S10p = &S10;
+    enemy S11;
+    enemy * S11p = &S11;
+    enemy S12;
+    enemy * S12p = &S12;
+    enemy S13;
+    enemy * S13p = &S13;
+    enemy S14;
+    enemy * S14p = &S14;
     
     // Inicializacion enemigos MAPA 3 - BOSS
     enemy Boss;
@@ -418,6 +471,7 @@ int main(void)
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
    
     //Mapa 1
+   //putbarrier (0 , 0, 3102, 23,  mapa1, BORDER); // Borde de la parte de arriba 
    putbarrier (0 , 200, 3101, 223,  mapa1, BORDER);
    putbarrier (175, 152, 190, 199,  mapa1, BORDER);
    putbarrier (288, 136, 335, 151,  mapa1, BORDER);
@@ -528,8 +582,9 @@ int main(void)
    putbarrier (447, 168, 463, 198, finalmapa2, EXIT4);
    
    //Mapa 3
-   putbarrier (0, 200, 563, 223, mapa3, BORDER);
-   putbarrier (MAPA3_W-1, 0 , MAPA3_W, BUFFER_H, mapa3, BORDER);
+   putbarrier (0, 0, 337, 239, mapa3, BORDER);
+   putbarrier (12, 22, 289, 207, mapa3, EMPTY);
+   putbarrier (290, 96, 337, 159, mapa3, EMPTY);
    
    
     //Carga de bitmaps, y otras variables de allegro
@@ -774,6 +829,37 @@ int main(void)
                     enemy_start(S5p,false,SQUID,MAPA1,1615,179,false,0);
                     enemy_start(S6p,false,SQUID,MAPA1,2076,107,false,0);
                     enemy_start(S7p,false,SQUID,MAPA1,2739,168,false,0);
+                    
+                    //MAPA 2
+                    
+                    enemy_start(F13p,false,FISH,MAPA2,293,98,false,0);
+                    enemy_start(F14p,false,FISH,MAPA2,371,182,false,0);
+                    enemy_start(F15p,false,FISH,MAPA2,484,73,false,0);
+                    enemy_start(F16p,false,FISH,MAPA2,528,142,false,0);
+                    enemy_start(F17p,false,FISH,MAPA2,696,144,false,0);
+                    enemy_start(F18p,false,FISH,MAPA2,751,98,false,0);
+                    enemy_start(F19p,false,FISH,MAPA2,808,180,false,0);
+                    enemy_start(F20p,false,FISH,MAPA2,963,99,false,0);
+                    enemy_start(F21p,false,FISH,MAPA2,1083,97,false,0);
+                    enemy_start(F22p,false,FISH,MAPA2,1173,178,false,0);
+                    enemy_start(F23p,false,FISH,MAPA2,1230,74,false,0);
+                    enemy_start(F24p,false,FISH,MAPA2,1389,141,false,0);
+                    enemy_start(F25p,false,FISH,MAPA2,1511,98,false,0);
+                    enemy_start(F26p,false,FISH,MAPA2,1590,165,false,0);
+                    enemy_start(F27p,false,FISH,MAPA2,1760,102,false,0);
+                    
+                    enemy_start(RF10p,false,REDFISH,MAPA2,1147,49,false,0);
+                    enemy_start(RF11p,false,REDFISH,MAPA2,1337,148,false,0);
+                    enemy_start(RF12p,false,REDFISH,MAPA2,1633,53,false,0);
+                    enemy_start(RF13p,false,REDFISH,MAPA2,2061,76,false,0);
+                    
+                    enemy_start(S8p,false,SQUID,MAPA2,892,148,false,0);
+                    enemy_start(S9p,false,SQUID,MAPA2,1193,138,false,0);
+                    enemy_start(S10p,false,SQUID,MAPA2,1340,104,false,0);
+                    enemy_start(S11p,false,SQUID,MAPA2,1530,179,false,0);
+                    enemy_start(S12p,false,SQUID,MAPA2,1168,107,false,0);
+                    enemy_start(S13p,false,SQUID,MAPA2,1872,139,false,0);
+                    enemy_start(S14p,false,SQUID,MAPA2,2070,185,false,0);
 
                     //MAPA 3 - BOSS
                     
@@ -870,6 +956,38 @@ int main(void)
                 enemy_mov(S5p, pMario);
                 enemy_mov(S6p, pMario);
                 enemy_mov(S7p, pMario);
+                
+                //Movimiento de enemigos MAPA 2
+                
+                enemy_mov(F12p, pMario);
+                enemy_mov(F13p, pMario);
+                enemy_mov(F14p, pMario);
+                enemy_mov(F15p, pMario);
+                enemy_mov(F16p, pMario);
+                enemy_mov(F17p, pMario);
+                enemy_mov(F18p, pMario);
+                enemy_mov(F19p, pMario);
+                enemy_mov(F20p, pMario);
+                enemy_mov(F21p, pMario);
+                enemy_mov(F22p, pMario);
+                enemy_mov(F23p, pMario);
+                enemy_mov(F24p, pMario);
+                enemy_mov(F25p, pMario);
+                enemy_mov(F26p, pMario);
+                enemy_mov(F27p, pMario);
+                
+                enemy_mov(RF10p, pMario);
+                enemy_mov(RF11p, pMario);
+                enemy_mov(RF12p, pMario);
+                enemy_mov(RF13p, pMario);
+                
+                enemy_mov(S8p, pMario);
+                enemy_mov(S9p, pMario);
+                enemy_mov(S10p, pMario);
+                enemy_mov(S11p, pMario);
+                enemy_mov(S12p, pMario);
+                enemy_mov(S13p, pMario);
+                enemy_mov(S14p, pMario);
                 
                 //Movimiento de enemigos MAPA 3 - BOSS
                 
@@ -1122,7 +1240,6 @@ int main(void)
             draw_enemy (F11p, pMario, p_bitmaps_t);
             draw_enemy (F12p, pMario, p_bitmaps_t);
             
-            
             draw_enemy (RF1p, pMario, p_bitmaps_t);
             draw_enemy (RF2p, pMario, p_bitmaps_t);
             draw_enemy (RF3p, pMario, p_bitmaps_t);
@@ -1140,6 +1257,37 @@ int main(void)
             draw_enemy (S5p, pMario, p_bitmaps_t);
             draw_enemy (S6p, pMario, p_bitmaps_t);
             draw_enemy (S7p, pMario, p_bitmaps_t);
+            
+            //Dibujo de enemigos MAPA 2
+            draw_enemy (F13p, pMario, p_bitmaps_t);
+            draw_enemy (F14p, pMario, p_bitmaps_t);
+            draw_enemy (F15p, pMario, p_bitmaps_t);
+            draw_enemy (F16p, pMario, p_bitmaps_t);
+            draw_enemy (F17p, pMario, p_bitmaps_t);
+            draw_enemy (F18p, pMario, p_bitmaps_t);
+            draw_enemy (F19p, pMario, p_bitmaps_t);
+            draw_enemy (F20p, pMario, p_bitmaps_t);
+            draw_enemy (F21p, pMario, p_bitmaps_t);
+            draw_enemy (F22p, pMario, p_bitmaps_t);
+            draw_enemy (F23p, pMario, p_bitmaps_t);
+            draw_enemy (F24p, pMario, p_bitmaps_t);
+            draw_enemy (F25p, pMario, p_bitmaps_t);
+            draw_enemy (F26p, pMario, p_bitmaps_t);
+            draw_enemy (F27p, pMario, p_bitmaps_t);
+            
+            draw_enemy (RF10p, pMario, p_bitmaps_t);
+            draw_enemy (RF11p, pMario, p_bitmaps_t);
+            draw_enemy (RF12p, pMario, p_bitmaps_t);
+            draw_enemy (RF13p, pMario, p_bitmaps_t);
+            
+            draw_enemy (S8p, pMario, p_bitmaps_t);
+            draw_enemy (S9p, pMario, p_bitmaps_t);
+            draw_enemy (S10p, pMario, p_bitmaps_t);
+            draw_enemy (S11p, pMario, p_bitmaps_t);
+            draw_enemy (S12p, pMario, p_bitmaps_t);
+            draw_enemy (S13p, pMario, p_bitmaps_t);
+            draw_enemy (S14p, pMario, p_bitmaps_t);
+            
 
             //Dibujo de enemigos MAPA 3 - BOSS
             
