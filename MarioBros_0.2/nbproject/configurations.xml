@@ -11,10 +11,7 @@
       <itemPath>Mario3.png</itemPath>
       <itemPath>Mario4.png</itemPath>
       <itemPath>Mario5.png</itemPath>
-      <itemPath>NES - Super Mario Bros - Enemies &amp; Bosses.png</itemPath>
-      <itemPath>NES - Super Mario Bros - Items Objects and NPCs.png</itemPath>
-      <itemPath>NES - Super Mario Bros - World 7-2.png</itemPath>
-      <itemPath>NES_-_Super_Mario_Bros_-_Mario__Luigi.png</itemPath>
+      <itemPath>Mario6.png</itemPath>
       <itemPath>bala.png</itemPath>
       <itemPath>boss.png</itemPath>
       <itemPath>coin.png</itemPath>
@@ -98,25 +95,7 @@
       </item>
       <item path="Mario5.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="NES - Super Mario Bros - Enemies &amp; Bosses.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES - Super Mario Bros - Items Objects and NPCs.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES - Super Mario Bros - World 7-2.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES_-_Super_Mario_Bros_-_Mario__Luigi.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="Mario6.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="bala.png" ex="false" tool="3" flavor2="0">
       </item>
@@ -192,25 +171,7 @@
       </item>
       <item path="Mario5.png" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="NES - Super Mario Bros - Enemies &amp; Bosses.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES - Super Mario Bros - Items Objects and NPCs.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES - Super Mario Bros - World 7-2.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
-      </item>
-      <item path="NES_-_Super_Mario_Bros_-_Mario__Luigi.png"
-            ex="false"
-            tool="3"
-            flavor2="0">
+      <item path="Mario6.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="bala.png" ex="false" tool="3" flavor2="0">
       </item>

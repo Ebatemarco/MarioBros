@@ -28,10 +28,10 @@
 #define SALTO_SPEED 1 //Velocidad de la subida al saltar
 #define MARIO_W 16 //Tamaño del sprite
 #define MARIO_H 16 //Tamaño del sprite
-#define MARIO_LIVES 10
+#define MARIO_LIVES 3
 #define XINICIAL 55
 #define YINICIAL 70
-#define LEVEL_TIME 120
+#define LEVEL_TIME 240
 
 #define MAPAINICIO 0
 #define MAPA1 1
@@ -189,7 +189,7 @@ int main(void)
     player Mario;
     player * pMario = &Mario;
     
-    //Inicializacion de monedas MAPA 1
+    //Inicializacion de monedas
     
     coin coin1;
     coin * pcoin1=&coin1;
@@ -352,7 +352,6 @@ int main(void)
     
     bool pausa= false;
     bool pausa_lock = false;
-    //bool startup=true;//flag que indica si el juego se acaba de iniciar
     bool restart=true;//flag que indica si el juego se reinicio
     
     int timemarker=0;
@@ -364,6 +363,7 @@ int main(void)
     //Variables relacionadas solo con el dibujo de mario
     int mariomove=0;//variable utilizada para alternar entre las animaciones 
     bool marioright=true;//flag que indica si mario esta mirando hcia la derecha
+    bool mariosteady=false;//flag que indica si mario esta quieto
     
     
     //Inicializacion de bitmaps y otras variables de allegro
@@ -379,6 +379,7 @@ int main(void)
     ALLEGRO_BITMAP *mario3 = NULL;
     ALLEGRO_BITMAP *mario4 = NULL;
     ALLEGRO_BITMAP *mario5 = NULL;
+    ALLEGRO_BITMAP *mario6 = NULL;
     
     ALLEGRO_BITMAP *background = NULL;
     ALLEGRO_BITMAP *game_over = NULL;
@@ -408,8 +409,6 @@ int main(void)
     bitmaps_t bitmaps = {&fish1,&fish2,&redfish1,&redfish2,&squid1,&squid2,&coin,&boss,&misil,&explosion1,&explosion2,&explosion3};//se utiliza una estructura de bitmaps para hacer más simple el uso de funciones de animación
     bitmaps_t * p_bitmaps_t = &bitmaps;
     
-    //ALLEGRO_COLOR grey;
-      // grey = al_map_rgb(255, 0, 0);
 
    //Zona de creacion de barreras
     
@@ -590,6 +589,7 @@ int main(void)
     mario3 = al_load_bitmap("Mario3.png");
     mario4 = al_load_bitmap("Mario4.png");
     mario5 = al_load_bitmap("Mario5.png");
+    mario6 = al_load_bitmap("Mario6.png");
     
     fish1 = al_load_bitmap("fish1.png");
 
@@ -647,7 +647,6 @@ int main(void)
         return -1;
     }
 
-    //al_init_primitives_addon();//inicia la parte de alegro que dibuja cosas simples
 
     //Registro de eventos
 
@@ -672,7 +671,7 @@ int main(void)
                 Mario.live=MARIO_LIVES;
                 Mario.death=false;
                 Mario.x=118;
-                Mario.y=181;
+                Mario.y=183;
                 Mario.n_mapa_actual=MAPAINICIO;
                 Mario.salto=0;
                 Mario.salto_cooldown=0;
@@ -790,6 +789,8 @@ int main(void)
                     restart=false;
                 }
             
+            mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
+            
             if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
             {          
                
@@ -889,11 +890,15 @@ int main(void)
                     timemarker=0;
                     }
                 
+
+
+                        
                 //Teclas de movimiento
  
                 if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa,p_background ))
                     {
                     mariomove++;
+                    mariosteady=false;
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==false)
                         {
                         (Mario.salto_cooldown)= 30;
@@ -910,6 +915,7 @@ int main(void)
                     {
                     (Mario.y) += MOVE_RATE;
                     mariomove++;
+                    mariosteady=false;
                     }
 
                 if (key_pressed[KEY_LEFT] && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
@@ -917,6 +923,7 @@ int main(void)
                     (Mario.x) -= MOVE_RATE;
                     mariomove++;
                     marioright=false;
+                    mariosteady=false;
                     }
 
                 if (key_pressed[KEY_RIGHT] && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa,p_background))
@@ -924,6 +931,7 @@ int main(void)
                     (Mario.x) += MOVE_RATE;
                     mariomove++;
                     marioright=true;
+                    mariosteady=false;
                     }
 
                 
@@ -1053,7 +1061,14 @@ int main(void)
             }
             
             //Dibujo de Mario
-            if (mariomove < 20 && mariomove >= 0)
+            
+            if ((!collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa,p_background))&& mariosteady==true)//Deteccion de si Mario está estático en el suelo
+                {
+                if (marioright==true)
+                al_draw_bitmap(mario6, (Mario.x), (Mario.y), 0);
+                else al_draw_bitmap(mario6, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
+                }
+            else if (mariomove < 20 && mariomove >= 0)
                 {
                 if (marioright==true)
                 al_draw_bitmap(mario1, (Mario.x), (Mario.y), 0);
@@ -1090,6 +1105,7 @@ int main(void)
                 al_draw_bitmap(mario5, (Mario.x), (Mario.y), 0);
                 else al_draw_bitmap(mario5, (Mario.x), (Mario.y), ALLEGRO_FLIP_HORIZONTAL);
                 }
+            
             
             //Dibujo de enemigos MAPA 1
             
@@ -1657,8 +1673,20 @@ void coin_start(coin* ncoin,float x,float y,char map,bool startup)
     ncoin->map=map;
     if(startup==true)//Si se acaba de iniciar el juego se rellena la matriz en donde se encuentra la moneda
     {
-    if(map==MAPA1)
-    putbarrier ((int)x, (int)y, (int)(x+COIN_SIZE), (int)(y+COIN_SIZE), mapa1, COIN);
+    switch(map)
+        {
+        case MAPA1:
+            putbarrier ((int)x, (int)y, (int)(x+COIN_SIZE), (int)(y+COIN_SIZE), mapa1, COIN);
+            break;
+        case MAPA2:
+            putbarrier ((int)x, (int)y, (int)(x+COIN_SIZE), (int)(y+COIN_SIZE), mapa2, COIN);
+            break;
+        case MAPA3:
+            putbarrier ((int)x, (int)y, (int)(x+COIN_SIZE), (int)(y+COIN_SIZE), mapa3, COIN);
+            break;
+        default:
+            break;
+        }
     }
 }
 
