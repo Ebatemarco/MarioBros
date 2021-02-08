@@ -1,11 +1,10 @@
 
 
-
-
-
 #include "dibujo allegro.h"
 #include "enemigos y monedas.h"
 #include "mapas.h"
+
+#include "raspberry.h"
 
 extern char mapa[BUFFER_H][BUFFER_W]; 
 extern char mapainicio[BUFFER_H][BUFFER_W]; 
@@ -13,6 +12,15 @@ extern char mapainicio[BUFFER_H][BUFFER_W];
 int main(void) 
 {
     //INICIALIZACION 
+#ifdef RPI
+    //Inicializacion Display RPi
+    joy_init();		//inicializa el joystick
+    disp_init();        //inicializa el display
+    disp_clear();	//limpia todo el display
+    
+    jcoord_t coord = {0,0};
+    
+#endif    
     
     //Inicializacion de Mario
     
@@ -255,6 +263,8 @@ int main(void)
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_FONT * font = NULL;
     
+    
+#ifdef ALLEGRO
     ALLEGRO_BITMAP *buffer = NULL;
     
     ALLEGRO_BITMAP *mario1 = NULL;
@@ -291,11 +301,7 @@ int main(void)
     
     bitmaps_t bitmaps = {&fish1,&fish2,&redfish1,&redfish2,&squid1,&squid2,&coin,&boss,&misil,&explosion1,&explosion2,&explosion3};//se utiliza una estructura de bitmaps para hacer más simple el uso de funciones de animación
     bitmaps_t * p_bitmaps_t = &bitmaps;
-    
 
-    barriers(); 
-   
-   
     //Carga de bitmaps, y otras variables de allegro
    
     /*Los if... se pueden reemplazar por la funcion must_init del github, quien quiera que lo haga*/
@@ -326,11 +332,7 @@ int main(void)
     }
     al_set_window_title(display,"SUPER Mario Bros - Underwater Edition");
     
-    timer = al_create_timer(1.0 / FPS);
-    if (!timer) {
-        fprintf(stderr, "failed to create timer!\n");
-        return -1;
-    }
+    
 
     buffer = al_create_bitmap(BUFFER_W, BUFFER_H);
     if (!buffer) {
@@ -346,7 +348,6 @@ int main(void)
         fprintf(stderr, "Could not load 'mariofont.ttf'.\n");
         return -1;
     }
-    
     
     mario1 = al_load_bitmap("Mario1.png");
     mario2 = al_load_bitmap("Mario2.png");
@@ -400,7 +401,17 @@ int main(void)
 
     
     explosion3 = al_load_bitmap("explosion3.png");
+    
+    background = al_load_bitmap("mapa-inicio.png");
 
+    #endif
+
+    timer = al_create_timer(1.0 / FPS);
+    if (!timer) {
+        fprintf(stderr, "failed to create timer!\n");
+        return -1;
+    }
+    
    
     event_queue = al_create_event_queue();
     if (!event_queue) 
@@ -420,6 +431,8 @@ int main(void)
 
     al_start_timer(timer);//inicio del timer
 
+    barriers();
+   
    
     while (!do_exit) 
     {    
@@ -434,8 +447,8 @@ int main(void)
                 //Estado inicial de Mario
                 Mario.live=MARIO_LIVES;
                 Mario.death=false;
-                Mario.x=118;
-                Mario.y=183;
+                Mario.x=XPANTALLA;
+                Mario.y=YPANTALLA;
                 Mario.n_mapa_actual=MAPAINICIO;
                 Mario.salto=0;
                 Mario.salto_cooldown=0;
@@ -445,7 +458,8 @@ int main(void)
                 Mario.timer=LEVEL_TIME;
                 Mario.score=0;
                 Mario.exit_pass=false;
-                
+
+#ifdef ALLEGRO                
                //Estado inicial de las monedas MAPA 1
                 coin_start(pcoin1,100,100,MAPA1,restart);
                 coin_start(pcoin2,130,100,MAPA1,restart);
@@ -484,12 +498,12 @@ int main(void)
                 coin_start(pcoin33,1607,179,MAPA2,restart);
                 coin_start(pcoin34,1223,61,MAPA2,restart);
                 coin_start(pcoin35,840,179,MAPA2,restart);
-                
+
+#endif /*ALLEGRO */                
                 //Carga del primer mapa
                 
                 clonarMatriz(mapainicio,mapa); //clonarMatriz(mapainicio,mapa);
-                background = al_load_bitmap("mapa-inicio.png");
-
+               
                 pausa=true;
             }
     
@@ -507,6 +521,7 @@ int main(void)
                     
                     //Estado inicial de los enemigos
                     
+#ifdef ALLEGRO                    
                     //MAPA 1
                     
                     enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
@@ -581,7 +596,7 @@ int main(void)
                     enemy_start(M4p,false,MISIL4,MAPA3,260,157,false,60*10);
                     enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
                     enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
-                    
+#endif /* ALLEGRO */                    
                     restart=false;
                 }
             
@@ -719,9 +734,77 @@ int main(void)
                     }
                 
 
-
-                        
                 //Teclas de movimiento
+#ifdef RPI
+
+            if ( (coord.y > MINY && coord.y <= MAXY) && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa ))
+                    {
+                    mariomove++;
+                    mariosteady=false;
+                    if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==false)
+                        {
+                        (Mario.salto_cooldown)= 30;
+                        (Mario.salto) = SALTO_H;
+                        (Mario.salto_lock)=true;
+                        }                    
+                    }
+                    
+                    if (!(coord.y > MINY && coord.y <= MAXY))
+                        (Mario.salto_lock)=false;
+                 
+                        
+                if ((coord.y > -MINY && coord.y <= -MAXY) && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder( pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa))
+                    {
+                    (Mario.y) += MOVE_RATE;
+                    mariomove++;
+                    mariosteady=false;
+                    }
+
+                if ((coord.x > -MINX && coord.x <= -MAXX) && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa))
+                    {
+                    (Mario.x) -= MOVE_RATE;
+                    mariomove++;
+                    marioright=false;
+                    mariosteady=false;
+                    }
+
+                if ((coord.x > MINX && coord.x <= MAXX) && collidewborder(pMario,(Mario.x)+MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE+MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa))
+                    {
+                    (Mario.x) += MOVE_RATE;
+                    mariomove++;
+                    marioright=true;
+                    mariosteady=false;
+                    }
+
+                
+                //Salto de Mario
+                
+                if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE  && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa)) //Mario cae siempre que no detecte nada abajo de él
+                    {
+                    (Mario.y) += MOVE_RATE/3; 
+                    mariomove++;
+                    }
+                
+                if((Mario.salto_cooldown)>0 ) //Se disminuye la variable (Mario.salto_cooldown) en cada loop, la cual sirve como un temporizador que no deja que Mario vuelva a saltar
+                    (Mario.salto_cooldown)--;
+                
+                if ((Mario.y) >= MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa) && (Mario.salto>0) ) //Mario salta lo determinado por la variable saltito
+                   {
+                    (Mario.salto)-=1;
+                    (Mario.y) -= MOVE_RATE*SALTO_SPEED;
+                   }
+                
+                disp_update();	//Actualiza el display con el contenido del buffer
+		joy_update();	//Mide las coordenadas del joystick
+                coord = joy_get_coord();//Guarda las coordenadas medidas
+                }    
+                
+                
+#endif                 
+                
+                
+#ifdef ALLEGRO      
+                
  
                 if (key_pressed[KEY_UP] && (Mario.y) >= MOVE_RATE && collidewborder(pMario ,(Mario.x), (Mario.y)-MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)-MOVE_RATE+MARIO_SIZE, mapa ))
                     {
@@ -1076,8 +1159,12 @@ int main(void)
     al_destroy_bitmap(squid2);
     al_destroy_bitmap(coin);
     
-    al_destroy_timer(timer);
     al_destroy_display(display);
+    
+#endif    
+    
+    al_destroy_timer(timer);
+    
     return 0;
 }
 

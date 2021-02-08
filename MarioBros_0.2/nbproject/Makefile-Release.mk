@@ -38,7 +38,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/dibujo\ allegro.o \
 	${OBJECTDIR}/enemigos\ y\ monedas.o \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/mapas.o
+	${OBJECTDIR}/mapas.o \
+	${OBJECTDIR}/raspberry.o
 
 
 # C Compiler Flags
@@ -86,6 +87,11 @@ ${OBJECTDIR}/mapas.o: mapas.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mapas.o mapas.c
+
+${OBJECTDIR}/raspberry.o: raspberry.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/raspberry.o raspberry.c
 
 # Subprojects
 .build-subprojects:

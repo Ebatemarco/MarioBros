@@ -6,9 +6,13 @@
                    projectFiles="true">
       <itemPath>constantes.h</itemPath>
       <itemPath>dibujo allegro.h</itemPath>
+      <itemPath>disdrv.h</itemPath>
       <itemPath>enemigos y monedas.h</itemPath>
       <itemPath>estructuras.h</itemPath>
+      <itemPath>joydrv.h</itemPath>
       <itemPath>mapas.h</itemPath>
+      <itemPath>raspberry.h</itemPath>
+      <itemPath>termlib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="f1" displayName="Resource Files" projectFiles="true">
       <itemPath>Mario1.png</itemPath>
@@ -45,6 +49,7 @@
       <itemPath>enemigos y monedas.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>mapas.c</itemPath>
+      <itemPath>raspberry.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -117,6 +122,8 @@
       </item>
       <item path="dibujo allegro.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="disdrv.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
@@ -134,6 +141,8 @@
       <item path="fish2.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gameover.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="joydrv.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -155,6 +164,10 @@
       </item>
       <item path="menu de pausa.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="raspberry.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="raspberry.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="redfish1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="redfish2.png" ex="false" tool="3" flavor2="0">
@@ -162,6 +175,8 @@
       <item path="squid1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="squid2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="termlib.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -209,6 +224,8 @@
       </item>
       <item path="dibujo allegro.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="disdrv.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
@@ -226,6 +243,8 @@
       <item path="fish2.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gameover.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="joydrv.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -247,6 +266,10 @@
       </item>
       <item path="menu de pausa.png" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="raspberry.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="raspberry.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="redfish1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="redfish2.png" ex="false" tool="3" flavor2="0">
@@ -254,6 +277,8 @@
       <item path="squid1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="squid2.png" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="termlib.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

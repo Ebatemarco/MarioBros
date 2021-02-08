@@ -19,6 +19,8 @@ char mapa[BUFFER_H][BUFFER_W]={EMPTY};
 
 void barriers()
 {
+    
+#ifdef ALLEGRO    
    //Zona de creacion de barreras
     
     //Mapa inicial
@@ -141,6 +143,14 @@ void barriers()
    putbarrier (0, 0, 337, 239, mapa3, BORDER);
    putbarrier (12, 22, 289, 207, mapa3, EMPTY);
    putbarrier (290, 96, 337, 159, mapa3, EMPTY);
+   
+#endif /* ALLEGRO */
+   
+#ifdef RPI
+
+   
+   
+#endif /* RPI */
 }
 
 
