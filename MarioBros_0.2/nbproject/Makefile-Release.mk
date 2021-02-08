@@ -35,9 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/Funciones.o \
-	${OBJECTDIR}/MarioBrosAllegro.o \
-	${OBJECTDIR}/main.o
+	${OBJECTDIR}/dibujo\ allegro.o \
+	${OBJECTDIR}/enemigos\ y\ monedas.o \
+	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/mapas.o
 
 
 # C Compiler Flags
@@ -64,20 +65,27 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobros_0.2: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobros_0.2 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/Funciones.o: Funciones.c
+.NO_PARALLEL:${OBJECTDIR}/dibujo\ allegro.o
+${OBJECTDIR}/dibujo\ allegro.o: dibujo\ allegro.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Funciones.o Funciones.c
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/dibujo\ allegro.o dibujo\ allegro.c
 
-${OBJECTDIR}/MarioBrosAllegro.o: MarioBrosAllegro.c
+.NO_PARALLEL:${OBJECTDIR}/enemigos\ y\ monedas.o
+${OBJECTDIR}/enemigos\ y\ monedas.o: enemigos\ y\ monedas.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/MarioBrosAllegro.o MarioBrosAllegro.c
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enemigos\ y\ monedas.o enemigos\ y\ monedas.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/mapas.o: mapas.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/mapas.o mapas.c
 
 # Subprojects
 .build-subprojects:

@@ -1,5 +1,10 @@
-build/Debug/GNU-Linux/Funciones.o: Funciones.c MarioAllegro.h Header.h
-
-MarioAllegro.h:
+build/Debug/GNU-Linux/Funciones.o: Funciones.c Header.h constantes.h \
+ estructuras.h Mapas.h
 
 Header.h:
+
+constantes.h:
+
+estructuras.h:
+
+Mapas.h:
