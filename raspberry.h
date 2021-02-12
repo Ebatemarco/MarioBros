@@ -15,9 +15,9 @@
 #define RASPBERRY_H
 
 #include "constantes.h"
-#include "termlib.h"
-#include "disdrv.h"
-#include "joydrv.h"
+#include "libs/termlib.h"
+#include "libs/disdrv.h"
+#include "libs/joydrv.h"
 
 void printmatrp (char mapa[BUFFER_H][BUFFER_H]);
 void printmario(player* Mario);

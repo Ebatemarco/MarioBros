@@ -88,8 +88,8 @@
 #define MARIO_SIZE 1
 #define SALTO_H 25 //Altura del salto de mario
 #define SALTO_SPEED 1 //Velocidad de la subida al saltar
-#define MARIO_W 16 //Tamaño del sprite
-#define MARIO_H 16 //Tamaño del sprite
+#define MARIO_W 1 //Tamaño del sprite
+#define MARIO_H 1 //Tamaño del sprite
 #define MOVE_RATE  2.0
 #define XINICIAL 8
 #define YINICIAL 8
