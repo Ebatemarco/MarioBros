@@ -437,7 +437,7 @@ int main(void)
     al_start_timer(timer);//inicio del timer
     
     #endif /*ALLEGRO*/
-putbarrier (0, 13, 15, 15, mapainicio, BORDER);
+putbarrier (0, 14, 30, 15, mapainicio, BORDER);
    /* barriers();
     Mario.x=XPANTALLA;
     Mario.y=YPANTALLA;
