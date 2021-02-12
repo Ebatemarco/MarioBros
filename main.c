@@ -439,9 +439,13 @@ int main(void)
     #endif /*ALLEGRO*/
 
     barriers();
-   
+   /* Mario.x=XPANTALLA;
+    Mario.y=YPANTALLA;
+    printmario(pMario);
+ #ifdef R  */
 #ifdef RPI
     unsigned int times=TIEMPO;
+
 #endif   
 
     while (!do_exit) 
@@ -811,7 +815,8 @@ int main(void)
                     (Mario.y) -= MOVE_RATE*SALTO_SPEED;
                    }
                 
-                printmatrp (mapa);
+                
+                printmatrp (mapa,pMario);
                 printmario(pMario);
                 disp_update();	//Actualiza el display con el contenido del buffer
 		joy_update();	//Mide las coordenadas del joystick
@@ -1185,7 +1190,7 @@ int main(void)
     al_destroy_timer(timer);
     
     #endif   /*ALLEGRO*/ 
-    
+    //#endif 
     return 0;
 }
 

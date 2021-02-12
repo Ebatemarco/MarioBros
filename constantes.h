@@ -78,7 +78,7 @@
 #define MAXY 127
 #define COORDSCALE (16/224)
 
-#define BUFFER_W 16
+#define BUFFER_W 222
 #define BUFFER_H 16
 
 #define DISP_SCALE 4
@@ -91,9 +91,9 @@
 #define MARIO_W 1 //Tamaño del sprite
 #define MARIO_H 1 //Tamaño del sprite
 #define MOVE_RATE  2.0
-#define XINICIAL 8
+#define XINICIAL 20
 #define YINICIAL 8
-#define XPANTALLA 8
+#define XPANTALLA 20
 #define YPANTALLA 8
 
 #define COIN_SIZE 1

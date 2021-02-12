@@ -19,7 +19,7 @@
 #include "libs/disdrv.h"
 #include "libs/joydrv.h"
 
-void printmatrp (char mapa[BUFFER_H][BUFFER_H]);
+void printmatrp (char mapai[BUFFER_H][BUFFER_W],player* Mario);
 void printmario(player* Mario);
 
 #endif /* RASPBERRY_H */

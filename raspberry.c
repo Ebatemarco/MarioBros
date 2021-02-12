@@ -6,23 +6,23 @@
 
 #include "raspberry.h"
 
-void printmatrp (char mapa[BUFFER_H][BUFFER_H])
+void printmatrp (char mapai[BUFFER_H][BUFFER_W],player* Mario)
 {
 int i, j;
 dcoord_t coord = {0,0};
 
 
-    for(j=0; j<BUFFER_H ;j++)
+    for(j=((Mario->x)-BUFFER_H/2); j<((Mario->x)+BUFFER_H/2) ;j++)
     {
         for(i=0; i <BUFFER_H;i++)
         {
-            if (mapa[j][i]==BORDER)
+            if (mapai[j][i]==BORDER)
             {
             coord.x=j;
             coord.y=i;
             disp_write (coord,D_ON);
             }
-            else if (mapa[j][i]==EMPTY)
+            else if (mapai[j][i]==EMPTY)
             {
             coord.x=j;
             coord.y=i;
@@ -35,7 +35,7 @@ dcoord_t coord = {0,0};
 void printmario(player* Mario)
 {
     dcoord_t coord ;
-    coord.x= Mario->x;
+    coord.x= BUFFER_H/2;
     coord.y= Mario->y;
     disp_write (coord,D_ON);
 }
