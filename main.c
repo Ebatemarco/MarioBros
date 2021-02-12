@@ -439,10 +439,11 @@ int main(void)
     #endif /*ALLEGRO*/
 
     barriers();
-   /* Mario.x=XPANTALLA;
+    Mario.x=XPANTALLA;
     Mario.y=YPANTALLA;
     printmario(pMario);
- #ifdef R  */
+    disp_update();	//Actualiza el display con el contenido del buffer
+ #ifdef R  
 #ifdef RPI
     unsigned int times=TIEMPO;
 
@@ -1190,7 +1191,7 @@ int main(void)
     al_destroy_timer(timer);
     
     #endif   /*ALLEGRO*/ 
-    //#endif 
+    #endif 
     return 0;
 }
 
