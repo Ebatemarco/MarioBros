@@ -438,8 +438,8 @@ int main(void)
     
     #endif /*ALLEGRO*/
 
-    barriers();
-    /*Mario.x=XPANTALLA;
+    /*barriers();
+    Mario.x=XPANTALLA;
     Mario.y=YPANTALLA;
     printmario(pMario);
     disp_update();	//Actualiza el display con el contenido del buffer
@@ -622,7 +622,7 @@ int main(void)
                     restart=false;
                 }
             
-            mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
+  /*          mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
             
             if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
             {          
@@ -755,7 +755,7 @@ int main(void)
                     timemarker=0;
                     }
                 
-
+*/
                 //Teclas de movimiento
 #ifdef RPI
 
