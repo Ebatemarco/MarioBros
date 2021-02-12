@@ -822,7 +822,7 @@ int main(void)
                 disp_update();	//Actualiza el display con el contenido del buffer
 		joy_update();	//Mide las coordenadas del joystick
                 coord = joy_get_coord();//Guarda las coordenadas medidas
-                }
+                //}
             }
                 
                 
