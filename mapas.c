@@ -25,7 +25,7 @@ void barriers()
     
     //Mapa inicial
    putbarrier (0, 200, 563, 223, mapainicio, BORDER);
-   putbarrier (MAPAINICIO_W-1, 0 , MAPAINICIO_W, BUFFER_H, mapainicio, BORDER);
+   /*putbarrier (MAPAINICIO_W-1, 0 , MAPAINICIO_W, BUFFER_H, mapainicio, BORDER);
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
    
     //Mapa 1
@@ -142,7 +142,7 @@ void barriers()
    //Mapa 3
    putbarrier (0, 0, 337, 239, mapa3, BORDER);
    putbarrier (12, 22, 289, 207, mapa3, EMPTY);
-   putbarrier (290, 96, 337, 159, mapa3, EMPTY);
+   putbarrier (290, 96, 337, 159, mapa3, EMPTY);*/
    
 //#endif /* ALLEGRO */
    
@@ -159,7 +159,7 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
 {
     int i, j;
     
-#ifdef RPI
+#ifdef RPI/*
     ax= (int)ax*COORDSCALE;
     ay= (int)ay*COORDSCALE;
     bx= (int)bx*COORDSCALE;
@@ -180,7 +180,7 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
     if(by>(BUFFER_H-1))
         by=BUFFER_H-1;
     else if (by<0)
-        by=0;
+        by=0;*/
 #endif /*RPI*/
     
     for(j=ay; j<= by ;j++)

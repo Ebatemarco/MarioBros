@@ -437,13 +437,13 @@ int main(void)
     al_start_timer(timer);//inicio del timer
     
     #endif /*ALLEGRO*/
-//putbarrier (0, 14, 30, 15, mapainicio, BORDER);
-    barriers();/*
+putbarrier (0, 14, 30, 15, mapainicio, BORDER);
+   /* barriers();
     Mario.x=XPANTALLA;
     Mario.y=YPANTALLA;
     printmario(pMario);
     disp_update();	//Actualiza el display con el contenido del buffer
- #ifdef R  */
+*/
 #ifdef RPI
     unsigned int times=TIEMPO;
 
@@ -817,7 +817,7 @@ int main(void)
                    }
                 
                 
-                //printmatrp (mapa,pMario);
+                printmatrp (mapa,pMario);
                 printmario(pMario);
                 disp_update();	//Actualiza el display con el contenido del buffer
 		joy_update();	//Mide las coordenadas del joystick
