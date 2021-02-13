@@ -765,7 +765,7 @@ int main(void)
                     mariosteady=false;
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==false)
                         {
-                        (Mario.salto_cooldown)= 30;
+                        (Mario.salto_cooldown)= SALTO_COOLDOWN;
                         (Mario.salto) = SALTO_H;
                         (Mario.salto_lock)=true;
                         }                    
@@ -782,7 +782,7 @@ int main(void)
                     mariosteady=false;
                     }
 
-                if ((coord.x < -MINX && coord.x >= -MAXX) && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa))
+                if ((coord.x < -MINX && coord.x >= -MAXX) && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa))
                     {
                     (Mario.x) -= MOVE_RATE;
                     mariomove++;
@@ -838,7 +838,7 @@ int main(void)
                     mariosteady=false;
                     if ((Mario.salto_cooldown)==0 && (Mario.salto_lock)==false)
                         {
-                        (Mario.salto_cooldown)= 30;
+                        (Mario.salto_cooldown)= SALTO_COOLDOWN;
                         (Mario.salto) = SALTO_H;
                         (Mario.salto_lock)=true;
                         }                    

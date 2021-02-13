@@ -25,7 +25,7 @@ void barriers()
     
     //Mapa inicial
    putbarrier (0, 200, 563, 223, mapainicio, BORDER);
-   /*putbarrier (MAPAINICIO_W-1, 0 , MAPAINICIO_W, BUFFER_H, mapainicio, BORDER);
+   putbarrier (MAPAINICIO_W-1, 0 , MAPAINICIO_W, BUFFER_H, mapainicio, BORDER);
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
    
     //Mapa 1
@@ -142,7 +142,7 @@ void barriers()
    //Mapa 3
    putbarrier (0, 0, 337, 239, mapa3, BORDER);
    putbarrier (12, 22, 289, 207, mapa3, EMPTY);
-   putbarrier (290, 96, 337, 159, mapa3, EMPTY);*/
+   putbarrier (290, 96, 337, 159, mapa3, EMPTY);
    
 //#endif /* ALLEGRO */
    
