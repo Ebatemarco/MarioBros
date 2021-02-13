@@ -77,7 +77,7 @@
 #define MAXX 127
 #define MINY 60
 #define MAXY 127
-#define COORDSCALE (16/224)
+#define COORDSCALE 0.07142
 
 #define BUFFER_W 222
 #define BUFFER_H 16
