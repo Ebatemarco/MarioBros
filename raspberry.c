@@ -11,24 +11,21 @@ void printmatrp (char mapai[BUFFER_H][BUFFER_W],player* Mario)
 int i, j;
 dcoord_t coord = {0,0};
 
-if(j<0)
-    j=0;
-if (j<=BUFFER_H)
-    j=15;
-    for(j=((Mario->x)-BUFFER_H/2); j<((Mario->x)+BUFFER_H/2) ;j++)
+
+    for(j=0; j <BUFFER_H;j++)
     {
-        for(i=0; i <BUFFER_H;i++)
+        for(i=((Mario->x)-(BUFFER_H/2)); i<((Mario->x)+(BUFFER_H/2)) ;i++)
         {
             if (mapai[j][i]==BORDER)
             {
-            coord.x=j-(Mario->x);
-            coord.y=i;
+            coord.x=i-((Mario->x)-(BUFFER_H/2));
+            coord.y=j;
             disp_write (coord,D_ON);
             }
-            else if (mapai[i][j]==EMPTY)
+            else if (mapai[j][i]==EMPTY)
             {
-            coord.x=j-(Mario->x);
-            coord.y=i;
+            coord.x=i-((Mario->x)-(BUFFER_H/2));
+            coord.y=j;
             disp_write (coord,D_OFF);
             }
         }
