@@ -159,13 +159,13 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
 {
     int i, j;
     
-#ifdef RPI/*
+#ifdef RPI
     ax= (int)ax*COORDSCALE;
     ay= (int)ay*COORDSCALE;
     bx= (int)bx*COORDSCALE;
     by= (int)by*COORDSCALE;
     
-    if(ax>(BUFFER_H-1))
+   /* if(ax>(BUFFER_H-1))
         ax=BUFFER_H-1;
     else if (ax<0)
         ax=0;

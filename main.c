@@ -437,8 +437,8 @@ int main(void)
     al_start_timer(timer);//inicio del timer
     
     #endif /*ALLEGRO*/
-putbarrier (0, 14, 30, 15, mapainicio, BORDER);
-   /* barriers();
+//putbarrier (0, 14, 30, 15, mapainicio, BORDER);
+    barriers();/*
     Mario.x=XPANTALLA;
     Mario.y=YPANTALLA;
     printmario(pMario);
@@ -782,7 +782,7 @@ putbarrier (0, 14, 30, 15, mapainicio, BORDER);
                     mariosteady=false;
                     }
 
-                if ((coord.x > -MINX && coord.x <= -MAXX) && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa))
+                if ((coord.x < -MINX && coord.x >= -MAXX) && (Mario.x) >= MOVE_RATE && collidewborder(pMario,(Mario.x)-MOVE_RATE, (Mario.y), (Mario.x)+MARIO_SIZE-MOVE_RATE , (Mario.y)+MARIO_SIZE, mapa))
                     {
                     (Mario.x) -= MOVE_RATE;
                     mariomove++;
