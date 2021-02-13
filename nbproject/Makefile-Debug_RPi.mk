@@ -59,11 +59,11 @@ LDLIBSOPTIONS=-L/usr/local/lib
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobros_0.2
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobrosue
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobros_0.2: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobrosue: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobros_0.2 ${OBJECTFILES} ${LDLIBSOPTIONS} libs/disdrv.o libs/joydrv.o libs/termlib.o
+	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobrosue ${OBJECTFILES} ${LDLIBSOPTIONS} libs/disdrv.o libs/joydrv.o libs/termlib.o
 
 .NO_PARALLEL:${OBJECTDIR}/enemigos\ y\ monedas.o
 ${OBJECTDIR}/enemigos\ y\ monedas.o: enemigos\ y\ monedas.c

@@ -24,10 +24,10 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=MarioBros_0.2
+PROJECTNAME=MarioBrosUE
 
 # Active Configuration
-DEFAULTCONF=Debug_RPi
+DEFAULTCONF=Debug_Allegro_
 CONF=${DEFAULTCONF}
 
 # All Configurations
