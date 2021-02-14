@@ -543,7 +543,7 @@ int main(void)
                    
                     //MAPA 1
                     
-                    //enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
+                    enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
                    /* enemy_start(F2p,false,FISH,MAPA1,380,86,false,0);
                     enemy_start(F3p,false,FISH,MAPA1,615,71,false,0);
                     enemy_start(F4p,false,FISH,MAPA1,944,42,false,0);
@@ -670,7 +670,7 @@ int main(void)
                 
                 //Movimiento de enemigos MAPA 1
                 
-                //enemy_mov(F1p, pMario);
+                enemy_mov(F1p, pMario);
                 /*enemy_mov(F2p, pMario);
                 enemy_mov(F3p, pMario);
                 enemy_mov(F4p, pMario);
@@ -818,7 +818,7 @@ int main(void)
                 
                     //Dibujo de enemigos MAPA 1
 
-                //draw_enemy_rpi (F1p, pMario );
+                draw_enemy_rpi (F1p, pMario );
                 /*draw_enemy_rpi (F2p, pMario );
                 draw_enemy_rpi (F3p, pMario );
                 draw_enemy_rpi (F4p, pMario );

@@ -88,7 +88,7 @@
 #define SCREEN_H (BUFFER_H * DISP_SCALE)
 
 #define MARIO_SIZE 0
-#define SALTO_H 7 //Altura del salto de mario
+#define SALTO_H 4 //Altura del salto de mario
 #define SALTO_SPEED 2 //Velocidad de la subida al saltar
 #define SALTO_COOLDOWN 20
 #define MARIO_W 1 //Tamaño del sprite

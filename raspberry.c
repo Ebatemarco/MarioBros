@@ -43,7 +43,7 @@ void printmario(player* Mario)
 void draw_enemy_rpi (enemy * en, player * Mario)
 {
     dcoord_t coord ;
-    coord.x= (int)(en->x*COORDSCALE);
+    coord.x= (int)((en->x*COORDSCALE)-(Mario->x-(BUFFER_H/2)));
     coord.y= (int)(en->y*COORDSCALE);
     
     
