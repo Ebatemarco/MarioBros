@@ -46,6 +46,10 @@ void draw_enemy_rpi (enemy * en, player * Mario)
     coord.x= (int)((en->x)-(Mario->x-(BUFFER_H/2)));
     coord.y= (int)(en->y);
     
+    if(coord.x>15)
+        coord.x=15;
+    if(coord.x<0)
+        coord.x=0;
     
     if(Mario->n_mapa_actual== en->mapa)
     {    
