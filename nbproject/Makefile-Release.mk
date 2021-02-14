@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/dibujo\ allegro.o \
+	${OBJECTDIR}/allegro.o \
 	${OBJECTDIR}/enemigos\ y\ monedas.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapas.o \
@@ -66,11 +66,10 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobrosue: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/mariobrosue ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-.NO_PARALLEL:${OBJECTDIR}/dibujo\ allegro.o
-${OBJECTDIR}/dibujo\ allegro.o: dibujo\ allegro.c
+${OBJECTDIR}/allegro.o: allegro.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/dibujo\ allegro.o dibujo\ allegro.c
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/allegro.o allegro.c
 
 .NO_PARALLEL:${OBJECTDIR}/enemigos\ y\ monedas.o
 ${OBJECTDIR}/enemigos\ y\ monedas.o: enemigos\ y\ monedas.c

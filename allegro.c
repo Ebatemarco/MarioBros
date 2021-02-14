@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-#include "dibujo allegro.h"
+#include "allegro.h"
 
 
 extern char mapainicio[BUFFER_H][BUFFER_W];

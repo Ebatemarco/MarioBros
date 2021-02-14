@@ -11,8 +11,8 @@
  * Created on February 5, 2021, 4:01 PM
  */
 
-#ifndef DIBUJO_ALLEGRO_H
-#define DIBUJO_ALLEGRO_H
+#ifndef ALLEGRO_H
+#define ALLEGRO_H
 
 #ifdef ALLEGRO
 #include "constantes.h"
@@ -57,5 +57,5 @@ void draw_enemy (enemy * en, player * Mario, bitmaps_t * bit);
 #endif
 
 
-#endif /* DIBUJO_ALLEGRO_H */
+#endif /* ALLEGRO_H */
 

@@ -21,6 +21,8 @@
 
 void printmatrp (char mapai[BUFFER_H][BUFFER_W],player* Mario);
 void printmario(player* Mario);
+void draw_enemy_rpi (enemy * en, player * Mario);
+void draw_coin_rpi (player * Mario,coin* ncoin);
 
 #endif /* RASPBERRY_H */
 

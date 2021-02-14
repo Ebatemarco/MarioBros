@@ -203,10 +203,19 @@ void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,bool 
     en->active= active;
     en->type= type;
     en->mapa= ma;
-    en->x= x;
-    en->y= y;
     en->dodge= dodge;
     en->timer=time;
+    
+    #ifdef ALLEGRO
+    en->x= x;
+    en->y= y;
+    #endif /*ALLEGRO*/
+
+    #ifdef RPI
+    en->x=(int)(x*COORDSCALE);
+    en->y=(int)(y*COORDSCALE);
+    #endif /*RPI*/
+    
     if (en->type == FISH || en->type == REDFISH || en->type == BOSS)
         en->prev_pos = x;
     else en->prev_pos = y;
@@ -233,6 +242,7 @@ void coin_start(coin* ncoin,float x,float y,char map,bool startup)
     ncoin->x=x;
     ncoin->y=y;
     ncoin->map=map;
+           
     if(startup==true)//Si se acaba de iniciar el juego se rellena la matriz en donde se encuentra la moneda
     {
     switch(map)
@@ -250,6 +260,11 @@ void coin_start(coin* ncoin,float x,float y,char map,bool startup)
             break;
         }
     }
+    
+    #ifdef RPI
+    ncoin->x=(int)(x*COORDSCALE);
+    ncoin->y=(int)(y*COORDSCALE);
+    #endif /*RPI*/
 }
 
 

@@ -1,6 +1,6 @@
 
 #ifdef ALLEGRO
-#include "dibujo allegro.h"
+#include "allegro.h"
 #endif /*ALLEGRO*/
 #include "enemigos y monedas.h"
 #include "mapas.h"
@@ -437,13 +437,10 @@ int main(void)
     al_start_timer(timer);//inicio del timer
     
     #endif /*ALLEGRO*/
+
 //putbarrier (0, 14, 30, 15, mapainicio, BORDER);
-    barriers();/*
-    Mario.x=XPANTALLA;
-    Mario.y=YPANTALLA;
-    printmario(pMario);
-    disp_update();	//Actualiza el display con el contenido del buffer
-*/
+    barriers();
+    
 #ifdef RPI
     unsigned int times=TIEMPO;
 
@@ -480,7 +477,7 @@ int main(void)
                 Mario.score=0;
                 Mario.exit_pass=false;
 
-#ifdef ALLEGRO                
+            
                //Estado inicial de las monedas MAPA 1
                 coin_start(pcoin1,100,100,MAPA1,restart);
                 coin_start(pcoin2,130,100,MAPA1,restart);
@@ -520,7 +517,7 @@ int main(void)
                 coin_start(pcoin34,1223,61,MAPA2,restart);
                 coin_start(pcoin35,840,179,MAPA2,restart);
 
-#endif /*ALLEGRO */ 
+
                 
                 //Carga del primer mapa
                 
@@ -543,7 +540,7 @@ int main(void)
                     
                     //Estado inicial de los enemigos
                    
-#ifdef ALLEGRO                    
+                   
                     //MAPA 1
                     
                     enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
@@ -618,11 +615,11 @@ int main(void)
                     enemy_start(M4p,false,MISIL4,MAPA3,260,157,false,60*10);
                     enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
                     enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
-#endif /* ALLEGRO */                    
+                   
                     restart=false;
                 }
             
-  /*          mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
+            mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
             
             if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
             {          
@@ -755,7 +752,7 @@ int main(void)
                     timemarker=0;
                     }
                 
-*/
+
                 //Teclas de movimiento
 #ifdef RPI
 
@@ -818,11 +815,126 @@ int main(void)
                 
                 
                 printmatrp (mapa,pMario);
+                
+                    //Dibujo de enemigos MAPA 1
+
+                draw_enemy_rpi (F1p, pMario );
+                draw_enemy_rpi (F2p, pMario );
+                draw_enemy_rpi (F3p, pMario );
+                draw_enemy_rpi (F4p, pMario );
+                draw_enemy_rpi (F5p, pMario );
+                draw_enemy_rpi (F6p, pMario );
+                draw_enemy_rpi (F7p, pMario );
+                draw_enemy_rpi (F8p, pMario );
+                draw_enemy_rpi (F9p, pMario );
+                draw_enemy_rpi (F10p, pMario );
+                draw_enemy_rpi (F11p, pMario );
+                draw_enemy_rpi (F12p, pMario );
+
+                draw_enemy_rpi (RF1p, pMario );
+                draw_enemy_rpi (RF2p, pMario );
+                draw_enemy_rpi (RF3p, pMario );
+                draw_enemy_rpi (RF4p, pMario );
+                draw_enemy_rpi (RF5p, pMario );
+                draw_enemy_rpi (RF6p, pMario );
+                draw_enemy_rpi (RF7p, pMario );
+                draw_enemy_rpi (RF8p, pMario );
+                draw_enemy_rpi (RF9p, pMario );
+
+                draw_enemy_rpi (S1p, pMario );
+                draw_enemy_rpi (S2p, pMario );
+                draw_enemy_rpi (S3p, pMario );
+                draw_enemy_rpi (S4p, pMario );
+                draw_enemy_rpi (S5p, pMario );
+                draw_enemy_rpi (S6p, pMario );
+                draw_enemy_rpi (S7p, pMario );
+
+                //Dibujo de enemigos MAPA 2
+                draw_enemy_rpi (F13p, pMario );
+                draw_enemy_rpi (F14p, pMario );
+                draw_enemy_rpi (F15p, pMario );
+                draw_enemy_rpi (F16p, pMario );
+                draw_enemy_rpi (F17p, pMario );
+                draw_enemy_rpi (F18p, pMario );
+                draw_enemy_rpi (F19p, pMario );
+                draw_enemy_rpi (F20p, pMario );
+                draw_enemy_rpi (F21p, pMario );
+                draw_enemy_rpi (F22p, pMario );
+                draw_enemy_rpi (F23p, pMario );
+                draw_enemy_rpi (F24p, pMario );
+                draw_enemy_rpi (F25p, pMario );
+                draw_enemy_rpi (F26p, pMario );
+                draw_enemy_rpi (F27p, pMario );
+
+                draw_enemy_rpi (RF10p, pMario );
+                draw_enemy_rpi (RF11p, pMario );
+                draw_enemy_rpi (RF12p, pMario );
+                draw_enemy_rpi (RF13p, pMario );
+
+                draw_enemy_rpi (S8p, pMario );
+                draw_enemy_rpi (S9p, pMario );
+                draw_enemy_rpi (S10p, pMario );
+                draw_enemy_rpi (S11p, pMario );
+                draw_enemy_rpi (S12p, pMario );
+                draw_enemy_rpi (S13p, pMario );
+                draw_enemy_rpi (S14p, pMario );
+
+
+                //Dibujo de enemigos MAPA 3 - BOSS
+
+                draw_enemy_rpi (Bossp, pMario );
+
+                draw_enemy_rpi (M1p, pMario );
+                draw_enemy_rpi (M2p, pMario );
+                draw_enemy_rpi (M3p, pMario );
+                draw_enemy_rpi (M4p, pMario );
+                draw_enemy_rpi (M5p, pMario );
+                draw_enemy_rpi (M6p, pMario );
+                
+                //Dibujo de monedas MAPA 1
+                 draw_coin_rpi(pMario,pcoin1 );
+                 draw_coin_rpi(pMario,pcoin2 );
+                 draw_coin_rpi(pMario,pcoin3 );
+                 draw_coin_rpi(pMario,pcoin4 );
+                 draw_coin_rpi(pMario,pcoin5 );
+                 draw_coin_rpi(pMario,pcoin6 );
+                 draw_coin_rpi(pMario,pcoin7 );
+                 draw_coin_rpi(pMario,pcoin8 );
+                 draw_coin_rpi(pMario,pcoin9 );
+                 draw_coin_rpi(pMario,pcoin10 );
+                 draw_coin_rpi(pMario,pcoin11 );
+                 draw_coin_rpi(pMario,pcoin12 );
+                 draw_coin_rpi(pMario,pcoin13 );
+                 draw_coin_rpi(pMario,pcoin14 );
+                 draw_coin_rpi(pMario,pcoin15 );
+                 draw_coin_rpi(pMario,pcoin16 );
+                 draw_coin_rpi(pMario,pcoin17 );
+                 draw_coin_rpi(pMario,pcoin18 );
+                 draw_coin_rpi(pMario,pcoin19 );
+                 draw_coin_rpi(pMario,pcoin20 );
+                 draw_coin_rpi(pMario,pcoin21 );
+                 draw_coin_rpi(pMario,pcoin22 );
+                 draw_coin_rpi(pMario,pcoin23 );
+                 draw_coin_rpi(pMario,pcoin24 );
+                 draw_coin_rpi(pMario,pcoin25 );
+
+                //Dibujo de monedas MAPA 2
+                 draw_coin_rpi(pMario,pcoin26 );
+                 draw_coin_rpi(pMario,pcoin27 );
+                 draw_coin_rpi(pMario,pcoin28 );
+                 draw_coin_rpi(pMario,pcoin29 );
+                 draw_coin_rpi(pMario,pcoin30 );
+                 draw_coin_rpi(pMario,pcoin31 );
+                 draw_coin_rpi(pMario,pcoin32 );
+                 draw_coin_rpi(pMario,pcoin33 );
+                 draw_coin_rpi(pMario,pcoin34 );
+                 draw_coin_rpi(pMario,pcoin35 );
+            
                 printmario(pMario);
                 disp_update();	//Actualiza el display con el contenido del buffer
 		joy_update();	//Mide las coordenadas del joystick
                 coord = joy_get_coord();//Guarda las coordenadas medidas
-                //}
+                }
             }
                 
                 
@@ -1147,6 +1259,7 @@ int main(void)
             draw_coin(pMario,pcoin24,p_bitmaps_t);
             draw_coin(pMario,pcoin25,p_bitmaps_t);
             
+            //Dibujo de monedas MAPA 2
             draw_coin(pMario,pcoin26,p_bitmaps_t);
             draw_coin(pMario,pcoin27,p_bitmaps_t);
             draw_coin(pMario,pcoin28,p_bitmaps_t);
