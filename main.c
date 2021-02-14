@@ -33,7 +33,7 @@ int main(void)
     
     //Inicializacion de monedas
     
-    coin coin1;
+    /*coin coin1;
     coin * pcoin1=&coin1;
     coin coin2;
     coin * pcoin2=&coin2;
@@ -102,13 +102,13 @@ int main(void)
     coin coin34;
     coin * pcoin34=&coin34;
     coin coin35;
-    coin * pcoin35=&coin35;
+    coin * pcoin35=&coin35;*/
     
     
     //Inicializacion de enemigos MAPA 1
     enemy F1;
     enemy * F1p = &F1;
-    enemy F2;
+    /*enemy F2;
     enemy * F2p = &F2;
     enemy F3;
     enemy * F3p = &F3;
@@ -239,7 +239,7 @@ int main(void)
     enemy * M5p = &M5;
     
     enemy M6;
-    enemy * M6p = &M6;
+    enemy * M6p = &M6;*/
     
     
     
@@ -479,7 +479,7 @@ int main(void)
 
             
                //Estado inicial de las monedas MAPA 1
-                coin_start(pcoin1,100,100,MAPA1,restart);
+               /* coin_start(pcoin1,100,100,MAPA1,restart);
                 coin_start(pcoin2,130,100,MAPA1,restart);
                 coin_start(pcoin3,150,100,MAPA1,restart);
                 coin_start(pcoin4,2895,52,MAPA1,restart);
@@ -515,7 +515,7 @@ int main(void)
                 coin_start(pcoin32,1407,119,MAPA2,restart);
                 coin_start(pcoin33,1607,179,MAPA2,restart);
                 coin_start(pcoin34,1223,61,MAPA2,restart);
-                coin_start(pcoin35,840,179,MAPA2,restart);
+                coin_start(pcoin35,840,179,MAPA2,restart);*/
 
 
                 
@@ -544,7 +544,7 @@ int main(void)
                     //MAPA 1
                     
                     enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
-                    enemy_start(F2p,false,FISH,MAPA1,380,86,false,0);
+                   /* enemy_start(F2p,false,FISH,MAPA1,380,86,false,0);
                     enemy_start(F3p,false,FISH,MAPA1,615,71,false,0);
                     enemy_start(F4p,false,FISH,MAPA1,944,42,false,0);
                     enemy_start(F5p,false,FISH,MAPA1,1200,72,false,0);
@@ -614,7 +614,7 @@ int main(void)
                     enemy_start(M3p,false,MISIL3,MAPA3,277,117,true,60*8);
                     enemy_start(M4p,false,MISIL4,MAPA3,260,157,false,60*10);
                     enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
-                    enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
+                    enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);*/
                    
                     restart=false;
                 }
@@ -627,7 +627,7 @@ int main(void)
                 
                 //Colision con las monedas
                 
-                fcoin(pMario,pcoin1);
+                /*fcoin(pMario,pcoin1);
                 fcoin(pMario,pcoin2);
                 fcoin(pMario,pcoin3);
                 fcoin(pMario,pcoin4);
@@ -666,12 +666,12 @@ int main(void)
                 
                 
                 
-                Mario.coin_obt=false;
+                Mario.coin_obt=false;*/
                 
                 //Movimiento de enemigos MAPA 1
                 
                 enemy_mov(F1p, pMario);
-                enemy_mov(F2p, pMario);
+                /*enemy_mov(F2p, pMario);
                 enemy_mov(F3p, pMario);
                 enemy_mov(F4p, pMario);
                 enemy_mov(F5p, pMario);
@@ -741,7 +741,7 @@ int main(void)
                 enemy_mov(M3p, pMario);
                 enemy_mov(M4p, pMario);
                 enemy_mov(M5p, pMario);
-                enemy_mov(M6p, pMario);
+                enemy_mov(M6p, pMario);*/
 
         
                 //Timer de mario para sus animaciones
@@ -819,7 +819,7 @@ int main(void)
                     //Dibujo de enemigos MAPA 1
 
                 draw_enemy_rpi (F1p, pMario );
-                draw_enemy_rpi (F2p, pMario );
+                /*draw_enemy_rpi (F2p, pMario );
                 draw_enemy_rpi (F3p, pMario );
                 draw_enemy_rpi (F4p, pMario );
                 draw_enemy_rpi (F5p, pMario );
@@ -928,7 +928,7 @@ int main(void)
                  draw_coin_rpi(pMario,pcoin32 );
                  draw_coin_rpi(pMario,pcoin33 );
                  draw_coin_rpi(pMario,pcoin34 );
-                 draw_coin_rpi(pMario,pcoin35 );
+                 draw_coin_rpi(pMario,pcoin35 );*/
             
                 printmario(pMario);
                 disp_update();	//Actualiza el display con el contenido del buffer
