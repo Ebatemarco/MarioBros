@@ -621,7 +621,7 @@ int main(void)
             
             mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
             
-            if (1/*pausa==false*/) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
+            if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
             {          
                
                 
@@ -935,6 +935,26 @@ int main(void)
 		joy_update();	//Mide las coordenadas del joystick
                 coord = joy_get_coord();//Guarda las coordenadas medidas
                 }
+            
+                //Boton de pausa
+                if ((joy_get_switch() == J_PRESS))
+                {
+                    if  (pausa_lock== false)
+                    {
+                        if (pausa== false )
+                            {
+                            pausa= true;
+                            pausa_lock = true;
+                            }
+                        else
+                            {
+                            pausa = false;
+                            pausa_lock = true;
+                            }
+                    }
+                }
+                if (!(joy_get_switch() == J_PRESS))
+                    pausa_lock= false;
             }
                 
                 
