@@ -621,7 +621,7 @@ int main(void)
             
             mariosteady=true;//mintras que mario no se mueva esta variable permanecerá true
             
-            if (pausa==false) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
+            if (1/*pausa==false*/) //Las funciones de movimiento solo funcionaran cuando el juego no esté en pausa
             {          
                
                 
