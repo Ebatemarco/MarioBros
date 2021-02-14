@@ -930,10 +930,7 @@ int main(void)
                  draw_coin_rpi(pMario,pcoin34 );
                  draw_coin_rpi(pMario,pcoin35 );*/
             
-                printmario(pMario);
-                disp_update();	//Actualiza el display con el contenido del buffer
-		joy_update();	//Mide las coordenadas del joystick
-                coord = joy_get_coord();//Guarda las coordenadas medidas
+                
                 }
             
                 //Boton de pausa
@@ -955,6 +952,11 @@ int main(void)
                 }
                 if (!(joy_get_switch() == J_PRESS))
                     pausa_lock= false;
+            
+                printmario(pMario);
+                disp_update();	//Actualiza el display con el contenido del buffer
+		joy_update();	//Mide las coordenadas del joystick
+                coord = joy_get_coord();//Guarda las coordenadas medidas
             }
                 
                 
