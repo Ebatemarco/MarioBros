@@ -51,6 +51,11 @@ void draw_enemy_rpi (enemy * en, player * Mario)
     if(coord.x<0)
         coord.x=0;
     
+    if(coord.y>15)
+        coord.y=15;
+    if(coord.y<0)
+        coord.y=0;
+    
     if(Mario->n_mapa_actual== en->mapa)
     {    
         if (en->type == BOSS)
