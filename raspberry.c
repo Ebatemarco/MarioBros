@@ -43,6 +43,7 @@ void printmario(player* Mario)
 void draw_enemy_rpi (enemy * en, player * Mario)
 {
     dcoord_t coord ;
+    int i,j;
     coord.x= (uint8_t)((en->x)-(Mario->x-(BUFFER_H/2)));
     coord.y= (uint8_t)(en->y);
     
@@ -93,7 +94,7 @@ void draw_enemy_rpi (enemy * en, player * Mario)
 
             if (en->type == BOSS)
             {
-            int i,j;
+            coord.x++;
             coord.y--;
             for(i=0; i<=3;i++)
                 {
