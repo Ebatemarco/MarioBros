@@ -128,12 +128,12 @@
 #define BOSS_W 3
 #define MISIL_SIZE 1
 
-#define MAPAINICIO_W 35
+/*#define MAPAINICIO_W 35
 #define MAPA1_W 220
 #define FINALMAPA1_W  40
 #define MAPA2_W  156
 #define FINALMAPA2_W  40
-#define MAPA3_W  23
+#define MAPA3_W  23*/
 
 #endif /* RPI */
 
