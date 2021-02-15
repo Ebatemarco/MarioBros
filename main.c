@@ -953,7 +953,12 @@ int main(void)
                 if (!(joy_get_switch() == J_PRESS))
                     pausa_lock= false;
             
+                //Boton de reiniciar
+                if(coord.y > MINY && coord.y <= MAXY && pausa==true)
+                restart=true;
+            
                 printmario(pMario);
+                print_post(pausa,pMario);
                 disp_update();	//Actualiza el display con el contenido del buffer
 		joy_update();	//Mide las coordenadas del joystick
                 coord = joy_get_coord();//Guarda las coordenadas medidas

@@ -124,3 +124,82 @@ void draw_coin_rpi(player * Mario,coin* ncoin)
        disp_write (coord,D_ON);
        }
 }
+
+void print_post (bool pausa,player* Mario)
+{
+    dcoord_t coord={0,0};
+    //Dibujo de otros mensajes
+    if (pausa==true)
+        {
+        disp_clear() ;
+        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XPANTALLA)//pantalla de inicio
+            {
+            coord.x=4;
+            for(coord.y = 4; coord.y<=11;coord.y++)
+                disp_write(coord, D_ON);
+            coord.x=5;
+            for(coord.y = 4; coord.y<=11;coord.y++)
+                disp_write(coord, D_ON);
+            coord.x=10;
+            for(coord.y = 4; coord.y<=11;coord.y++)
+                disp_write(coord, D_ON);
+            coord.x=11;
+            for(coord.y = 4; coord.y<=11;coord.y++)
+                disp_write(coord, D_ON);
+            
+            coord.y=6;
+            for (coord.x = 6; coord.x<=9;coord.x++)
+                disp_write(coord, D_ON);
+            
+            coord.x=6;
+            coord.y=5;
+            disp_write(coord, D_ON);
+            coord.x=9;
+            disp_write(coord, D_ON);
+            coord.x=7;
+            coord.y=7;
+            disp_write(coord, D_ON);
+            coord.x=8;
+            disp_write(coord, D_ON);
+            
+            }
+        else //pantalla de pausa
+            {
+            coord.x=6;
+            for (coord.y=6; coord.y<=9;coord.y++) 
+                disp_write(coord, D_ON);
+            coord.x=9;
+            for (coord.y=6; coord.y<=9;coord.y++) 
+                disp_write(coord, D_ON);
+            }
+        }
+    if (Mario->live==0) //Si se acabaron las vidas aparece el cartel de game over
+    {
+        for (coord.y = 0; coord.y<BUFFER_H;coord.y++) 
+            {
+            for (coord.x = 0; coord.x<BUFFER_H;coord.x++) 
+            disp_write(coord, D_ON) ;
+            }
+        
+        coord.x=5;
+        coord.y=6;
+        disp_write(coord, D_OFF);
+        coord.x=9;
+        disp_write(coord, D_OFF);
+
+        coord.x=5;
+        coord.y=10;
+        disp_write(coord, D_OFF);
+        coord.x=9;
+        disp_write(coord, D_OFF);
+
+        coord.y=9;
+        for (coord.x=6; coord.x<=8;coord.x++) 
+                    disp_write(coord, D_OFF);
+        }
+}
+
+
+ 
+
+

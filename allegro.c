@@ -175,7 +175,7 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu
     //Dibujo de otros mensajes
     if (pausa==true)
         {
-        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==118)//pantalla de inicio
+        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XPANTALLA)//pantalla de inicio
             {
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,13*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "Presiona");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,14*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "la tecla P ");
