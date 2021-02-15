@@ -124,7 +124,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                     Mario->death=true; 
                     }
                     if ((en->x)> (en->prev_pos)-50)
-                    (en->x) -= 1/MOVE_RATE_FISH;
+                    (en->x) -= (1/MOVE_RATE_FISH);
                 }
                 if (en->type == MISIL1 || en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6 ) //Movimiento de los misiles del submarino
                 {
@@ -136,11 +136,11 @@ if((Mario->n_mapa_actual)== en->mapa)
                         {
                         if ((en->y)> (en->prev_pos)+MISIL1_TURN_COORD) 
                             {
-                            (en->y) -= 1/MOVE_RATE_MISIL;
+                            (en->y) -= (1/MOVE_RATE_MISIL);
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_MISIL;
+                            (en->x) -= (1/MOVE_RATE_MISIL);
                             en->dodge = true;
                             }
                         }
@@ -148,27 +148,27 @@ if((Mario->n_mapa_actual)== en->mapa)
                         {
                         if ((en->y)> (en->prev_pos)+MISIL2_TURN_COORD)
                             {
-                            (en->y) -= 1/MOVE_RATE_MISIL;
+                            (en->y) -= (1/MOVE_RATE_MISIL);
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_MISIL;
+                            (en->x) -= (1/MOVE_RATE_MISIL);
                             en->dodge = true;
                             }
                         }
                     else if (en->type == MISIL3)
                         {
-                        (en->x) -= 1/MOVE_RATE_MISIL;
+                        (en->x) -= (1/MOVE_RATE_MISIL);
                         }
                     else if (en->type == MISIL4)
                         {
                         if ((en->y)< (en->prev_pos)+MISIL4_TURN_COORD)
                             {
-                            (en->y) += 1/MOVE_RATE_MISIL;
+                            (en->y) += (1/MOVE_RATE_MISIL);
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_MISIL;
+                            (en->x) -= (1/MOVE_RATE_MISIL);
                             en->dodge = true;
                             }
                         }
@@ -176,11 +176,11 @@ if((Mario->n_mapa_actual)== en->mapa)
                         {
                         if ((en->y)< (en->prev_pos)+MISIL5_TURN_COORD)
                             {
-                            (en->y) += 1/MOVE_RATE_MISIL;
+                            (en->y) += (1/MOVE_RATE_MISIL);
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_MISIL;
+                            (en->x) -= (1/MOVE_RATE_MISIL);
                             en->dodge = true;
                             }
                         }
@@ -188,19 +188,19 @@ if((Mario->n_mapa_actual)== en->mapa)
                         {
                         if ((en->timer > -60*2) && (en->timer < 0))
                             {
-                            (en->y) -= 1/MOVE_RATE_MISIL;
+                            (en->y) -= (1/MOVE_RATE_MISIL);
                             }
                         else if (en->timer > -60*10) 
                             {
-                            (en->x) -= 1/MOVE_RATE_MISIL;
+                            (en->x) -= (1/MOVE_RATE_MISIL);
                             }
                         else if (en->timer > -60*12)
                             {
-                            (en->y) += 1/MOVE_RATE_MISIL;
+                            (en->y) += (1/MOVE_RATE_MISIL);
                             }
                         else if (en->timer > -60*19) 
                             {
-                            (en->x) += 1/MOVE_RATE_MISIL;
+                            (en->x) += (1/MOVE_RATE_MISIL);
                             }
 
                         }

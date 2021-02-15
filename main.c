@@ -217,7 +217,7 @@ int main(void)
     enemy S13;
     enemy * S13p = &S13;
     enemy S14;
-    enemy * S14p = &S14;/*
+    enemy * S14p = &S14;
     
     // Inicializacion enemigos MAPA 3 - BOSS
     enemy Boss;
@@ -239,7 +239,7 @@ int main(void)
     enemy * M5p = &M5;
     
     enemy M6;
-    enemy * M6p = &M6;*/
+    enemy * M6p = &M6;
     
     
     
@@ -572,7 +572,7 @@ int main(void)
                     enemy_start(S4p,false,SQUID,MAPA1,1258,131,false,0);
                     enemy_start(S5p,false,SQUID,MAPA1,1615,179,false,0);
                     enemy_start(S6p,false,SQUID,MAPA1,2076,107,false,0);
-                    enemy_start(S7p,false,SQUID,MAPA1,2739,168,false,0);/*
+                    enemy_start(S7p,false,SQUID,MAPA1,2739,168,false,0);
                     
                     //MAPA 2
                     
@@ -614,7 +614,7 @@ int main(void)
                     enemy_start(M3p,false,MISIL3,MAPA3,277,117,true,60*8);
                     enemy_start(M4p,false,MISIL4,MAPA3,260,157,false,60*10);
                     enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
-                    enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);*/
+                    enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
                    
                     restart=false;
                 }
@@ -699,7 +699,7 @@ int main(void)
                 enemy_mov(S4p, pMario);
                 enemy_mov(S5p, pMario);
                 enemy_mov(S6p, pMario);
-                enemy_mov(S7p, pMario);/*
+                enemy_mov(S7p, pMario);
                 
                 //Movimiento de enemigos MAPA 2
                 
@@ -741,7 +741,7 @@ int main(void)
                 enemy_mov(M3p, pMario);
                 enemy_mov(M4p, pMario);
                 enemy_mov(M5p, pMario);
-                enemy_mov(M6p, pMario);*/
+                enemy_mov(M6p, pMario);
 
         
                 //Timer de mario para sus animaciones
@@ -847,7 +847,7 @@ int main(void)
                 draw_enemy_rpi (S4p, pMario );
                 draw_enemy_rpi (S5p, pMario );
                 draw_enemy_rpi (S6p, pMario );
-                draw_enemy_rpi (S7p, pMario );/*
+                draw_enemy_rpi (S7p, pMario );
 
                 //Dibujo de enemigos MAPA 2
                 draw_enemy_rpi (F13p, pMario );
@@ -889,7 +889,7 @@ int main(void)
                 draw_enemy_rpi (M3p, pMario );
                 draw_enemy_rpi (M4p, pMario );
                 draw_enemy_rpi (M5p, pMario );
-                draw_enemy_rpi (M6p, pMario );
+                draw_enemy_rpi (M6p, pMario );/*
                 
                 //Dibujo de monedas MAPA 1
                  draw_coin_rpi(pMario,pcoin1 );
