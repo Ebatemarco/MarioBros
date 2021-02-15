@@ -33,7 +33,7 @@ int main(void)
     
     //Inicializacion de monedas
     
-    /*coin coin1;
+    coin coin1;
     coin * pcoin1=&coin1;
     coin coin2;
     coin * pcoin2=&coin2;
@@ -102,7 +102,7 @@ int main(void)
     coin coin34;
     coin * pcoin34=&coin34;
     coin coin35;
-    coin * pcoin35=&coin35;*/
+    coin * pcoin35=&coin35;
     
     
     //Inicializacion de enemigos MAPA 1
@@ -479,7 +479,7 @@ int main(void)
 
             
                //Estado inicial de las monedas MAPA 1
-               /* coin_start(pcoin1,100,100,MAPA1,restart);
+                coin_start(pcoin1,100,100,MAPA1,restart);
                 coin_start(pcoin2,130,100,MAPA1,restart);
                 coin_start(pcoin3,150,100,MAPA1,restart);
                 coin_start(pcoin4,2895,52,MAPA1,restart);
@@ -515,7 +515,7 @@ int main(void)
                 coin_start(pcoin32,1407,119,MAPA2,restart);
                 coin_start(pcoin33,1607,179,MAPA2,restart);
                 coin_start(pcoin34,1223,61,MAPA2,restart);
-                coin_start(pcoin35,840,179,MAPA2,restart);*/
+                coin_start(pcoin35,840,179,MAPA2,restart);
 
 
                 
@@ -627,7 +627,7 @@ int main(void)
                 
                 //Colision con las monedas
                 
-                /*fcoin(pMario,pcoin1);
+                fcoin(pMario,pcoin1);
                 fcoin(pMario,pcoin2);
                 fcoin(pMario,pcoin3);
                 fcoin(pMario,pcoin4);
@@ -666,7 +666,7 @@ int main(void)
                 
                 
                 
-                Mario.coin_obt=false;*/
+                Mario.coin_obt=false;
                 
                 //Movimiento de enemigos MAPA 1
                 
@@ -889,7 +889,7 @@ int main(void)
                 draw_enemy_rpi (M3p, pMario );
                 draw_enemy_rpi (M4p, pMario );
                 draw_enemy_rpi (M5p, pMario );
-                draw_enemy_rpi (M6p, pMario );/*
+                draw_enemy_rpi (M6p, pMario );
                 
                 //Dibujo de monedas MAPA 1
                  draw_coin_rpi(pMario,pcoin1 );
@@ -928,7 +928,7 @@ int main(void)
                  draw_coin_rpi(pMario,pcoin32 );
                  draw_coin_rpi(pMario,pcoin33 );
                  draw_coin_rpi(pMario,pcoin34 );
-                 draw_coin_rpi(pMario,pcoin35 );*/
+                 draw_coin_rpi(pMario,pcoin35 );
             
                 
                 }

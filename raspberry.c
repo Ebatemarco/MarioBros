@@ -119,8 +119,9 @@ void draw_enemy_rpi (enemy * en, player * Mario)
 void draw_coin_rpi(player * Mario,coin* ncoin)
 {
     dcoord_t coord ;
-    coord.x= ncoin->x;
-    coord.y= ncoin->y;
+    coord.x= (uint8_t)((ncoin->x)-(Mario->x-(BUFFER_H/2)));
+    coord.y= (uint8_t)(ncoin->y);
+
     if(((Mario->n_mapa_actual)== (ncoin->map)) && ((ncoin->active) == true))//se dibuja la moneda solo cuando esté activa y mario se encuentre en el mapa de la misma
        {
        disp_write (coord,D_ON);

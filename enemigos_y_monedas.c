@@ -257,9 +257,12 @@ void fcoin(player * Mario,coin* ncoin)
 void coin_start(coin* ncoin,float x,float y,char map,bool startup)
 {
     ncoin->active=true;
-    ncoin->x=x;
-    ncoin->y=y;
     ncoin->map=map;
+
+    #ifdef ALLEGRO
+    ncoin->x= x;
+    ncoin->y= y;
+    #endif /*ALLEGRO*/
            
     if(startup==true)//Si se acaba de iniciar el juego se rellena la matriz en donde se encuentra la moneda
     {
