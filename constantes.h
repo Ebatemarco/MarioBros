@@ -68,12 +68,7 @@
 #define BOSS_W 75
 #define MISIL_SIZE 10
 
-#define MAPAINICIO_W 500
-#define MAPA1_W 3103
-#define FINALMAPA1_W  564
-#define MAPA2_W  2200
-#define FINALMAPA2_W  564
-#define MAPA3_W  338
+
 
 #endif /* ALLEGRO */
 
@@ -168,6 +163,13 @@
 #define SQUID 3
 #define REDFISH 2
 #define FISH 1
+
+#define MAPAINICIO_W 500
+#define MAPA1_W 3103
+#define FINALMAPA1_W  564
+#define MAPA2_W  2200
+#define FINALMAPA2_W  564
+#define MAPA3_W  338
 
 
 #endif /* CONSTANTES_H */
