@@ -683,7 +683,7 @@ int main(void)
                 enemy_mov(F11p, pMario);
                 enemy_mov(F12p, pMario);
                 
-                /*enemy_mov(RF1p, pMario);
+                enemy_mov(RF1p, pMario);
                 enemy_mov(RF2p, pMario);
                 enemy_mov(RF3p, pMario);
                 enemy_mov(RF4p, pMario);
@@ -691,7 +691,7 @@ int main(void)
                 enemy_mov(RF6p, pMario);
                 enemy_mov(RF7p, pMario);
                 enemy_mov(RF8p, pMario);
-                enemy_mov(RF9p, pMario);
+                enemy_mov(RF9p, pMario);/*
                 
                 enemy_mov(S1p, pMario);
                 enemy_mov(S2p, pMario);

@@ -24,6 +24,7 @@ void barriers()
    //Zona de creacion de barreras
     
     //Mapa inicial
+   putbarrier (0, 0, 2, 223, mapainicio, BORDER);
    putbarrier (0, 200, 563, 223, mapainicio, BORDER);
    putbarrier (MAPAINICIO_W-4, 0 , MAPAINICIO_W, 223, mapainicio, BORDER);
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
@@ -145,6 +146,7 @@ void barriers()
    putbarrier (0, 0, 337, 239, mapa3, BORDER);
    putbarrier (12, 22, 289, 207, mapa3, EMPTY);
    putbarrier (290, 96, 337, 159, mapa3, EMPTY);
+   putbarrier (0, 0, 11, 239, mapa3, BORDER);
    
 //#endif /* ALLEGRO */
    
