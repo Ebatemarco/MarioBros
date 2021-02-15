@@ -115,14 +115,14 @@
 #define MISIL2_TURN_COORD -3
 #define MISIL4_TURN_COORD 1
 #define MISIL5_TURN_COORD 2
-#define BOSS_STOP -3
+#define BOSS_STOP -1
 
 
 #define FISH_SIZE 1
 #define SQUID_H 2
 #define SQUID_W 1
-#define BOSS_H 2
-#define BOSS_W 3
+#define BOSS_H 4
+#define BOSS_W 5
 #define MISIL_SIZE 1
 
 /*#define MAPAINICIO_W 35
