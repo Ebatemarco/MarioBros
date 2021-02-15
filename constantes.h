@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <math.h>
 
 
 #include "estructuras.h"
@@ -51,8 +52,14 @@
 #define MOVE_RATE_FISH  4.0
 #define MOVE_RATE_REDFISH  2.0
 #define MOVE_RATE_SQUID 2.0
+#define MOVE_RATE_MISIL 2.0
 #define DODGE_DIST 40
 #define FISH_DIST 15
+
+#define MISIL1_TURN_COORD -80
+#define MISIL2_TURN_COORD -40
+#define MISIL4_TURN_COORD 10
+#define MISIL5_TURN_COORD 30
 
 #define FISH_SIZE 16
 #define SQUID_H 24
@@ -101,17 +108,24 @@
 
 #define COIN_SIZE 1
 
-#define MOVE_RATE_FISH  60.0
+#define MOVE_RATE_FISH  16.0
 #define MOVE_RATE_REDFISH  1
 #define MOVE_RATE_SQUID 1
+#define MOVE_RATE_MISIL 1
 #define DODGE_DIST 3
 #define FISH_DIST 0.5
 
+#define MISIL1_TURN_COORD -6
+#define MISIL2_TURN_COORD -3
+#define MISIL4_TURN_COORD 1
+#define MISIL5_TURN_COORD 2
+
+
 #define FISH_SIZE 1
-#define SQUID_H 1
+#define SQUID_H 2
 #define SQUID_W 1
-#define BOSS_H 4
-#define BOSS_W 5
+#define BOSS_H 2
+#define BOSS_W 3
 #define MISIL_SIZE 1
 
 #define MAPAINICIO_W 36

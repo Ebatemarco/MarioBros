@@ -44,7 +44,6 @@ void draw_enemy_rpi (enemy * en, player * Mario)
 {
     dcoord_t coord ;
     coord.x= (uint8_t)((en->x)-(Mario->x-(BUFFER_H/2)));
-    printf("%f  %d\n",en->x,coord.x);
     coord.y= (uint8_t)(en->y);
     
     if(coord.x<=15 && coord.x>=0)

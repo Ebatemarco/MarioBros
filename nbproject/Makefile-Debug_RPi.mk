@@ -55,7 +55,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/local/lib
+LDLIBSOPTIONS=-L/usr/local/lib -lm
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}

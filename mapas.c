@@ -109,7 +109,7 @@ void barriers()
    putbarrier (96,160,287,207, mapa2, BORDER);
    putbarrier (176,144,287,159, mapa2, BORDER);
    putbarrier (48,176,79,207, mapa2, BORDER);
-   putbarrier (288,32,2199,207, mapa2, BORDER);
+   putbarrier (288,1,2199,207, mapa2, BORDER);
 
    putbarrier (288,48,623,207, mapa2, EMPTY);
    putbarrier (624,96,1823,159, mapa2, EMPTY);

@@ -86,6 +86,9 @@
           <linkerAddLib>
             <pElem>/usr/local/lib</pElem>
           </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibStdlibItem>Mathematics</linkerLibStdlibItem>
+          </linkerLibItems>
           <commandLine>libs/disdrv.o libs/joydrv.o libs/termlib.o</commandLine>
         </linkerTool>
       </compileType>

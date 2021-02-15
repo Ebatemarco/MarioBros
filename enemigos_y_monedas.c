@@ -20,6 +20,19 @@ void enemy_mov (enemy * en, player* Mario )
 {
 if((Mario->n_mapa_actual)== en->mapa)
 {
+    float xhitbox;
+    float yhitbox;
+    
+    #ifdef RPI
+    xhitbox= floor(en->x);
+    yhitbox= floor(en->y);
+    #endif
+    
+    #ifdef ALLEGRO
+    xhitbox= en->x;
+    yhitbox= en->y;
+    #endif
+    
     //Generacion de enemigos
     if (((Mario->x) >= (en->x - (BUFFER_H/2)) ) || (Mario->n_mapa_actual == MAPA3))//solo se activará el enemigo cuando se encuentre en el campo de vision de mario
     {
@@ -50,7 +63,7 @@ if((Mario->n_mapa_actual)== en->mapa)
 
             if (en->type == FISH || en->type == REDFISH) //Movimiento de los peces
                 {
-                if ( collide_entity(en->x, en->y, (en->x)+FISH_SIZE, (en->y)+FISH_SIZE, Mario) )
+                if ( collide_entity(xhitbox, yhitbox, xhitbox+FISH_SIZE, yhitbox+FISH_SIZE, Mario) )
                     {
                     Mario->death=true; 
                     }
@@ -62,7 +75,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                     else en->dodge =false;
                     }
                 if (en->type == FISH)
-                (en->x) -= 0.06;
+                (en->x) -= (1/MOVE_RATE_FISH);
 
                 if (en->type == REDFISH)
                 (en->x) -= 1/MOVE_RATE_REDFISH;
@@ -70,7 +83,7 @@ if((Mario->n_mapa_actual)== en->mapa)
 
             if (en->type == SQUID)//Movimiento de los pulpos
                 {
-                if ( collide_entity(en->x, en->y, (en->x)+SQUID_W, (en->y)+SQUID_H, Mario) )
+                if ( collide_entity(xhitbox, yhitbox, xhitbox+SQUID_W, yhitbox+SQUID_H, Mario) )
                     {
                     Mario->death=true;
                     }
@@ -106,7 +119,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                 }
                 if (en->type == BOSS) //Movimiento del boss submarino
                 {
-                    if ( collide_entity(en->x, en->y, (en->x)+BOSS_W, (en->y)+BOSS_H, Mario) )
+                    if ( collide_entity(xhitbox, yhitbox, xhitbox+BOSS_W, yhitbox+BOSS_H, Mario) )
                     {
                     Mario->death=true; 
                     }
@@ -115,59 +128,59 @@ if((Mario->n_mapa_actual)== en->mapa)
                 }
                 if (en->type == MISIL1 || en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6 ) //Movimiento de los misiles del submarino
                 {
-                    if ( collide_entity(en->x, en->y, (en->x)+MISIL_SIZE, (en->y)+MISIL_SIZE, Mario) )
+                    if ( collide_entity(xhitbox, yhitbox, xhitbox+MISIL_SIZE, yhitbox+MISIL_SIZE, Mario) )
                     {
                     Mario->death=true; 
                     }
                     if (en->type == MISIL1)
                         {
-                        if ((en->y)> (en->prev_pos)-80)
+                        if ((en->y)> (en->prev_pos)+MISIL1_TURN_COORD) 
                             {
-                            (en->y) -= 1/MOVE_RATE_SQUID;
+                            (en->y) -= 1/MOVE_RATE_MISIL;
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            (en->x) -= 1/MOVE_RATE_MISIL;
                             en->dodge = true;
                             }
                         }
                     else if (en->type == MISIL2)
                         {
-                        if ((en->y)> (en->prev_pos)-40)
+                        if ((en->y)> (en->prev_pos)+MISIL2_TURN_COORD)
                             {
-                            (en->y) -= 1/MOVE_RATE_SQUID;
+                            (en->y) -= 1/MOVE_RATE_MISIL;
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            (en->x) -= 1/MOVE_RATE_MISIL;
                             en->dodge = true;
                             }
                         }
                     else if (en->type == MISIL3)
                         {
-                        (en->x) -= 1/MOVE_RATE_SQUID;
+                        (en->x) -= 1/MOVE_RATE_MISIL;
                         }
                     else if (en->type == MISIL4)
                         {
-                        if ((en->y)< (en->prev_pos)+10)
+                        if ((en->y)< (en->prev_pos)+MISIL4_TURN_COORD)
                             {
-                            (en->y) += 1/MOVE_RATE_SQUID;
+                            (en->y) += 1/MOVE_RATE_MISIL;
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            (en->x) -= 1/MOVE_RATE_MISIL;
                             en->dodge = true;
                             }
                         }
                     else if (en->type == MISIL5)
                         {
-                        if ((en->y)< (en->prev_pos)+30)
+                        if ((en->y)< (en->prev_pos)+MISIL5_TURN_COORD)
                             {
-                            (en->y) += 1/MOVE_RATE_SQUID;
+                            (en->y) += 1/MOVE_RATE_MISIL;
                             }
                         else
                             {
-                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            (en->x) -= 1/MOVE_RATE_MISIL;
                             en->dodge = true;
                             }
                         }
@@ -175,19 +188,19 @@ if((Mario->n_mapa_actual)== en->mapa)
                         {
                         if ((en->timer > -60*2) && (en->timer < 0))
                             {
-                            (en->y) -= 1/MOVE_RATE_SQUID;
+                            (en->y) -= 1/MOVE_RATE_MISIL;
                             }
                         else if (en->timer > -60*10) 
                             {
-                            (en->x) -= 1/MOVE_RATE_SQUID;
+                            (en->x) -= 1/MOVE_RATE_MISIL;
                             }
                         else if (en->timer > -60*12)
                             {
-                            (en->y) += 1/MOVE_RATE_SQUID;
+                            (en->y) += 1/MOVE_RATE_MISIL;
                             }
                         else if (en->timer > -60*19) 
                             {
-                            (en->x) += 1/MOVE_RATE_SQUID;
+                            (en->x) += 1/MOVE_RATE_MISIL;
                             }
 
                         }
