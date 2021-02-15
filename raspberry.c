@@ -16,7 +16,7 @@ dcoord_t coord = {0,0};
     {
         for(i=((Mario->x)-(BUFFER_H/2)); i<((Mario->x)+(BUFFER_H/2)) ;i++)
         {
-            if (mapai[j][i]==BORDER && mapai[j][i]==EXIT0)
+            if (mapai[j][i]==BORDER || mapai[j][i]==EXIT0)
             {
             coord.x=i-((Mario->x)-(BUFFER_H/2));
             coord.y=j;
@@ -131,8 +131,8 @@ void print_post (bool pausa,player* Mario)
     //Dibujo de otros mensajes
     if (pausa==true)
         {
-        disp_clear() ;
-        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XPANTALLA)//pantalla de inicio
+        disp_clear();
+        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==(float(XPANTALLA)) )//pantalla de inicio
             {
             coord.x=4;
             for(coord.y = 4; coord.y<=11;coord.y++)
@@ -165,6 +165,7 @@ void print_post (bool pausa,player* Mario)
             }
         else //pantalla de pausa
             {
+            disp_clear();
             coord.x=6;
             for (coord.y=6; coord.y<=9;coord.y++) 
                 disp_write(coord, D_ON);
@@ -173,8 +174,10 @@ void print_post (bool pausa,player* Mario)
                 disp_write(coord, D_ON);
             }
         }
+    
     if (Mario->live==0) //Si se acabaron las vidas aparece el cartel de game over
     {
+        disp_clear();
         for (coord.y = 0; coord.y<BUFFER_H;coord.y++) 
             {
             for (coord.x = 0; coord.x<BUFFER_H;coord.x++) 
@@ -196,7 +199,7 @@ void print_post (bool pausa,player* Mario)
         coord.y=9;
         for (coord.x=6; coord.x<=8;coord.x++) 
                     disp_write(coord, D_OFF);
-        }
+    }
 }
 
 
