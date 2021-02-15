@@ -16,7 +16,7 @@ dcoord_t coord = {0,0};
     {
         for(i=((Mario->x)-(BUFFER_H/2)); i<((Mario->x)+(BUFFER_H/2)) ;i++)
         {
-            if (mapai[j][i]==BORDER || mapai[j][i]==EXIT0)
+            if (mapai[j][i]==BORDER || mapai[j][i]==EXIT0 || mapai[j][i]==EXIT2 || mapai[j][i]==EXIT4)
             {
             coord.x=i-((Mario->x)-(BUFFER_H/2));
             coord.y=j;
