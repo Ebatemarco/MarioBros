@@ -65,6 +65,55 @@
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
+    <conf name="Debug_RPi" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <standard>10</standard>
+          <incDir>
+            <pElem>/usr/local/include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>RPI</Elem>
+          </preprocessorList>
+          <warningLevel>2</warningLevel>
+        </cTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>/usr/local/lib</pElem>
+          </linkerAddLib>
+          <commandLine>libs/disdrv.o libs/joydrv.o libs/termlib.o</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="constantes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="estructuras.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libs/disdrv.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libs/joydrv.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libs/termlib.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mapas.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="mapas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="raspberry.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="raspberry.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
     <conf name="Debug_Allegro_" type="1">
       <toolsSet>
         <compilerSet>default</compilerSet>
@@ -269,55 +318,6 @@
       <item path="squid1.png" ex="false" tool="3" flavor2="0">
       </item>
       <item path="squid2.png" ex="false" tool="3" flavor2="0">
-      </item>
-    </conf>
-    <conf name="Debug_RPi" type="1">
-      <toolsSet>
-        <compilerSet>default</compilerSet>
-        <dependencyChecking>true</dependencyChecking>
-        <rebuildPropChanged>false</rebuildPropChanged>
-      </toolsSet>
-      <compileType>
-        <cTool>
-          <standard>10</standard>
-          <incDir>
-            <pElem>/usr/local/include</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>RPI</Elem>
-          </preprocessorList>
-          <warningLevel>2</warningLevel>
-        </cTool>
-        <linkerTool>
-          <linkerAddLib>
-            <pElem>/usr/local/lib</pElem>
-          </linkerAddLib>
-          <commandLine>libs/disdrv.o libs/joydrv.o libs/termlib.o</commandLine>
-        </linkerTool>
-      </compileType>
-      <item path="constantes.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="estructuras.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="libs/disdrv.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="libs/joydrv.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="libs/termlib.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mapas.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="mapas.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="raspberry.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="raspberry.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

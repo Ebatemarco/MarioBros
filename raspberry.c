@@ -98,7 +98,7 @@ void draw_enemy_rpi (enemy * en, player * Mario)
             }
 
             if (en->type == BOSS)
-                
+            {
             disp_write (coord,D_ON);
             coord.x++;
             disp_write (coord,D_ON);
@@ -111,7 +111,7 @@ void draw_enemy_rpi (enemy * en, player * Mario)
             disp_write (coord,D_ON);
             coord.x--;
             disp_write (coord,D_ON);
-
+            }
             if (en->type == MISIL1 ||en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6)
             disp_write (coord,D_ON);
         }

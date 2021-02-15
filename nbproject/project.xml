@@ -12,15 +12,15 @@
             <sourceRootList/>
             <confList>
                 <confElem>
+                    <name>Debug_RPi</name>
+                    <type>1</type>
+                </confElem>
+                <confElem>
                     <name>Debug_Allegro_</name>
                     <type>1</type>
                 </confElem>
                 <confElem>
                     <name>Release</name>
-                    <type>1</type>
-                </confElem>
-                <confElem>
-                    <name>Debug_RPi</name>
                     <type>1</type>
                 </confElem>
             </confList>

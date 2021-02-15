@@ -6,6 +6,14 @@
 CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
+# Debug_RPi configuration
+CND_PLATFORM_Debug_RPi=GNU-Linux
+CND_ARTIFACT_DIR_Debug_RPi=dist/Debug_RPi/GNU-Linux
+CND_ARTIFACT_NAME_Debug_RPi=mariobrosue
+CND_ARTIFACT_PATH_Debug_RPi=dist/Debug_RPi/GNU-Linux/mariobrosue
+CND_PACKAGE_DIR_Debug_RPi=dist/Debug_RPi/GNU-Linux/package
+CND_PACKAGE_NAME_Debug_RPi=mariobrosue.tar
+CND_PACKAGE_PATH_Debug_RPi=dist/Debug_RPi/GNU-Linux/package/mariobrosue.tar
 # Debug_Allegro_ configuration
 CND_PLATFORM_Debug_Allegro_=GNU-Linux
 CND_ARTIFACT_DIR_Debug_Allegro_=dist/Debug_Allegro_/GNU-Linux
@@ -22,14 +30,6 @@ CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/mariobrosue
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
 CND_PACKAGE_NAME_Release=mariobrosue.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/mariobrosue.tar
-# Debug_RPi configuration
-CND_PLATFORM_Debug_RPi=GNU-Linux
-CND_ARTIFACT_DIR_Debug_RPi=dist/Debug_RPi/GNU-Linux
-CND_ARTIFACT_NAME_Debug_RPi=mariobrosue
-CND_ARTIFACT_PATH_Debug_RPi=dist/Debug_RPi/GNU-Linux/mariobrosue
-CND_PACKAGE_DIR_Debug_RPi=dist/Debug_RPi/GNU-Linux/package
-CND_PACKAGE_NAME_Debug_RPi=mariobrosue.tar
-CND_PACKAGE_PATH_Debug_RPi=dist/Debug_RPi/GNU-Linux/package/mariobrosue.tar
 #
 # include compiler specific variables
 #
