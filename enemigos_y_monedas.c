@@ -298,8 +298,8 @@ void coin_start(coin* ncoin,float x,float y,char map,bool startup)
     }
     
     #ifdef RPI
-    ncoin->x=(int)(x*COORDSCALE);
-    ncoin->y=(int)(y*COORDSCALE);
+    ncoin->x=floor(x*COORDSCALE);
+    ncoin->y=floor(y*COORDSCALE);
     #endif /*RPI*/
 }
 
