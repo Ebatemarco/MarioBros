@@ -103,10 +103,13 @@ void draw_enemy_rpi (enemy * en, player * Mario)
             disp_write (coord,D_ON);
             
             coord.y++;
+            if(coord.x < (Mario->x+(BUFFER_H/2)) )
             disp_write (coord,D_ON);
             coord.x--;
+            if(coord.x < (Mario->x+(BUFFER_H/2)) )
             disp_write (coord,D_ON);
             coord.x--;
+            if(coord.x < (Mario->x+(BUFFER_H/2)) )
             disp_write (coord,D_ON);
             }
             if (en->type == MISIL1 ||en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6)
