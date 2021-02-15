@@ -829,9 +829,9 @@ int main(void)
                 draw_enemy_rpi (F9p, pMario );
                 draw_enemy_rpi (F10p, pMario );
                 draw_enemy_rpi (F11p, pMario );
-                draw_enemy_rpi (F12p, pMario );
+                draw_enemy_rpi (F12p, pMario );/*
 
-                /*draw_enemy_rpi (RF1p, pMario );
+                draw_enemy_rpi (RF1p, pMario );
                 draw_enemy_rpi (RF2p, pMario );
                 draw_enemy_rpi (RF3p, pMario );
                 draw_enemy_rpi (RF4p, pMario );
