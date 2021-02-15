@@ -43,10 +43,10 @@ void printmario(player* Mario)
 void draw_enemy_rpi (enemy * en, player * Mario)
 {
     dcoord_t coord ;
-    coord.x= (int)((en->x)-(Mario->x-(BUFFER_H/2)));
-    coord.y= (int)(en->y);
+    coord.x= (uint8_t)((en->x)-(Mario->x-(BUFFER_H/2)));
+    coord.y= (uint8_t)(en->y);
     
-    if(coord.x>15)
+    /*if(coord.x>15)
         coord.x=15;
     if(coord.x<0)
         coord.x=0;
@@ -54,7 +54,7 @@ void draw_enemy_rpi (enemy * en, player * Mario)
     if(coord.y>15)
         coord.y=15;
     if(coord.y<0)
-        coord.y=0;
+        coord.y=0;*/
     
     if(Mario->n_mapa_actual== en->mapa)
     {    
