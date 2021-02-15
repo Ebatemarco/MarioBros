@@ -94,10 +94,11 @@ void draw_enemy_rpi (enemy * en, player * Mario)
             if (en->type == BOSS)
             {
             int i,j;
-            for(i=0; i<=4;i++)
+            coord.y--;
+            for(i=0; i<=3;i++)
                 {
                 coord.y++;
-                for(j=0; j<=4;j++)
+                for(j=0; j<=3;j++)
                     {
                     coord.x--;
                     disp_write(coord, D_ON);
