@@ -107,7 +107,7 @@
 #define MOVE_RATE_REDFISH  8.0
 #define MOVE_RATE_SQUID 16.0
 #define MOVE_RATE_MISIL 16.0
-#define DODGE_DIST 3
+#define DODGE_DIST 2
 #define FISH_DIST 0.3
 
 #define MISIL1_TURN_COORD -6
