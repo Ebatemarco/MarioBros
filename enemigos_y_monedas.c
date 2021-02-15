@@ -62,7 +62,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                     else en->dodge =false;
                     }
                 if (en->type == FISH)
-                (en->x) -= 0.017;
+                (en->x) -= 0.03;
 
                 if (en->type == REDFISH)
                 (en->x) -= 1/MOVE_RATE_REDFISH;

@@ -94,9 +94,9 @@
 #define MARIO_W 1 //Tamaño del sprite
 #define MARIO_H 1 //Tamaño del sprite
 #define MOVE_RATE  1.0
-#define XINICIAL 20
+#define XINICIAL 5
 #define YINICIAL 8
-#define XPANTALLA 20
+#define XPANTALLA 5
 #define YPANTALLA 8
 
 #define COIN_SIZE 1
