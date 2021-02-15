@@ -230,8 +230,8 @@ void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,bool 
     #endif /*RPI*/
     
     if (en->type == FISH || en->type == REDFISH || en->type == BOSS)
-        en->prev_pos = x;
-    else en->prev_pos = y;
+        en->prev_pos = en->x;
+    else en->prev_pos = en->y;
 }
 
 
