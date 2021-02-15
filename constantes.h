@@ -60,6 +60,7 @@
 #define MISIL2_TURN_COORD -40
 #define MISIL4_TURN_COORD 10
 #define MISIL5_TURN_COORD 30
+#define BOSS_STOP -50
 
 #define FISH_SIZE 16
 #define SQUID_H 24
@@ -114,6 +115,7 @@
 #define MISIL2_TURN_COORD -3
 #define MISIL4_TURN_COORD 1
 #define MISIL5_TURN_COORD 2
+#define BOSS_STOP -3
 
 
 #define FISH_SIZE 1

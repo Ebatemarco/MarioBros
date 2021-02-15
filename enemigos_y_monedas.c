@@ -123,7 +123,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                     {
                     Mario->death=true; 
                     }
-                    if ((en->x)> (en->prev_pos)-50)
+                    if ((en->x)> (en->prev_pos)+BOSS_STOP)
                     (en->x) -= (1/MOVE_RATE_FISH);
                 }
                 if (en->type == MISIL1 || en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6 ) //Movimiento de los misiles del submarino
