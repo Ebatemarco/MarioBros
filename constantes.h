@@ -105,7 +105,7 @@
 #define MOVE_RATE_REDFISH  1
 #define MOVE_RATE_SQUID 1
 #define DODGE_DIST 3
-#define FISH_DIST 5
+#define FISH_DIST 0.5
 
 #define FISH_SIZE 1
 #define SQUID_H 1
