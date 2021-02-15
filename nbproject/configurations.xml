@@ -7,7 +7,7 @@
       <itemPath>allegro.h</itemPath>
       <itemPath>constantes.h</itemPath>
       <itemPath>libs/disdrv.h</itemPath>
-      <itemPath>enemigos y monedas.h</itemPath>
+      <itemPath>enemigos_y_monedas.h</itemPath>
       <itemPath>estructuras.h</itemPath>
       <itemPath>libs/joydrv.h</itemPath>
       <itemPath>mapas.h</itemPath>
@@ -46,7 +46,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>allegro.c</itemPath>
-      <itemPath>enemigos y monedas.c</itemPath>
+      <itemPath>enemigos_y_monedas.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>mapas.c</itemPath>
       <itemPath>raspberry.c</itemPath>
@@ -91,9 +91,9 @@
       </compileType>
       <item path="constantes.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
+      <item path="enemigos_y_monedas.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
+      <item path="enemigos_y_monedas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="estructuras.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -171,9 +171,9 @@
       </item>
       <item path="constantes.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
+      <item path="enemigos_y_monedas.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
+      <item path="enemigos_y_monedas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="estructuras.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -263,9 +263,9 @@
       </item>
       <item path="constantes.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="enemigos y monedas.c" ex="false" tool="0" flavor2="0">
+      <item path="enemigos_y_monedas.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="enemigos y monedas.h" ex="false" tool="3" flavor2="0">
+      <item path="enemigos_y_monedas.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="estructuras.h" ex="false" tool="3" flavor2="0">
       </item>

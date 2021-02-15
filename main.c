@@ -2,7 +2,7 @@
 #ifdef ALLEGRO
 #include "allegro.h"
 #endif /*ALLEGRO*/
-#include "enemigos y monedas.h"
+#include "enemigos_y_monedas.h"
 #include "mapas.h"
 
 

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-#include "enemigos y monedas.h"
+#include "enemigos_y_monedas.h"
 //FUNCIONES
 
 
@@ -62,7 +62,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                     else en->dodge =false;
                     }
                 if (en->type == FISH)
-                (en->x) -= 1/MOVE_RATE_FISH;
+                (en->x) -= 0.017;
 
                 if (en->type == REDFISH)
                 (en->x) -= 1/MOVE_RATE_REDFISH;

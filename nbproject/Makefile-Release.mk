@@ -36,7 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/allegro.o \
-	${OBJECTDIR}/enemigos\ y\ monedas.o \
+	${OBJECTDIR}/enemigos_y_monedas.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapas.o \
 	${OBJECTDIR}/raspberry.o
@@ -71,11 +71,10 @@ ${OBJECTDIR}/allegro.o: allegro.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/allegro.o allegro.c
 
-.NO_PARALLEL:${OBJECTDIR}/enemigos\ y\ monedas.o
-${OBJECTDIR}/enemigos\ y\ monedas.o: enemigos\ y\ monedas.c
+${OBJECTDIR}/enemigos_y_monedas.o: enemigos_y_monedas.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enemigos\ y\ monedas.o enemigos\ y\ monedas.c
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enemigos_y_monedas.o enemigos_y_monedas.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}

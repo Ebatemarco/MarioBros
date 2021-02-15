@@ -36,7 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/allegro.o \
-	${OBJECTDIR}/enemigos\ y\ monedas.o \
+	${OBJECTDIR}/enemigos_y_monedas.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/mapas.o
 
@@ -70,11 +70,10 @@ ${OBJECTDIR}/allegro.o: allegro.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Wall -DALLEGRO `pkg-config --cflags allegro-5` `pkg-config --cflags allegro_acodec-5` `pkg-config --cflags allegro_audio-5` `pkg-config --cflags allegro_color-5` `pkg-config --cflags allegro_dialog-5` `pkg-config --cflags allegro_font-5` `pkg-config --cflags allegro_image-5` `pkg-config --cflags allegro_main-5` `pkg-config --cflags allegro_memfile-5` `pkg-config --cflags allegro_physfs-5` `pkg-config --cflags allegro_primitives-5` `pkg-config --cflags allegro_ttf-5` `pkg-config --cflags allegro_video-5` -std=c11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/allegro.o allegro.c
 
-.NO_PARALLEL:${OBJECTDIR}/enemigos\ y\ monedas.o
-${OBJECTDIR}/enemigos\ y\ monedas.o: enemigos\ y\ monedas.c
+${OBJECTDIR}/enemigos_y_monedas.o: enemigos_y_monedas.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Wall -DALLEGRO `pkg-config --cflags allegro-5` `pkg-config --cflags allegro_acodec-5` `pkg-config --cflags allegro_audio-5` `pkg-config --cflags allegro_color-5` `pkg-config --cflags allegro_dialog-5` `pkg-config --cflags allegro_font-5` `pkg-config --cflags allegro_image-5` `pkg-config --cflags allegro_main-5` `pkg-config --cflags allegro_memfile-5` `pkg-config --cflags allegro_physfs-5` `pkg-config --cflags allegro_primitives-5` `pkg-config --cflags allegro_ttf-5` `pkg-config --cflags allegro_video-5` -std=c11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enemigos\ y\ monedas.o enemigos\ y\ monedas.c
+	$(COMPILE.c) -g -Wall -DALLEGRO `pkg-config --cflags allegro-5` `pkg-config --cflags allegro_acodec-5` `pkg-config --cflags allegro_audio-5` `pkg-config --cflags allegro_color-5` `pkg-config --cflags allegro_dialog-5` `pkg-config --cflags allegro_font-5` `pkg-config --cflags allegro_image-5` `pkg-config --cflags allegro_main-5` `pkg-config --cflags allegro_memfile-5` `pkg-config --cflags allegro_physfs-5` `pkg-config --cflags allegro_primitives-5` `pkg-config --cflags allegro_ttf-5` `pkg-config --cflags allegro_video-5` -std=c11  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enemigos_y_monedas.o enemigos_y_monedas.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
