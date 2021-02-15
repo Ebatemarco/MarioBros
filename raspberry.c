@@ -54,7 +54,8 @@ void draw_enemy_rpi (enemy * en, player * Mario)
         if (en->type == BOSS)
                 {
                 if (en->timer <= 0)
-                    {/*
+                    {
+                    printf("explosion");/*
                     if (en->timer > -30*1) 
                     al_draw_bitmap(*(bitm->p_explosion1), (en->x)+5, (en->y)-6, 0);
                     else if (en->timer > -30*2)

@@ -113,7 +113,7 @@
 #define MOVE_RATE_SQUID 1
 #define MOVE_RATE_MISIL 1
 #define DODGE_DIST 3
-#define FISH_DIST 0.5
+#define FISH_DIST 0.3
 
 #define MISIL1_TURN_COORD -6
 #define MISIL2_TURN_COORD -3
@@ -128,12 +128,12 @@
 #define BOSS_W 3
 #define MISIL_SIZE 1
 
-#define MAPAINICIO_W 36
-#define MAPA1_W 222
-#define FINALMAPA1_W  41
-#define MAPA2_W  158
-#define FINALMAPA2_W  41
-#define MAPA3_W  25
+#define MAPAINICIO_W 35
+#define MAPA1_W 220
+#define FINALMAPA1_W  40
+#define MAPA2_W  156
+#define FINALMAPA2_W  40
+#define MAPA3_W  23
 
 #endif /* RPI */
 
