@@ -187,7 +187,7 @@ int main(void)
     enemy RF12;
     enemy * RF12p = &RF12;
     enemy RF13;
-    enemy * RF13p = &RF13;/*
+    enemy * RF13p = &RF13;
     
     
     enemy S1;
@@ -217,7 +217,7 @@ int main(void)
     enemy S13;
     enemy * S13p = &S13;
     enemy S14;
-    enemy * S14p = &S14;
+    enemy * S14p = &S14;/*
     
     // Inicializacion enemigos MAPA 3 - BOSS
     enemy Boss;
@@ -564,7 +564,7 @@ int main(void)
                     enemy_start(RF6p,false,REDFISH,MAPA1,2322,84,false,0);
                     enemy_start(RF7p,false,REDFISH,MAPA1,2610,46,false,0);
                     enemy_start(RF8p,false,REDFISH,MAPA1,2787,112,false,0);
-                    enemy_start(RF9p,false,REDFISH,MAPA1,2988,48,false,0);/*
+                    enemy_start(RF9p,false,REDFISH,MAPA1,2988,48,false,0);
                     
                     enemy_start(S1p,false,SQUID,MAPA1,459,173,false,0);
                     enemy_start(S2p,false,SQUID,MAPA1,944,168,false,0);
@@ -572,7 +572,7 @@ int main(void)
                     enemy_start(S4p,false,SQUID,MAPA1,1258,131,false,0);
                     enemy_start(S5p,false,SQUID,MAPA1,1615,179,false,0);
                     enemy_start(S6p,false,SQUID,MAPA1,2076,107,false,0);
-                    enemy_start(S7p,false,SQUID,MAPA1,2739,168,false,0);
+                    enemy_start(S7p,false,SQUID,MAPA1,2739,168,false,0);/*
                     
                     //MAPA 2
                     
@@ -691,7 +691,7 @@ int main(void)
                 enemy_mov(RF6p, pMario);
                 enemy_mov(RF7p, pMario);
                 enemy_mov(RF8p, pMario);
-                enemy_mov(RF9p, pMario);/*
+                enemy_mov(RF9p, pMario);
                 
                 enemy_mov(S1p, pMario);
                 enemy_mov(S2p, pMario);
@@ -699,7 +699,7 @@ int main(void)
                 enemy_mov(S4p, pMario);
                 enemy_mov(S5p, pMario);
                 enemy_mov(S6p, pMario);
-                enemy_mov(S7p, pMario);
+                enemy_mov(S7p, pMario);/*
                 
                 //Movimiento de enemigos MAPA 2
                 
@@ -839,7 +839,7 @@ int main(void)
                 draw_enemy_rpi (RF6p, pMario );
                 draw_enemy_rpi (RF7p, pMario );
                 draw_enemy_rpi (RF8p, pMario );
-                draw_enemy_rpi (RF9p, pMario );/*
+                draw_enemy_rpi (RF9p, pMario );
 
                 draw_enemy_rpi (S1p, pMario );
                 draw_enemy_rpi (S2p, pMario );
@@ -847,7 +847,7 @@ int main(void)
                 draw_enemy_rpi (S4p, pMario );
                 draw_enemy_rpi (S5p, pMario );
                 draw_enemy_rpi (S6p, pMario );
-                draw_enemy_rpi (S7p, pMario );
+                draw_enemy_rpi (S7p, pMario );/*
 
                 //Dibujo de enemigos MAPA 2
                 draw_enemy_rpi (F13p, pMario );

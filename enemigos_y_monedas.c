@@ -91,13 +91,13 @@ if((Mario->n_mapa_actual)== en->mapa)
                     {
                     if((Mario->x)<=(en->x))
                         {
-                        (en->x) -= 0.8/MOVE_RATE_SQUID;
-                        (en->y) -= 0.8/MOVE_RATE_SQUID;
+                        (en->x) -= (0.8/MOVE_RATE_SQUID);
+                        (en->y) -= (0.8/MOVE_RATE_SQUID);
                         }
                     if((Mario->x)>(en->x))
                         {
-                        (en->x) += 0.8/MOVE_RATE_SQUID;
-                        (en->y) -= 0.8/MOVE_RATE_SQUID;
+                        (en->x) += (0.8/MOVE_RATE_SQUID);
+                        (en->y) -= (0.8/MOVE_RATE_SQUID);
                         }
                     }
                 else 
@@ -108,7 +108,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                         }
                     else
                         {
-                        (en->y) += 2/MOVE_RATE_SQUID;
+                        (en->y) += (2/MOVE_RATE_SQUID);
                         if ((en->y) > (en->prev_pos))
                             {
                             en->dodge = false;
