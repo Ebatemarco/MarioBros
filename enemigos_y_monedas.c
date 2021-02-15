@@ -246,8 +246,10 @@ void fcoin(player * Mario,coin* ncoin)
     float xhitbox;
     float yhitbox;
      #ifdef RPI
-    xhitbox= floor(ncoin->x);
-    yhitbox= floor(ncoin->y);
+    /*xhitbox= floor(ncoin->x);
+    yhitbox= floor(ncoin->y);*/
+    xhitbox= ncoin->x;
+    yhitbox= ncoin->y;
     #endif
     
     #ifdef ALLEGRO
@@ -257,8 +259,9 @@ void fcoin(player * Mario,coin* ncoin)
     
         if((Mario->coin_obt)&&(Mario->n_mapa_actual == ncoin->map)) //Solo se escanea si mario tocó la moneda cuando el flag de coin_obtenida se encuentra prendida
             {
-                if(Mario->n_mapa_actual== ncoin->map && collide_entity(xhitbox, yhitbox, xhitbox+COIN_SIZE, yhitbox+COIN_SIZE, Mario) && (ncoin->active == true))
+                if((Mario->n_mapa_actual== ncoin->map) && collide_entity(xhitbox, yhitbox, xhitbox+COIN_SIZE, yhitbox+COIN_SIZE, Mario) && (ncoin->active == true))
                     {
+                    printf("ping");
                     ncoin->active=false;//Si mario tocó la moneda esta se desactiva y se aumenta el contador de monedas
                     Mario->coins ++;
                     Mario->score += 300;
