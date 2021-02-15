@@ -121,7 +121,7 @@
 #define FISH_SIZE 1
 #define SQUID_H 2
 #define SQUID_W 1
-#define BOSS_H 4
+#define BOSS_H 6
 #define BOSS_W 5
 #define MISIL_SIZE 1
 

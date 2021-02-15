@@ -29,6 +29,7 @@ if((Mario->n_mapa_actual)== en->mapa)
     if (en->type==BOSS)
     {
     xhitbox= xhitbox-4;
+    yhitbox--;
     }
     #endif
     
