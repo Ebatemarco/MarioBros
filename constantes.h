@@ -101,7 +101,7 @@
 
 #define COIN_SIZE 1
 
-#define MOVE_RATE_FISH  4.0
+#define MOVE_RATE_FISH  60.0
 #define MOVE_RATE_REDFISH  1
 #define MOVE_RATE_SQUID 1
 #define DODGE_DIST 3
