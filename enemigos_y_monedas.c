@@ -78,7 +78,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                 (en->x) -= (1/MOVE_RATE_FISH);
 
                 if (en->type == REDFISH)
-                (en->x) -= 1/MOVE_RATE_REDFISH;
+                (en->x) -= (1/MOVE_RATE_REDFISH);
                 }
 
             if (en->type == SQUID)//Movimiento de los pulpos
