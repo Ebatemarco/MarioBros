@@ -124,7 +124,6 @@ void draw_coin_rpi(player * Mario,coin* ncoin)
     
     if(((Mario->n_mapa_actual)== (ncoin->map)) && ((ncoin->active) == true) && ((Mario->x) > (ncoin->x - (BUFFER_H/2))) && ((Mario->x) < (ncoin->x + (BUFFER_H/2))) )//se dibuja la moneda solo cuando esté activa y mario se encuentre en el mapa de la misma
        {
-        printf("drawcoin");
        disp_write (coord,D_ON);
        }
 }

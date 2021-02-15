@@ -228,7 +228,6 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 
             case COIN:
                 {
-                    printf("matriz");
                 Mario->coin_obt=true;
                 }
                 break;
