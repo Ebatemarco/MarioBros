@@ -162,7 +162,7 @@ int main(void)
     enemy * F27p = &F27;
     
     
-    /*enemy RF1;
+    enemy RF1;
     enemy * RF1p = &RF1;
     enemy RF2;
     enemy * RF2p = &RF2;
@@ -187,7 +187,7 @@ int main(void)
     enemy RF12;
     enemy * RF12p = &RF12;
     enemy RF13;
-    enemy * RF13p = &RF13;
+    enemy * RF13p = &RF13;/*
     
     
     enemy S1;
@@ -556,7 +556,7 @@ int main(void)
                     enemy_start(F11p,false,FISH,MAPA1,2613,107,false,0);
                     enemy_start(F12p,false,FISH,MAPA1,2935,111,false,0);
                     
-                    /*enemy_start(RF1p,false,REDFISH,MAPA1,268,87,false,0);
+                    enemy_start(RF1p,false,REDFISH,MAPA1,268,87,false,0);
                     enemy_start(RF2p,false,REDFISH,MAPA1,756,172,false,0);
                     enemy_start(RF3p,false,REDFISH,MAPA1,1465,40,false,0);
                     enemy_start(RF4p,false,REDFISH,MAPA1,1820,158,false,0);
@@ -564,7 +564,7 @@ int main(void)
                     enemy_start(RF6p,false,REDFISH,MAPA1,2322,84,false,0);
                     enemy_start(RF7p,false,REDFISH,MAPA1,2610,46,false,0);
                     enemy_start(RF8p,false,REDFISH,MAPA1,2787,112,false,0);
-                    enemy_start(RF9p,false,REDFISH,MAPA1,2988,48,false,0);
+                    enemy_start(RF9p,false,REDFISH,MAPA1,2988,48,false,0);/*
                     
                     enemy_start(S1p,false,SQUID,MAPA1,459,173,false,0);
                     enemy_start(S2p,false,SQUID,MAPA1,944,168,false,0);
@@ -829,7 +829,7 @@ int main(void)
                 draw_enemy_rpi (F9p, pMario );
                 draw_enemy_rpi (F10p, pMario );
                 draw_enemy_rpi (F11p, pMario );
-                draw_enemy_rpi (F12p, pMario );/*
+                draw_enemy_rpi (F12p, pMario );
 
                 draw_enemy_rpi (RF1p, pMario );
                 draw_enemy_rpi (RF2p, pMario );
@@ -839,7 +839,7 @@ int main(void)
                 draw_enemy_rpi (RF6p, pMario );
                 draw_enemy_rpi (RF7p, pMario );
                 draw_enemy_rpi (RF8p, pMario );
-                draw_enemy_rpi (RF9p, pMario );
+                draw_enemy_rpi (RF9p, pMario );/*
 
                 draw_enemy_rpi (S1p, pMario );
                 draw_enemy_rpi (S2p, pMario );

@@ -25,7 +25,7 @@ void barriers()
     
     //Mapa inicial
    putbarrier (0, 200, 563, 223, mapainicio, BORDER);
-   putbarrier (MAPAINICIO_W-4, 0 , MAPAINICIO_W, BUFFER_H, mapainicio, BORDER);
+   putbarrier (MAPAINICIO_W-4, 0 , MAPAINICIO_W, 224, mapainicio, BORDER);
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
    
     //Mapa 1
@@ -75,7 +75,7 @@ void barriers()
    putbarrier (3006, 152, 3037, 199,  mapa1, BORDER);
    putbarrier (2990, 168, 3021, 199,  mapa1, BORDER);
    putbarrier (2974, 184, 2989, 199,  mapa1, BORDER);
-   putbarrier (MAPA1_W-1, 0 , MAPA1_W, BUFFER_H, mapa1, BORDER);
+   putbarrier (MAPA1_W-1, 0 , MAPA1_W, 224, mapa1, BORDER);
    
    putbarrier (1072, 200, 1151, 223,  mapa1, BLOCKDEATH);
    putbarrier (2111, 168, 2254, 223,  mapa1, EMPTY);
@@ -96,7 +96,7 @@ void barriers()
    putbarrier (80, 184 , 95, 199, finalmapa1, BORDER);
    putbarrier (48, 168 , 79, 199, finalmapa1, BORDER);
    putbarrier (352, 184 , 367, 199, finalmapa1, BORDER);
-   putbarrier (FINALMAPA1_W-4, 0 , FINALMAPA1_W, BUFFER_H, finalmapa1, BORDER);
+   putbarrier (FINALMAPA1_W-4, 0 , FINALMAPA1_W, 224, finalmapa1, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa1, EXIT2);
    
    //Mapa2
@@ -121,7 +121,7 @@ void barriers()
    putbarrier (2137,96,2152,111, mapa2, EMPTY);
    putbarrier (0, 207, 2199, 239, mapa2, BORDER);
    putbarrier (2137, 114, 2150, 142, mapa2, EXIT3);
-   putbarrier (MAPA2_W-4, 0 , MAPA2_W, BUFFER_H, mapa2, BORDER);
+   putbarrier (MAPA2_W-4, 0 , MAPA2_W, 224, mapa2, BORDER);
    
    //Final del mapa 2
    putbarrier (0, 200, 563, 223, finalmapa2, BORDER);
@@ -136,7 +136,7 @@ void barriers()
    putbarrier (48, 168 , 79, 199, finalmapa2, BORDER);
    putbarrier (352, 184 , 367, 199, finalmapa2, BORDER);
    putbarrier (0, 200, 563, 223, finalmapa2, BORDER);
-   putbarrier (FINALMAPA2_W-4, 0 , FINALMAPA2_W, BUFFER_H, finalmapa2, BORDER);
+   putbarrier (FINALMAPA2_W-4, 0 , FINALMAPA2_W, 224, finalmapa2, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa2, EXIT4);
    
    //Mapa 3
