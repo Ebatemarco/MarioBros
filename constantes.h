@@ -115,7 +115,7 @@
 #define MISIL2_TURN_COORD -3
 #define MISIL4_TURN_COORD 1
 #define MISIL5_TURN_COORD 2
-#define BOSS_STOP -1
+#define BOSS_STOP +5
 
 
 #define FISH_SIZE 1

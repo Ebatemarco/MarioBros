@@ -26,6 +26,10 @@ if((Mario->n_mapa_actual)== en->mapa)
     #ifdef RPI
     xhitbox= floor(en->x);
     yhitbox= floor(en->y);
+    if (enemy->type==BOSS)
+    {
+    xhitbox= xhitbox-4;
+    }
     #endif
     
     #ifdef ALLEGRO

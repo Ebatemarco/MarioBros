@@ -104,7 +104,7 @@ void draw_enemy_rpi (enemy * en, player * Mario)
                     coord.x--;
                     disp_write(coord, D_ON);
                     }
-                coord.x+=4;
+                coord.x= (coord.x)+ 4;
                 }
             }
             if (en->type == MISIL1 ||en->type == MISIL2 ||en->type == MISIL3 ||en->type == MISIL4 ||en->type == MISIL5 ||en->type == MISIL6)
