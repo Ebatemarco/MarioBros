@@ -243,9 +243,21 @@ void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,bool 
 
 void fcoin(player * Mario,coin* ncoin)
 {
+    float xhitbox;
+    float yhitbox;
+     #ifdef RPI
+    xhitbox= floor(ncoin->x);
+    yhitbox= floor(ncoin->y);
+    #endif
+    
+    #ifdef ALLEGRO
+    xhitbox= ncoin->x;
+    yhitbox= ncoin->y;
+    #endif
+    
         if((Mario->coin_obt)&&(Mario->n_mapa_actual == ncoin->map)) //Solo se escanea si mario tocó la moneda cuando el flag de coin_obtenida se encuentra prendida
             {
-                if(Mario->n_mapa_actual== ncoin->map && collide_entity(ncoin->x, ncoin->y, (ncoin->x)+COIN_SIZE, (ncoin->y)+COIN_SIZE, Mario) && (ncoin->active == true))
+                if(Mario->n_mapa_actual== ncoin->map && collide_entity(xhitbox, yhitbox, xhitbox+COIN_SIZE, yhitbox+COIN_SIZE, Mario) && (ncoin->active == true))
                     {
                     ncoin->active=false;//Si mario tocó la moneda esta se desactiva y se aumenta el contador de monedas
                     Mario->coins ++;
