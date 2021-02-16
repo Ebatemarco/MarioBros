@@ -538,7 +538,9 @@ int main(void)
                     if(restart==false)
                     {
                     Mario.live-=1;
+#ifdef RPI
                     printf("Vidas: %d", Mario.live);
+#endif
                     Mario.death=false;
                     Mario.x=XINICIAL;
                     Mario.y=YINICIAL;
