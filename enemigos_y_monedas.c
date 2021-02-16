@@ -248,8 +248,8 @@ void fcoin(player * Mario,coin* ncoin)
      #ifdef RPI
     /*xhitbox= floor(ncoin->x);
     yhitbox= floor(ncoin->y);*/
-    xhitbox= floor(ncoin->x);
-    yhitbox= floor(ncoin->y);
+    xhitbox= ncoin->x;
+    yhitbox= ncoin->y;
     #endif
     
     #ifdef ALLEGRO
@@ -298,8 +298,8 @@ void coin_start(coin* ncoin,float x,float y,char map,bool startup)
     }
     
     #ifdef RPI
-    ncoin->x=floor(x*COORDSCALE);
-    ncoin->y=floor(y*COORDSCALE);
+    ncoin->x=(x*COORDSCALE);
+    ncoin->y=(y*COORDSCALE);
     #endif /*RPI*/
 }
 
