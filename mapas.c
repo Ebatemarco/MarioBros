@@ -218,7 +218,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 }
                 break;
                 
-            case EXIT0:
+            case EXIT4:
                 {
                 Mario->exit_pass=true;
                 clonarMatriz(mapa1,mapa);
@@ -264,7 +264,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 }
                 break;
                 
-            case EXIT4:
+            case EXIT0:
                 {
                 Mario->exit_pass=true;
                 clonarMatriz(mapa3,mapa);

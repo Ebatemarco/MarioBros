@@ -538,9 +538,6 @@ int main(void)
                     if(restart==false)
                     {
                     Mario.live-=1;
-#ifdef RPI
-                    printf("Vidas: %c", Mario.live);
-#endif
                     Mario.death=false;
                     Mario.x=XINICIAL;
                     Mario.y=YINICIAL;
@@ -548,7 +545,9 @@ int main(void)
                     
                     //Estado inicial de los enemigos
                    
-                   
+                   #ifdef RPI
+                    printf("Vidas: %d", Mario.live);
+                   #endif
                     //MAPA 1
                     
                     enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
@@ -1066,6 +1065,7 @@ int main(void)
                 //Boton de reiniciar
                 if(key_pressed[KEY_R])
                 {
+                al_stop_samples();
                 restart=true;
                 Mario.exit_pass = true;//se levanta el flag para actualizar el background
                 Mario.n_mapa_actual=MAPAINICIO;

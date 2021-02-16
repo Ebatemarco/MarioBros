@@ -183,7 +183,7 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu
             }
         else al_draw_scaled_bitmap(menu,0, 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);//pantalla de pausa
         }
-    if (Mario->live==0) //Si se acabaron las vidas aparece el cartel de game over
+    if (Mario->live<=0) //Si se acabaron las vidas aparece el cartel de game over
     al_draw_scaled_bitmap(gameover,0, 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
     
     al_flip_display();
