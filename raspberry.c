@@ -22,7 +22,7 @@ dcoord_t coord = {0,0};
             coord.y=j;
             disp_write (coord,D_ON);
             }
-            else if (mapai[j][i]==EMPTY|| mapai[j][i]==COIN)
+            else if (mapai[j][i]==EMPTY|| mapai[j][i]==COIN || mapai[j][i]==BLOCKDEATH)
             {
             coord.x=i-((Mario->x)-(BUFFER_H/2));
             coord.y=j;
