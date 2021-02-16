@@ -544,10 +544,9 @@ int main(void)
                     }
                     
                     //Estado inicial de los enemigos
-                   
-                   #ifdef RPI
+#ifdef RPI
                     printf("\nVidas: %d\n", (int)(Mario.live));
-                   #endif
+#endif
                     //MAPA 1
                     
                     enemy_start(F1p,false,FISH,MAPA1,219,122,false,0);
