@@ -57,16 +57,25 @@ void fcoin(player * Mario,coin* ncoin);
 void coin_start(coin* ncoin,float x,float y,char map, bool startup);
 
 /*
- * @brief Destecta si mario choco con una moneda o enemigo
+ * @brief Destecta si mario choco con un enemigo
  * @param param1 coordenada x de la esquina superior izquierda del objeto
  * @param param2 coordenada y de la esquina superior izquierda del objeto
  * @param param3 coordenada x de la esquina inferior derecha del objeto
  * @param param4 coordenada y de la esquina inferior derecha del objeto
  * @param param5 puntero de mario
- * @return evuelve 1 si chco o 0 si no lo hizo
+ * @return devuelve 1 si choco o 0 si no lo hizo
 */
 bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario);
 
+/*
+ * @brief Destecta si mario choco con una moneda
+ * @param param1 coordenada x de la esquina superior izquierda del objeto
+ * @param param2 coordenada y de la esquina superior izquierda del objeto
+ * @param param3 coordenada x de la esquina inferior derecha del objeto
+ * @param param4 coordenada y de la esquina inferior derecha del objeto
+ * @param param5 puntero de mario
+ * @return Devuelve 1 si choco o 0 si no lo hizo
+*/
 bool collide_coin(float ax1, float ay1, float ax2, float ay2, player* Mario);
 
 /***********************************************************

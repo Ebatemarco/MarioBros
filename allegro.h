@@ -41,11 +41,12 @@ ALLEGRO_BITMAP *(*p_explosion1);
 ALLEGRO_BITMAP *(*p_explosion2);
 ALLEGRO_BITMAP *(*p_explosion3);
 }bitmaps_t;
+/*Estructura de punteros a Bitmap*/
 
 enum MYKEYS 
 {
     KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT , KEY_P ,KEY_R
-};
+};/*Numeracion de las teclas de direccion*/
 
 /***********************************************************
 	Prototipos de funciones globales

@@ -15,14 +15,13 @@ char mapa1[BUFFER_H][BUFFER_W]={EMPTY};
 char finalmapa1[BUFFER_H][BUFFER_W]={EMPTY};
 char mapa2[BUFFER_H][BUFFER_W]={EMPTY};
 
-char mapa[BUFFER_H][BUFFER_W]={EMPTY}; 
+char mapa[BUFFER_H][BUFFER_W]={EMPTY}; //Matriz que aparece en pantalla sobre la cual se escribe el mapa actual
 
 
 
 void barriers()
 {
-    
-//#ifdef ALLEGRO    
+       
    //Zona de creacion de barreras
     
     //Mapa inicial
@@ -157,9 +156,8 @@ void barriers()
    putbarrier (290, 96, 337, 159, mapa3, EMPTY);
    putbarrier (0, 0, 11, 239, mapa3, BORDER);
    putbarrier (331, 96, 337, 159, mapa3, EXIT5);
-//#endif /* ALLEGRO */
-   
 
+   
 }
 
 
