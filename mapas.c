@@ -1,8 +1,10 @@
+///////////////////////////////////////////////////////////////////////////////
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico Final Programación I.
+ * MarioBros Underwater Edition
+ * File:  mapas.c
  */
+///////////////////////////////////////////////////////////////////////////////
 
 #include "mapas.h"
 
@@ -26,7 +28,7 @@ void barriers()
     //Mapa inicial
    putbarrier (0, 0, 2, 223, mapainicio, BORDER);
    putbarrier (0, 200, 563, 223, mapainicio, BORDER);
-   putbarrier (MAPAINICIO_W-4, 0 , MAPAINICIO_W, 223, mapainicio, BORDER);
+   putbarrier (MAPAINICIO_W-4, 0 , 500, 223, mapainicio, BORDER);
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
    
     //Mapa 1
@@ -98,7 +100,7 @@ void barriers()
    putbarrier (80, 184 , 95, 199, finalmapa1, BORDER);
    putbarrier (48, 168 , 79, 199, finalmapa1, BORDER);
    putbarrier (352, 184 , 367, 199, finalmapa1, BORDER);
-   putbarrier (FINALMAPA1_W-4, 0 , FINALMAPA1_W, 223, finalmapa1, BORDER);
+   putbarrier (FINALMAPA1_W-4, 0 , 500, 223, finalmapa1, BORDER);
    putbarrier (0, 0, 2, 223, finalmapa1, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa1, EXIT2);
    
@@ -140,7 +142,7 @@ void barriers()
    putbarrier (48, 168 , 79, 199, finalmapa2, BORDER);
    putbarrier (352, 184 , 367, 199, finalmapa2, BORDER);
    putbarrier (0, 200, 563, 223, finalmapa2, BORDER);
-   putbarrier (FINALMAPA2_W-4, 0 , FINALMAPA2_W, 223, finalmapa2, BORDER);
+   putbarrier (FINALMAPA2_W-4, 0 , 500, 223, finalmapa2, BORDER);
    putbarrier (0, 0, 2, 223, finalmapa2, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa2, EXIT4);
    
@@ -149,7 +151,7 @@ void barriers()
    putbarrier (12, 22, 289, 207, mapa3, EMPTY);
    putbarrier (290, 96, 337, 159, mapa3, EMPTY);
    putbarrier (0, 0, 11, 239, mapa3, BORDER);
-   
+   putbarrier (331, 96, 337, 159, mapa3, EXIT5);
 //#endif /* ALLEGRO */
    
 //#ifdef RPI
@@ -171,22 +173,6 @@ void putbarrier (int ax, int ay, int bx, int by, char mapa[BUFFER_H][BUFFER_W] ,
     bx= (int)(bx*COORDSCALE);
     by= (int)(by*COORDSCALE);
     
-   /* if(ax>(BUFFER_H-1))
-        ax=BUFFER_H-1;
-    else if (ax<0)
-        ax=0;
-    if(ay>(BUFFER_H-1))
-        ay=BUFFER_H-1;
-    else if (ay<0)
-        ay=0;
-    if(bx>(BUFFER_H-1))
-        bx=BUFFER_H-1;
-    else if (bx<0)
-        bx=0;
-    if(by>(BUFFER_H-1))
-        by=BUFFER_H-1;
-    else if (by<0)
-        by=0;*/
 #endif /*RPI*/
     
     for(j=ay; j<= by ;j++)
@@ -287,6 +273,17 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 Mario->n_mapa_actual=MAPA3;
                 Mario->score = (Mario->timer)*100;
                 Mario->timer=LEVEL_TIME;
+                return false;
+                }
+                break;
+                
+            case EXIT5:
+                {
+                Mario->score = (Mario->timer)*100;
+                Mario->x=XINICIAL;
+                Mario->y=YINICIAL;
+                Mario->win=true;
+                printf("GANASTE !!!\nTu puntaje: %u\n",Mario->score);
                 return false;
                 }
                 break;

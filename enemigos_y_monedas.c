@@ -1,19 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico Final Programación I.
+ * MarioBros Underwater Edition
+ * File:  enemigos_y_monedas.c
  */
+///////////////////////////////////////////////////////////////////////////////
 
 #include "enemigos_y_monedas.h"
-//FUNCIONES
-
-
-extern char mapa1[BUFFER_H][BUFFER_W];
-
-extern char mapa2[BUFFER_H][BUFFER_W];
-
-extern char mapa3[BUFFER_H][BUFFER_W];
-
 
 
 void enemy_mov (enemy * en, player* Mario ) 

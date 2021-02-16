@@ -1,20 +1,12 @@
+///////////////////////////////////////////////////////////////////////////////
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico Final Programación I.
+ * MarioBros Underwater Edition
+ * File:  allegro.c
  */
+///////////////////////////////////////////////////////////////////////////////
 
 #include "allegro.h"
-
-
-extern char mapainicio[BUFFER_H][BUFFER_W];
-extern char mapa3[BUFFER_H][BUFFER_W];
-extern char finalmapa2[BUFFER_H][BUFFER_W];
-extern char mapa1[BUFFER_H][BUFFER_W];
-extern char finalmapa1[BUFFER_H][BUFFER_W];
-extern char mapa2[BUFFER_H][BUFFER_W];
-
-extern char mapa[BUFFER_H][BUFFER_W]; 
 
 void draw_coin(player * Mario,coin* ncoin,bitmaps_t * bitm)
 {
@@ -124,6 +116,9 @@ void disp_pre_draw(ALLEGRO_BITMAP* b, player* Mario,ALLEGRO_BITMAP *(*p_backgrou
         case FINALMAPA2:
             *p_background = al_load_bitmap("mapa-final.png");
             break;
+        case MAPAINICIO:
+            *p_background = al_load_bitmap("mapa-inicio.png");
+            break;
         default:
             break;
         }
@@ -132,7 +127,7 @@ void disp_pre_draw(ALLEGRO_BITMAP* b, player* Mario,ALLEGRO_BITMAP *(*p_backgrou
     al_set_target_bitmap(b);
 }
 
-void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu,ALLEGRO_BITMAP* gameover, player* Mario, ALLEGRO_FONT * font,bool pausa)//dibujo de cosas en la pantalla,no en el buffer
+void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu,ALLEGRO_BITMAP* gameover,ALLEGRO_BITMAP* winscreen, player* Mario, ALLEGRO_FONT * font,bool pausa)//dibujo de cosas en la pantalla,no en el buffer
 {
     //Dibujo del buffer
     al_set_target_backbuffer(disp);
@@ -175,7 +170,12 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* b,ALLEGRO_BITMAP* menu
     //Dibujo de otros mensajes
     if (pausa==true)
         {
-        if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XPANTALLA)//pantalla de inicio
+        if (Mario->win==true)
+        {
+        al_draw_scaled_bitmap(winscreen,0, 0, BUFFER_H, BUFFER_H, 0, 0, SCREEN_W, SCREEN_H, 0);
+        al_draw_textf(font, al_map_rgb(255, 255, 255), 15*(SCREEN_W/20) ,9*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT,"%d",Mario->score);
+        }
+        else if(Mario->n_mapa_actual==MAPAINICIO && Mario->x==XPANTALLA)//pantalla de inicio
             {
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,13*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "Presiona");
             al_draw_textf(font, al_map_rgb(255, 255, 255), 9*(SCREEN_W/20) ,14*(SCREEN_H/20), ALLEGRO_ALIGN_LEFT, "la tecla P ");

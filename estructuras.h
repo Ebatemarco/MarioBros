@@ -1,19 +1,19 @@
+///////////////////////////////////////////////////////////////////////////////
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico Final Programación I.
+ * MarioBros Underwater Edition
+ * File:  estructuras.h
  */
-
-/* 
- * File:   estructuras.h
- * Author: matias
- *
- * Created on 7 de febrero de 2021, 14:24
- */
+///////////////////////////////////////////////////////////////////////////////
 
 #ifndef ESTRUCTURAS_H
 #define ESTRUCTURAS_H
 
+/***********************************************************
+                Definición de Estructuras
+***********************************************************/
+
+//JUGADOR
 typedef struct
 {
     char live;//Vidas de Mario
@@ -24,14 +24,16 @@ typedef struct
     int salto;//variable que indica cuanto debe subir mario tras saltar
     int salto_cooldown;//temporizador que indica cuanto falta para hacer un nuevo salto
     bool salto_lock;//Flag que bloquea el salto de Mario cuando se mantiene apretada la tecla para saltar
-    int coins;
-    bool coin_obt;
-    unsigned int timer;
-    unsigned int score;
-    bool exit_pass;
+    int coins;//cantidad de monedas de mario
+    bool coin_obt;//flag que indica si se acaba de obtener una moneda
+    unsigned int timer; //timer del nivel
+    unsigned int score;//puntuacion actual
+    bool exit_pass;//flag para actualizar el background
+    bool win;//flag que inidica si ganaste
     
 }player;
 
+//ENEMIGO
 typedef struct
 {
     bool active; // Flag que indica si el enemigo esta activo o no
@@ -44,12 +46,13 @@ typedef struct
     int timer;//Temporizador de los misiles que indica cuanto falta para que se activen
 }enemy;
 
+//MONEDA
 typedef struct
 {
-    bool active;
-    float x;
-    float y;
-    char map;
+    bool active;// Flag que indica si la moneda esta activa o no
+    float x;;//Posicion x de la moneda
+    float y;//Posicion y de la moneda
+    char map;//mapa de la moneda
 }coin;
 
 

@@ -2,29 +2,32 @@
 /*
  * Trabajo Práctico Final Programación I.
  * MarioBros Underwater Edition
- * File:  raspberry.h
+ * File:  main.h
  */
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef RASPBERRY_H
-#define RASPBERRY_H
+#ifndef MAIN_H
+#define MAIN_H
 
 /***********************************************************
 			Headers
 ***********************************************************/
-#include "constantes.h"
-#include "libs/termlib.h"
-#include "libs/disdrv.h"
-#include "libs/joydrv.h"
+#include "enemigos_y_monedas.h"
+#include "mapas.h"
+
+#ifdef RPI
+#include "raspberry.h"
+#endif
+
+#ifdef ALLEGRO
+#include "allegro.h"
+#endif /*ALLEGRO*/
 
 /***********************************************************
-	Prototipos de funciones globales
+           Prototipos de variables globales
 ***********************************************************/
-void printmatrp (char mapai[BUFFER_H][BUFFER_W],player* Mario);
-void printmario(player* Mario);
-void draw_enemy_rpi (enemy * en, player * Mario);
-void draw_coin_rpi (player * Mario,coin* ncoin);
-void print_post (bool pausa,player* Mario);
+extern char mapa[BUFFER_H][BUFFER_W]; 
+extern char mapainicio[BUFFER_H][BUFFER_W]; 
 
-#endif /* RASPBERRY_H */
+#endif /* MAIN_H */
 

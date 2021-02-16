@@ -1,31 +1,30 @@
+///////////////////////////////////////////////////////////////////////////////
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico Final Programación I.
+ * MarioBros Underwater Edition
+ * File:  constantes.h
  */
-
-/* 
- * File:   constantes.h
- * Author: matias
- *
- * Created on 7 de febrero de 2021, 14:21
- */
+///////////////////////////////////////////////////////////////////////////////
 
 #ifndef CONSTANTES_H
 #define CONSTANTES_H
 
+/***********************************************************
+			Headers
+***********************************************************/
 #define _DEFAULT_SOURCE
 #include <unistd.h>
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
 
-
 #include "estructuras.h"
 
+/***********************************************************
+                        Definiciones
+***********************************************************/
 #ifdef ALLEGRO
 
 #define BUFFER_W 3103
@@ -145,6 +144,7 @@
 #define FINALMAPA2 (MAPA2+10)
 #define MAPA3 3
 
+#define EXIT5 9
 #define EXIT4 8
 #define EXIT3 7
 #define EXIT2 6
