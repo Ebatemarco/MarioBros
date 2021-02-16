@@ -521,7 +521,7 @@ int main(void)
                 
                 //Carga del primer mapa
                 
-                clonarMatriz(mapainicio,mapa); //clonarMatriz(mapainicio,mapa);
+                clonarMatriz(mapainicio,mapa);
                
                 pausa=true;
             }
