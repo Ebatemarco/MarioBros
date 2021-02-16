@@ -546,7 +546,7 @@ int main(void)
                     //Estado inicial de los enemigos
                    
                    #ifdef RPI
-                    printf("Vidas: %d", (int)(Mario.live));
+                    printf("\nVidas: %d\n", (int)(Mario.live));
                    #endif
                     //MAPA 1
                     
