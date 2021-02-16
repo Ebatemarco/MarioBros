@@ -539,7 +539,7 @@ int main(void)
                     {
                     Mario.live-=1;
 #ifdef RPI
-                    printf("Vidas: %d", Mario.live);
+                    printf("Vidas: %c", Mario.live);
 #endif
                     Mario.death=false;
                     Mario.x=XINICIAL;
