@@ -238,7 +238,7 @@ void fcoin(player * Mario,coin* ncoin)
 { 
         if((Mario->coin_obt ==true)&&(Mario->n_mapa_actual == ncoin->map)) //Solo se escanea si mario tocó la moneda cuando el flag de coin_obtenida se encuentra prendida
             {
-                if( (collide_entity(ncoin->x, ncoin->y, ncoin->x+COIN_SIZE,ncoin->y+COIN_SIZE, Mario)) && (ncoin->active == true) )
+                if( (collide_coin(ncoin->x, ncoin->y, ncoin->x+COIN_SIZE,ncoin->y+COIN_SIZE, Mario)) && (ncoin->active == true) )
                     {
                     printf("moneda");
                     ncoin->active=false;//Si mario tocó la moneda esta se desactiva y se aumenta el contador de monedas
@@ -298,3 +298,20 @@ bool collide_entity(float ax1, float ay1, float ax2, float ay2, player* Mario)
     return true;
 }
 
+bool collide_coin(float ax1, float ay1, float ax2, float ay2, player* Mario)
+{
+    #ifdef ALLEGRO
+    if(ax1 > ((Mario->x)+ MARIO_SIZE)) return false;
+    if(ax2 < (Mario->x)) return false;
+    if(ay1 > ((Mario->y)+ MARIO_SIZE)) return false;
+    if(ay2 < (Mario->y)) return false;
+    #endif /*ALLEGRO*/
+
+    #ifdef RPI
+    if(ax1 > ((Mario->x)+ 1)) return false;
+    if(ax2 < (Mario->x)) return false;
+    if(ay1 > ((Mario->y)+ 1)) return false;
+    if(ay2 < (Mario->y)) return false;
+    #endif /*RPI*/
+    return true;
+}
