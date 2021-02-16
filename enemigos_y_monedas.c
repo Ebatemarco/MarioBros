@@ -240,7 +240,6 @@ void fcoin(player * Mario,coin* ncoin)
             {
                 if( (collide_coin(ncoin->x, ncoin->y, ncoin->x+COIN_SIZE,ncoin->y+COIN_SIZE, Mario)) && (ncoin->active == true) )
                     {
-                    printf("moneda");
                     ncoin->active=false;//Si mario tocó la moneda esta se desactiva y se aumenta el contador de monedas
                     Mario->coins ++;
                     Mario->score += 300;

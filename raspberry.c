@@ -231,12 +231,12 @@ void print_post (bool pausa,player* Mario)
         coord.x=3; 
         for (coord.y = 4; coord.y<=6;coord.y++) 
             {  
-            disp_write(coord, D_ON) ;
+            disp_write(coord, D_OFF) ;
             }
         coord.x=12;
         for (coord.y = 4; coord.y<=6;coord.y++) 
             {
-            disp_write(coord, D_ON) ;
+            disp_write(coord, D_OFF) ;
             }
         coord.x=4;
         coord.y=9;
