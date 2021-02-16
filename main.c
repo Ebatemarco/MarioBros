@@ -538,6 +538,7 @@ int main(void)
                     if(restart==false)
                     {
                     Mario.live-=1;
+                    printf("Vidas: %d", Mario.live);
                     Mario.death=false;
                     Mario.x=XINICIAL;
                     Mario.y=YINICIAL;
