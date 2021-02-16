@@ -270,6 +270,10 @@ int main(void)
     ALLEGRO_EVENT_QUEUE *event_queue = NULL;
     ALLEGRO_TIMER *timer = NULL;
     ALLEGRO_FONT * font = NULL;
+    ALLEGRO_SAMPLE *main_song;
+    ALLEGRO_SAMPLE *gameover_note;
+    ALLEGRO_SAMPLE *pausa_note;
+    ALLEGRO_SAMPLE *death_note;
     
     ALLEGRO_BITMAP *buffer = NULL;
     
@@ -337,6 +341,47 @@ int main(void)
         return -1;
     }
     
+    //INICIALIZACION DE AUDIO
+    if (!al_install_audio()) {
+        fprintf(stderr, "failed to initialize audio!\n");
+        return -1;
+    }
+    if (!al_init_acodec_addon()) {
+        fprintf(stderr, "failed to initialize audio codecs!\n");
+        return -1;
+    }
+    if (!al_reserve_samples(4)) {
+        fprintf(stderr, "failed to reserve samples!\n");
+        return -1;
+    }
+    
+    main_song = al_load_sample("main_song.wav");
+    if (!main_song) {
+        printf("Audio clip main_song not loaded!\n");
+        return -1;
+    }
+    
+    gameover_note = al_load_sample("gameover_note.wav");
+    if (!main_song) {
+        printf("Audio clip main_song not loaded!\n");
+        return -1;
+    }
+    
+    death_note = al_load_sample("death_note.wav");
+    if (!main_song) {
+        printf("Audio clip main_song not loaded!\n");
+        return -1;
+    }
+    
+    pausa_note = al_load_sample("pausa_note.wav");
+    if (!main_song) {
+        printf("Audio clip main_song not loaded!\n");
+        return -1;
+    }
+    /*ALLEGRO_SAMPLE_INSTANCE * spp;
+    spp=al_create_sample_instance(main_song);
+    al_play_sample_instance(spp);*/
+    
     al_set_window_title(display,"SUPER Mario Bros - Underwater Edition");
     
     buffer = al_create_bitmap(BUFFER_W, BUFFER_H);
@@ -401,7 +446,6 @@ int main(void)
     al_register_event_source(event_queue, al_get_keyboard_event_source()); //registramos el teclado
 
     al_start_timer(timer);//inicio del timer
-    
     #endif /*ALLEGRO*/
 
     barriers();//se cargan todas las barreras de los mapas
@@ -413,6 +457,10 @@ int main(void)
         if (al_get_next_event(event_queue, &ev)) //Toma un evento de la cola
         {
             if (ev.type == ALLEGRO_EVENT_TIMER) {
+                
+                if (restart==true)
+                al_play_sample(main_song, 0.5, 0.0, 1.0, ALLEGRO_PLAYMODE_LOOP, NULL); //Musica principal
+                
     #endif /*ALLEGRO*/
 
     #ifdef RPI
@@ -982,6 +1030,7 @@ int main(void)
                             {
                             pausa= true;
                             pausa_lock = true;
+                            al_play_sample(pausa_note, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
                             }
                         else
                             {
@@ -991,10 +1040,16 @@ int main(void)
                     }
                 }
         
-                if ((Mario.live)==0)//Si se acabaron las vidas Mario se bloquea en una posicion y se pausa el juego
+                if ((Mario.live)<=0)//Si se acabaron las vidas Mario se bloquea en una posicion y se pausa el juego
                 {
-                 Mario.x= BUFFER_H/2; 
-                 pausa=true;
+                    if((Mario.live)==0)
+                    {
+                    Mario.live--;
+                    al_stop_samples();
+                    al_play_sample(gameover_note, 1.0, 0.0, 1.0, ALLEGRO_PLAYMODE_ONCE, NULL);
+                    }
+                Mario.x= BUFFER_H/2; 
+                pausa=true;
                 }
         
                 if (Mario.win==true)//Si se acabaron las vidas Mario se bloquea en una posicion y se pausa el juego
@@ -1286,6 +1341,9 @@ int main(void)
     al_destroy_bitmap(game_over);
     al_destroy_bitmap(menupausa);
     al_destroy_bitmap(buffer);
+    
+    al_destroy_sample(main_song);
+    al_uninstall_audio();
     al_destroy_display(display);
     al_destroy_timer(timer);
     
