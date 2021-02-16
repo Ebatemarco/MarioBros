@@ -27,12 +27,17 @@ void barriers()
     
     //Mapa inicial
    putbarrier (0, 0, 2, 223, mapainicio, BORDER);
+   putbarrier (404, 168, 465, 199, mapainicio, BORDER);
+   putbarrier (436, 136, 465, 199, mapainicio, BORDER);
    putbarrier (0, 200, 563, 223, mapainicio, BORDER);
    putbarrier (MAPAINICIO_W-4, 0 , 500, 223, mapainicio, BORDER);
    putbarrier (404, 173, 414, 199, mapainicio, EXIT0);
    
     //Mapa 1
-   //putbarrier (0 , 0, 3102, 23,  mapa1, BORDER); // Borde de la parte de arriba 
+   
+   #ifdef ALLEGRO
+   putbarrier (0 , 0, 3102, 23,  mapa1, BORDER); // Borde de la parte de arriba 
+   #endif /* ALLEGRO */
    putbarrier (0,0, 2, 223,  mapa1, BORDER);
    putbarrier (0 , 200, 3101, 223,  mapa1, BORDER);
    putbarrier (175, 152, 190, 199,  mapa1, BORDER);
@@ -154,11 +159,7 @@ void barriers()
    putbarrier (331, 96, 337, 159, mapa3, EXIT5);
 //#endif /* ALLEGRO */
    
-//#ifdef RPI
 
-   
-   
-//#endif /* RPI */
 }
 
 
@@ -218,7 +219,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 }
                 break;
                 
-            case EXIT4:
+            case EXIT0:
                 {
                 Mario->exit_pass=true;
                 clonarMatriz(mapa1,mapa);
@@ -264,7 +265,7 @@ bool collidewborder(player* Mario,int ax1, int ay1, int ax2, int ay2,char mapa [
                 }
                 break;
                 
-            case EXIT0:
+            case EXIT4:
                 {
                 Mario->exit_pass=true;
                 clonarMatriz(mapa3,mapa);
