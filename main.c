@@ -225,22 +225,55 @@ int main(void)
     enemy * Bossp = &Boss;
     
     enemy M1;
-    enemy * M1p = &M1;
-    
+    enemy * M1p = &M1;  
     enemy M2;
-    enemy * M2p = &M2;
-    
+    enemy * M2p = &M2; 
     enemy M3;
     enemy * M3p = &M3;
-    
     enemy M4;
-    enemy * M4p = &M4;
-    
+    enemy * M4p = &M4;  
     enemy M5;
     enemy * M5p = &M5;
-    
     enemy M6;
     enemy * M6p = &M6;
+    
+    enemy M7;
+    enemy * M7p = &M7;  
+    enemy M8;
+    enemy * M8p = &M8; 
+    enemy M9;
+    enemy * M9p = &M9;
+    enemy M10;
+    enemy * M10p = &M10;  
+    enemy M11;
+    enemy * M11p = &M11;
+    enemy M12;
+    enemy * M12p = &M12;
+    
+    enemy M13;
+    enemy * M13p = &M13;  
+    enemy M14;
+    enemy * M14p = &M14; 
+    enemy M15;
+    enemy * M15p = &M15;
+    enemy M16;
+    enemy * M16p = &M16;  
+    enemy M17;
+    enemy * M17p = &M17;
+    enemy M18;
+    enemy * M18p = &M18;
+    
+    enemy M19;
+    enemy * M19p = &M19;  
+    enemy M20;
+    enemy * M20p = &M20; 
+    enemy M21;
+    enemy * M21p = &M21;
+    enemy M22;
+    enemy * M22p = &M22;  
+    enemy M23;
+    enemy * M23p = &M23;
+
     
     
     
@@ -589,14 +622,37 @@ int main(void)
 
                     //MAPA 3 - BOSS
                     
-                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*33);
+                    enemy_start(Bossp,false,BOSS,MAPA3,300,103,false,60*45);
                     
-                    enemy_start(M1p,false,MISIL1,MAPA3,277,114,false,60*4);
-                    enemy_start(M2p,false,MISIL2,MAPA3,277,114,false,60*6);
-                    enemy_start(M3p,false,MISIL3,MAPA3,277,117,true,60*8);
-                    enemy_start(M4p,false,MISIL4,MAPA3,260,157,false,60*10);
-                    enemy_start(M5p,false,MISIL5,MAPA3,260,157,false,60*12);
-                    enemy_start(M6p,false,MISIL6,MAPA3,277,114,false,60*14);
+                    enemy_start(M1p,false,MISIL1,MAPA3,0,0,false,60*4);
+                    enemy_start(M2p,false,MISIL2,MAPA3,0,0,false,60*6);
+                    enemy_start(M3p,false,MISIL3,MAPA3,0,0,false,60*8);
+                    enemy_start(M4p,false,MISIL4,MAPA3,0,0,false,60*10);
+                    enemy_start(M5p,false,MISIL5,MAPA3,0,0,false,60*12);
+                    
+                    enemy_start(M6p,false,MISIL1,MAPA3,0,0,false,60*14);
+                    enemy_start(M7p,false,MISIL3,MAPA3,0,0,false,60*14);
+                    enemy_start(M8p,false,MISIL4,MAPA3,0,0,false,60*14);
+                    enemy_start(M9p,false,MISIL5,MAPA3,0,0,false,60*14);
+                    
+                    enemy_start(M10p,false,MISIL1,MAPA3,0,0,false,60*16);
+                    enemy_start(M11p,false,MISIL2,MAPA3,0,0,false,60*16);
+                    enemy_start(M12p,false,MISIL4,MAPA3,0,0,false,60*16);
+                    enemy_start(M13p,false,MISIL5,MAPA3,0,0,false,60*16);
+                    
+                    enemy_start(M14p,false,MISIL2,MAPA3,0,0,false,60*19);
+                    enemy_start(M15p,false,MISIL3,MAPA3,0,0,false,60*19);
+                    enemy_start(M16p,false,MISIL4,MAPA3,0,0,false,60*19);
+                    enemy_start(M17p,false,MISIL5,MAPA3,0,0,false,60*19);
+                    
+                    enemy_start(M18p,false,MISIL1,MAPA3,0,0,false,60*20);
+                    enemy_start(M19p,false,MISIL5,MAPA3,0,0,false,60*21);
+                    enemy_start(M20p,false,MISIL1,MAPA3,0,0,false,60*23);
+                    enemy_start(M21p,false,MISIL2,MAPA3,0,0,false,60*24);
+                    enemy_start(M22p,false,MISIL3,MAPA3,0,0,false,60*25);
+                    
+                    
+                    enemy_start(M23p,false,MISIL6,MAPA3,0,0,false,60*25);
                    
                     restart=false;
                 }
@@ -722,6 +778,23 @@ int main(void)
                 enemy_mov(M4p, pMario);
                 enemy_mov(M5p, pMario);
                 enemy_mov(M6p, pMario);
+                enemy_mov(M7p, pMario);
+                enemy_mov(M8p, pMario);
+                enemy_mov(M9p, pMario);
+                enemy_mov(M10p, pMario);
+                enemy_mov(M11p, pMario);
+                enemy_mov(M12p, pMario);
+                enemy_mov(M13p, pMario);
+                enemy_mov(M14p, pMario);
+                enemy_mov(M15p, pMario);
+                enemy_mov(M16p, pMario);
+                enemy_mov(M17p, pMario);
+                enemy_mov(M18p, pMario);
+                enemy_mov(M19p, pMario);
+                enemy_mov(M20p, pMario);
+                enemy_mov(M21p, pMario);
+                enemy_mov(M22p, pMario);
+                enemy_mov(M23p, pMario);
 
           
 
@@ -850,6 +923,23 @@ int main(void)
                 draw_enemy_rpi (M4p, pMario );
                 draw_enemy_rpi (M5p, pMario );
                 draw_enemy_rpi (M6p, pMario );
+                draw_enemy_rpi (M7p, pMario);
+                draw_enemy_rpi (M8p, pMario);
+                draw_enemy_rpi (M9p, pMario);
+                draw_enemy_rpi (M10p, pMario);
+                draw_enemy_rpi (M11p, pMario);
+                draw_enemy_rpi (M12p, pMario);
+                draw_enemy_rpi (M13p, pMario);
+                draw_enemy_rpi (M14p, pMario);
+                draw_enemy_rpi (M15p, pMario);
+                draw_enemy_rpi (M16p, pMario);
+                draw_enemy_rpi (M17p, pMario);
+                draw_enemy_rpi (M18p, pMario);
+                draw_enemy_rpi (M19p, pMario);
+                draw_enemy_rpi (M20p, pMario);
+                draw_enemy_rpi (M21p, pMario);
+                draw_enemy_rpi (M22p, pMario);
+                draw_enemy_rpi (M23p, pMario);
                 
                 //Dibujo de monedas MAPA 1
                  draw_coin_rpi(pMario,pcoin1 );
@@ -1248,6 +1338,24 @@ int main(void)
             draw_enemy (M4p, pMario, p_bitmaps_t);
             draw_enemy (M5p, pMario, p_bitmaps_t);
             draw_enemy (M6p, pMario, p_bitmaps_t);
+            draw_enemy (M7p, pMario, p_bitmaps_t);
+            draw_enemy (M8p, pMario, p_bitmaps_t);
+            draw_enemy (M9p, pMario, p_bitmaps_t);
+            draw_enemy (M10p, pMario, p_bitmaps_t);
+            draw_enemy (M11p, pMario, p_bitmaps_t);
+            draw_enemy (M12p, pMario, p_bitmaps_t);
+            draw_enemy (M13p, pMario, p_bitmaps_t);
+            draw_enemy (M14p, pMario, p_bitmaps_t);
+            draw_enemy (M15p, pMario, p_bitmaps_t);
+            draw_enemy (M16p, pMario, p_bitmaps_t);
+            draw_enemy (M17p, pMario, p_bitmaps_t);
+            draw_enemy (M18p, pMario, p_bitmaps_t);
+            draw_enemy (M19p, pMario, p_bitmaps_t);
+            draw_enemy (M20p, pMario, p_bitmaps_t);
+            draw_enemy (M21p, pMario, p_bitmaps_t);
+            draw_enemy (M22p, pMario, p_bitmaps_t);
+            draw_enemy (M23p, pMario, p_bitmaps_t);
+            
             
             
             //Dibujo de monedas MAPA 1

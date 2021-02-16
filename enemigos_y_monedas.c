@@ -215,16 +215,33 @@ void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,bool 
     en->type= type;
     en->mapa= ma;
     en->dodge= dodge;
-    en->timer=time;
-    
+
+    if (en->type == MISIL1 || en->type == MISIL2 || en->type == MISIL3|| en->type == MISIL6)//posiciones default de los misiles
+    {
+        x=277;
+        y=114;
+        if (en->type == MISIL3)
+        {
+            y=117;
+            en->dodge=true;
+        }
+    }
+    if (en->type == MISIL4 || en->type == MISIL5)
+    {
+        x=260;
+        y=157;
+    }
+                       
     #ifdef ALLEGRO
     en->x= x;
     en->y= y;
+    en->timer=time;
     #endif /*ALLEGRO*/
 
     #ifdef RPI
     en->x=(int)(x*COORDSCALE);
     en->y=(int)(y*COORDSCALE);
+    en->timer=(time*0.6);
     #endif /*RPI*/
     
     if (en->type == FISH || en->type == REDFISH || en->type == BOSS)
