@@ -741,7 +741,7 @@ int main(void)
                     (Mario.salto_lock)=false;
 
 
-            if ((coord.y > -MINY && coord.y <= -MAXY) && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa))
+            if ((coord.y < -MINY && coord.y >= -MAXY) && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa))
                 {
                 (Mario.y) += MOVE_RATE;
                 }
@@ -917,7 +917,7 @@ int main(void)
                 if(coord.y > MINY && coord.y <= MAXY && pausa==true)
                 restart=true;
                 
-                if((coord.y > -MINY && coord.y <= -MAXY) && pausa==true)
+                if((coord.y < -MINY && coord.y >= -MAXY) && pausa==true)
                 do_exit=true;
             
                 printmario(pMario); //se dibuja a mario
