@@ -102,7 +102,7 @@
 #define XPANTALLA 5
 #define YPANTALLA 8
 
-#define COIN_SIZE 1
+#define COIN_SIZE 2
 
 #define MOVE_RATE_FISH  16.0
 #define MOVE_RATE_REDFISH  8.0
