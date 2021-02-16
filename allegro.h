@@ -87,6 +87,12 @@ void disp_post_draw(ALLEGRO_DISPLAY* disp,ALLEGRO_BITMAP* buffer,ALLEGRO_BITMAP*
 */
 void draw_enemy (enemy * en, player * Mario, bitmaps_t * bit);
 
+/*
+ * @brief Iniciliza las funciones de allegro
+ * @param param1 funcion de allegro a inicializar
+ * @param nombre de lo que estamos inicalizando
+*/
+void must_init(bool test, const char *description);
 /***********************************************************
            Prototipos de variables globales
 ***********************************************************/

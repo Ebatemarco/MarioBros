@@ -313,21 +313,25 @@ int main(void)
 
     //Carga de bitmaps, y otras variables de allegro
    
-    if (!al_init()) 
-    {
-        printf("Error al inicializar allegro\n");
-        return -1;
-    }
-
-    if (!al_install_keyboard()) 
-    {
-        printf("Error al inicializar teclado\n");
-        return -1;
-    }
+    must_init(al_init(),"allegro");
+    must_init(al_install_keyboard(), "teclado");
+    must_init(al_init_image_addon(), "imagenes");
     
-    if (!al_init_image_addon()) 
+    
+    timer = al_create_timer(1.0 / FPS);
+    must_init(timer, "timer");
+
+    event_queue = al_create_event_queue();
+    if (!event_queue) 
     {
-        printf("Error al inicializar image_addon\n");
+        fprintf(stderr, "failed to create event_queue!\n");
+        al_destroy_bitmap(mario1);
+        al_destroy_bitmap(mario2);
+        al_destroy_bitmap(mario3);
+        al_destroy_bitmap(mario4);
+        al_destroy_bitmap(mario5);
+        al_destroy_bitmap(mario6);
+        al_destroy_timer(timer);
         return -1;
     }
     
@@ -337,50 +341,34 @@ int main(void)
         fprintf(stderr, "failed to create display!\n");
         al_destroy_timer(timer);
         al_destroy_bitmap(mario1);
+        al_destroy_bitmap(mario2);
+        al_destroy_bitmap(mario3);
+        al_destroy_bitmap(mario4);
+        al_destroy_bitmap(mario5);
+        al_destroy_bitmap(mario6);
         al_destroy_event_queue(event_queue);
         return -1;
     }
     
     //INICIALIZACION DE AUDIO
-    if (!al_install_audio()) {
-        fprintf(stderr, "failed to initialize audio!\n");
-        return -1;
-    }
-    if (!al_init_acodec_addon()) {
-        fprintf(stderr, "failed to initialize audio codecs!\n");
-        return -1;
-    }
-    if (!al_reserve_samples(4)) {
-        fprintf(stderr, "failed to reserve samples!\n");
-        return -1;
-    }
+    
+    must_init(al_install_audio(), "audio");
+    must_init(al_init_acodec_addon(), "acodec");
+    must_init(al_reserve_samples(4), "samples");
+    
     
     main_song = al_load_sample("main_song.wav");
-    if (!main_song) {
-        printf("Audio clip main_song not loaded!\n");
-        return -1;
-    }
+    must_init(main_song, "main_song");
     
     gameover_note = al_load_sample("gameover_note.wav");
-    if (!main_song) {
-        printf("Audio clip main_song not loaded!\n");
-        return -1;
-    }
+    must_init(gameover_note, "gameover_note");
     
     death_note = al_load_sample("death_note.wav");
-    if (!main_song) {
-        printf("Audio clip main_song not loaded!\n");
-        return -1;
-    }
+    must_init(death_note, "death_note");
     
     pausa_note = al_load_sample("pausa_note.wav");
-    if (!main_song) {
-        printf("Audio clip main_song not loaded!\n");
-        return -1;
-    }
-    /*ALLEGRO_SAMPLE_INSTANCE * spp;
-    spp=al_create_sample_instance(main_song);
-    al_play_sample_instance(spp);*/
+    must_init(pausa_note, "pausa_note");
+   
     
     al_set_window_title(display,"SUPER Mario Bros - Underwater Edition");
     
@@ -388,6 +376,7 @@ int main(void)
     if (!buffer) {
         fprintf(stderr, "failed to create Mario bitmap!\n");
         al_destroy_timer(timer);
+        al_destroy_bitmap(buffer);
         return -1;
     }
     
@@ -398,6 +387,8 @@ int main(void)
         fprintf(stderr, "Could not load 'mariofont.ttf'.\n");
         return -1;
     }
+    
+    //Cargar los bitmap
     
     mario1 = al_load_bitmap("Mario1.png");
     mario2 = al_load_bitmap("Mario2.png");
@@ -424,20 +415,7 @@ int main(void)
     explosion3 = al_load_bitmap("explosion3.png");
     background = al_load_bitmap("mapa-inicio.png");
 
-    timer = al_create_timer(1.0 / FPS);
-    if (!timer) {
-        fprintf(stderr, "failed to create timer!\n");
-        return -1;
-    }
 
-    event_queue = al_create_event_queue();
-    if (!event_queue) 
-    {
-        fprintf(stderr, "failed to create event_queue!\n");
-        al_destroy_bitmap(mario1);
-        al_destroy_timer(timer);
-        return -1;
-    }
 
     //Registro de eventos
 
@@ -1331,6 +1309,7 @@ int main(void)
     al_destroy_bitmap(mario3);
     al_destroy_bitmap(mario4);
     al_destroy_bitmap(mario5);
+    al_destroy_bitmap(mario6);
     al_destroy_bitmap(fish1);
     al_destroy_bitmap(fish2);
     al_destroy_bitmap(redfish1);

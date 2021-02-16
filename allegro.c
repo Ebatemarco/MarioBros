@@ -8,6 +8,14 @@
 
 #include "allegro.h"
 
+void must_init(bool test, const char *description)
+{
+    if(test) return;
+
+    printf("couldn't initialize %s\n", description);
+    exit(1);
+}
+
 void draw_coin(player * Mario,coin* ncoin,bitmaps_t * bitm)
 {
      if(((Mario->n_mapa_actual)== (ncoin->map)) && ((ncoin->active) == true))//se dibuja la moneda solo cuando esté activa y mario se encuentre en el mapa de la misma
