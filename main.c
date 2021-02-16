@@ -23,7 +23,7 @@ int main(void)
     unsigned int times=TIEMPO; //variable que indica cada cuantos microsegundos se ejecutará el loop principal
     //mensaje de bienvenida e instrucciones
     printf("\n __  __                  _                 ____  \n|  \\/  |   __ _   _ __  (_)   ___         | __ )   _ __    ___    ___ \n| |\\/| |  / _` | | '__| | |  / _ \\        |  _ \\  | '__|  / _ \\  / __| \n| |  | | | (_| | | |    | | | (_) |       | |_) | | |    | (_) | \\__ \\ \n|_|  |_|  \\__,_| |_|    |_|  \\___/        |____/  |_|     \\___/  |___/ \n");
-    printf("\nINSTRUCCIONES:\nUtilice la palanca para desplazarse hacia los lados y para saltar.\nPresione la palanca para pausar, y posteriormente mueva la palanca hacia arriba si desea reiniciar el juego\n--> A continuacion presione la palanca para empezar\n");
+    printf("\nINSTRUCCIONES:\nUtilice la palanca para desplazarse hacia los lados y para saltar.\nPresione la palanca para pausar, y posteriormente mueva la palanca hacia arriba si desea reiniciar el juego o para abajo si desea salir del mismo\n--> A continuacion presione la palanca para empezar\n");
     
 #endif  /*RPI*/ 
     
@@ -249,14 +249,11 @@ int main(void)
     bool pausa= false; //flag que indica si el juego esta pausado
     bool pausa_lock = false;
     bool restart=true;//flag que indica si el juego se reinicio
-    
-    bool redraw = false;
+   
     bool do_exit = false;
-    
-    
-    
-   #ifdef ALLEGRO
 
+   #ifdef ALLEGRO
+    bool redraw = false;
     bool key_pressed[5] = {false, false, false, false, false}; //Estado de teclas, true cuando esta apretada
     
     //Variables relacionadas solo con el dibujo de mario
@@ -919,6 +916,9 @@ int main(void)
                 //Boton de reiniciar
                 if(coord.y > MINY && coord.y <= MAXY && pausa==true)
                 restart=true;
+                
+                if((coord.y > -MINY && coord.y <= -MAXY) && pausa==true)
+                do_exit=true;
             
                 printmario(pMario); //se dibuja a mario
                 print_post(pausa,pMario); //se dibujan pantallas y mensajes
@@ -1325,6 +1325,9 @@ int main(void)
     al_destroy_bitmap(buffer);
     
     al_destroy_sample(main_song);
+    al_destroy_sample(gameover_note);
+    al_destroy_sample(pausa_note);
+    al_destroy_sample(death_note);
     al_uninstall_audio();
     al_destroy_display(display);
     al_destroy_timer(timer);
