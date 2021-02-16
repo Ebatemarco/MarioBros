@@ -81,6 +81,7 @@
 #define MINY 60
 #define MAXY 127
 #define COORDSCALE 0.07142
+#define TIME_SCALE 0.6
 
 #define BUFFER_W 222
 #define BUFFER_H 16
@@ -113,7 +114,7 @@
 #define MISIL1_TURN_COORD -6
 #define MISIL2_TURN_COORD -3
 #define MISIL4_TURN_COORD 1
-#define MISIL5_TURN_COORD 2
+#define MISIL5_TURN_COORD 3
 #define BOSS_STOP +5
 
 

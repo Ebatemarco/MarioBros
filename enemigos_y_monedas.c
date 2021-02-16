@@ -183,6 +183,8 @@ if((Mario->n_mapa_actual)== en->mapa)
                             }
                         }
                     else if (en->type == MISIL6)//el misil6 gira en base a un temporizador
+                        
+                    #ifdef ALLEGRO
                         {
                         if ((en->timer > -60*2) && (en->timer < 0))
                             {
@@ -200,8 +202,29 @@ if((Mario->n_mapa_actual)== en->mapa)
                             {
                             (en->x) += (1/MOVE_RATE_MISIL);
                             }
-
                         }
+                    #endif /*ALLEGRO*/
+
+                    #ifdef RPI
+                        {
+                        if ((en->timer > -60*2*TIME_SCALE) && (en->timer < 0))
+                            {
+                            (en->y) -= (1/MOVE_RATE_MISIL);
+                            }
+                        else if (en->timer > -60*10*TIME_SCALE) 
+                            {
+                            (en->x) -= (1/MOVE_RATE_MISIL);
+                            }
+                        else if (en->timer > -60*12*TIME_SCALE)
+                            {
+                            (en->y) += (1/MOVE_RATE_MISIL);
+                            }
+                        else if (en->timer > -60*19*TIME_SCALE) 
+                            {
+                            (en->x) += (1/MOVE_RATE_MISIL);
+                            }
+                        }
+                    #endif /*RPI*/
                 }
 
         }
@@ -241,7 +264,7 @@ void enemy_start (enemy * en,bool active,char type,char ma,float x,float y,bool 
     #ifdef RPI
     en->x=(int)(x*COORDSCALE);
     en->y=(int)(y*COORDSCALE);
-    en->timer=(time*0.6);
+    en->timer=(time*TIME_SCALE);
     #endif /*RPI*/
     
     if (en->type == FISH || en->type == REDFISH || en->type == BOSS)
