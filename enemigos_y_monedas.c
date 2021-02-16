@@ -202,6 +202,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                             {
                             (en->x) += (1/MOVE_RATE_MISIL);
                             }
+                        
                         }
                     #endif /*ALLEGRO*/
 
@@ -223,6 +224,8 @@ if((Mario->n_mapa_actual)== en->mapa)
                             {
                             (en->x) += (1/MOVE_RATE_MISIL);
                             }
+                        else if (en->timer <= -60*19)
+                            en->active=false;
                         }
                     #endif /*RPI*/
                 }
