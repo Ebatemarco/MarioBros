@@ -51,6 +51,14 @@ if((Mario->n_mapa_actual)== en->mapa)
                 }
                 else if (en->type == MISIL6)
                 en->timer --; 
+            #ifdef ALLEGRO   
+            if (en->type==MISIL6 && en->timer<=-60*19)
+                    en->active=false;
+            #endif
+            #ifdef RPI                
+            if (en->timer <= -60*19*TIME_SCALE)
+                            en->active=false;
+            #endif
             }
     }
         
