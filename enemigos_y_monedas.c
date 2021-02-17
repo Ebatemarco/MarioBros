@@ -56,7 +56,7 @@ if((Mario->n_mapa_actual)== en->mapa)
                     en->active=false;
             #endif
             #ifdef RPI                
-            if (en->timer <= -60*19*TIME_SCALE)
+            if (en->timer <= (-60*19*TIME_SCALE))
                             en->active=false;
             #endif
             }
