@@ -104,7 +104,7 @@ void barriers()
    putbarrier (80, 184 , 95, 199, finalmapa1, BORDER);
    putbarrier (48, 168 , 79, 199, finalmapa1, BORDER);
    putbarrier (352, 184 , 367, 199, finalmapa1, BORDER);
-   putbarrier (FINALMAPA1_W-4, 0 , 500, 223, finalmapa1, BORDER);
+   putbarrier (FINALMAPA1_W-4, 0 , FINALMAPA1_W, 223, finalmapa1, BORDER);
    putbarrier (0, 0, 2, 223, finalmapa1, BORDER);
    putbarrier (447, 168, 463, 198, finalmapa1, EXIT2);
    
