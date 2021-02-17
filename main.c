@@ -814,7 +814,7 @@ int main(void)
                     (Mario.salto_lock)=false;
 
 
-            if ((coord.y < -MINY && coord.y >= -MAXY) && (Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa))
+            if ((coord.y < -MINY && coord.y >= -MAXY) && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa))
                 {
                 (Mario.y) += MOVE_RATE;
                 }
@@ -832,7 +832,7 @@ int main(void)
 
             //Salto de Mario
 
-            if ((Mario.y) <= SCREEN_H - MARIO_SIZE - MOVE_RATE  && collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa)) //Mario cae siempre que no detecte nada abajo de él
+            if ( collidewborder(pMario,(Mario.x), (Mario.y)+MOVE_RATE, (Mario.x)+MARIO_SIZE , (Mario.y)+MOVE_RATE+MARIO_SIZE, mapa)) //Mario cae siempre que no detecte nada abajo de él
                 {
                 (Mario.y) += MOVE_RATE/3; 
                 }
